@@ -7,7 +7,7 @@ function StartFunctions() {
 
         let screen = document.getElementById("turnOff");
 
-        screen.style.backgroundImage = "url('Assets/Img_ShutDown.png')";
+        screen.style.backgroundImage = "url('Assets/Img_ShutDown.PNG')";
         screen.style.display = "block";
 
         setTimeout(function () {

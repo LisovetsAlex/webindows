@@ -13,7 +13,7 @@ function WindowHandler() {
     this.initLoad = function () {
         let screen = document.getElementById("turnOff");
 
-        screen.style.backgroundImage = "url('Assets/Img_LoadingWindows.png')";
+        screen.style.backgroundImage = "url('Assets/Img_LoadingWindows.PNG')";
         screen.style.display = "block";
         setTimeout(function () {
             screen.style.display = "none";
