@@ -8,7 +8,7 @@ import type { Response } from "express";
 export class AppController {
     constructor(private readonly appService: AppService) {}
 
-    @Get("/app")
+    @Get("")
     getFile(@Res() res: Response) {
         const file = createReadStream(
             join(process.cwd(), `files/WindowsWebHTML.html`)
