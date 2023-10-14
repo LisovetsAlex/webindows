@@ -22,7 +22,7 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getFile(res) {
-        const file = (0, node_fs_1.createReadStream)((0, node_path_1.join)(process.cwd(), `files/WindowsWebHTML.html`));
+        const file = (0, node_fs_1.createReadStream)((0, node_path_1.join)(process.cwd(), `files/index.html`));
         file.pipe(res);
     }
     getSomeFile(params, res) {
