@@ -10,7 +10,7 @@ export class AppController {
 
     @Get("")
     getFile(@Res() res: Response) {
-        const file = createReadStream(join(process.cwd(), `files/WindowsWebHTML.html`));
+        const file = createReadStream(join(process.cwd(), `files/index.html`));
         file.pipe(res);
     }
 
