@@ -23,7 +23,7 @@ function WindowHandler() {
         shortCut.setAttribute("id", "id_shortcuts");
         for (let i = 0; i < this.allApps.length; i++) {
             shortCut.innerHTML += `<button id="${this.allApps[i].name}sc" class="winCl-ShortcutBtn winCl-Grabber" data-width="75" ondblclick="OpenApp('${this.allApps[i].name}', '${this.allApps[i].html}')" onmousedown="StartDrag('${this.allApps[i].name}sc')">
-                <img src="Assets/${this.allApps[i].img}">
+                <img src="Assets/${this.allApps[i].img}" loading="lazy">
                 ${this.allApps[i].name}
             </button>`;
         }
@@ -33,15 +33,12 @@ function WindowHandler() {
 
     this.UpdateTime = function () {
         let clock = document.getElementById("id_clockTaskBar");
-        clock.innerHTML =
-            String(this.date.getHours()) + ":" + String(this.date.getMinutes());
+        clock.innerHTML = String(this.date.getHours()) + ":" + String(this.date.getMinutes());
     };
 
     this.TickMouse = function (event) {
-        if (event.clientX <= window.innerWidth && event.clientX >= 20)
-            this.x = event.clientX;
-        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10)
-            this.y = event.clientY;
+        if (event.clientX <= window.innerWidth && event.clientX >= 20) this.x = event.clientX;
+        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10) this.y = event.clientY;
 
         if (!this.isDragging) {
             const iframes = document.getElementsByTagName("iframe");
@@ -57,24 +54,21 @@ function WindowHandler() {
         }
 
         this.selectedObj.style.position = "absolute";
-        this.selectedObj.style.left =
-            Number(this.x - Number(this.selectedObj.dataset.width) / 2) + "px";
+        this.selectedObj.style.left = Number(this.x - Number(this.selectedObj.dataset.width) / 2) + "px";
         this.selectedObj.style.top = this.y - 10 + "px";
     };
 
     this.Drag = function (id) {
         this.SetSelectedObj(id);
         for (let i = 0; i < this.openApps.length; i++) {
-            if (this.openApps[i].name == id && this.openApps[i].isFullScreen)
-                this.ExpandWindow(id);
+            if (this.openApps[i].name == id && this.openApps[i].isFullScreen) this.ExpandWindow(id);
         }
 
         let arr = document.getElementsByClassName("winCl-BasicWindow");
         for (let i = 0; i < arr.length; i++) {
             arr[i].style["z-index"] = 1;
         }
-        if (!this.selectedObj.classList.contains("winCl-ShortcutBtn"))
-            this.selectedObj.style["z-index"] = 2;
+        if (!this.selectedObj.classList.contains("winCl-ShortcutBtn")) this.selectedObj.style["z-index"] = 2;
 
         this.isDragging = true;
     };
@@ -104,6 +98,7 @@ function WindowHandler() {
         let frame = document.createElement("iframe");
         frame.setAttribute("id", `${name}`);
         frame.setAttribute("src", `${html}`);
+        frame.setAttribute("loading", `lazy`);
         frame.style.width = 358;
         frame.style.height = 198;
 

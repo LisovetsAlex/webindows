@@ -26,6 +26,8 @@ let AppController = class AppController {
         file.pipe(res);
     }
     getSomeFile(params, res) {
+        if (params.name == "favicon.ico")
+            return;
         const file = (0, node_fs_1.createReadStream)((0, node_path_1.join)(process.cwd(), `files/${params.name}`));
         file.pipe(res);
     }
@@ -40,14 +42,14 @@ let AppController = class AppController {
 };
 exports.AppController = AppController;
 __decorate([
-    (0, common_1.Get)("/app"),
+    (0, common_1.Get)(""),
     __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getFile", null);
 __decorate([
-    (0, common_1.Get)(':name'),
+    (0, common_1.Get)(":name"),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
@@ -55,7 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getSomeFile", null);
 __decorate([
-    (0, common_1.Get)('/Apps/:name'),
+    (0, common_1.Get)("/Apps/:name"),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
@@ -63,7 +65,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getAppFile", null);
 __decorate([
-    (0, common_1.Get)('/Assets/:name'),
+    (0, common_1.Get)("/Assets/:name"),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),

@@ -10,33 +10,27 @@ export class AppController {
 
     @Get("")
     getFile(@Res() res: Response) {
-        const file = createReadStream(
-            join(process.cwd(), `files/WindowsWebHTML.html`)
-        );
+        const file = createReadStream(join(process.cwd(), `files/WindowsWebHTML.html`));
         file.pipe(res);
     }
 
-    @Get(':name')
+    @Get(":name")
     getSomeFile(@Param() params: any, @Res() res: Response) {
-        const file = createReadStream(
-            join(process.cwd(), `files/${params.name}`)
-        );
+        if (params.name == "favicon.ico") return;
+
+        const file = createReadStream(join(process.cwd(), `files/${params.name}`));
         file.pipe(res);
     }
 
-    @Get('/Apps/:name')
+    @Get("/Apps/:name")
     getAppFile(@Param() params: any, @Res() res: Response) {
-        const file = createReadStream(
-            join(process.cwd(), `files/Apps/${params.name}`)
-        );
+        const file = createReadStream(join(process.cwd(), `files/Apps/${params.name}`));
         file.pipe(res);
     }
 
-    @Get('/Assets/:name')
+    @Get("/Assets/:name")
     getAssetFile(@Param() params: any, @Res() res: Response) {
-        const file = createReadStream(
-            join(process.cwd(), `files/Assets/${params.name}`)
-        );
+        const file = createReadStream(join(process.cwd(), `files/Assets/${params.name}`));
         file.pipe(res);
     }
 
