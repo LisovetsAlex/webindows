@@ -15,65 +15,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const node_fs_1 = require("node:fs");
-const node_path_1 = require("node:path");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
-    getFile(res) {
-        const file = (0, node_fs_1.createReadStream)((0, node_path_1.join)(process.cwd(), `files/index.html`));
-        file.pipe(res);
-    }
-    getSomeFile(params, res) {
-        if (params.name == "favicon.ico")
+    getFile(request, res) {
+        const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
+        const fileName = this.appService.extractFileNameFromUrl(fullUrl) || "index.html";
+        const filePath = this.appService.getFilePath(fileName);
+        if (!filePath) {
+            console.warn("NOT found: " + filePath + " | file name: " + fileName);
             return;
-        const file = (0, node_fs_1.createReadStream)((0, node_path_1.join)(process.cwd(), `files/${params.name}`));
-        file.pipe(res);
-    }
-    getAppFile(params, res) {
-        const file = (0, node_fs_1.createReadStream)((0, node_path_1.join)(process.cwd(), `files/Apps/${params.name}`));
-        file.pipe(res);
-    }
-    getAssetFile(params, res) {
-        const file = (0, node_fs_1.createReadStream)((0, node_path_1.join)(process.cwd(), `files/Assets/${params.name}`));
-        file.pipe(res);
+        }
+        res.sendFile(filePath);
     }
 };
 exports.AppController = AppController;
 __decorate([
-    (0, common_1.Get)(""),
-    __param(0, (0, common_1.Res)()),
+    (0, common_1.Get)("/:filepath(*)"),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getFile", null);
-__decorate([
-    (0, common_1.Get)(":name"),
-    __param(0, (0, common_1.Param)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "getSomeFile", null);
-__decorate([
-    (0, common_1.Get)("/Apps/:name"),
-    __param(0, (0, common_1.Param)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "getAppFile", null);
-__decorate([
-    (0, common_1.Get)("/Assets/:name"),
-    __param(0, (0, common_1.Param)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "getAssetFile", null);
 exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(""),
+    (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

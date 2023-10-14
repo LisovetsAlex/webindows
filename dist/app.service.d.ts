@@ -1,3 +1,6 @@
 export declare class AppService {
-    getHello(): string;
+    getFileExtension(filename: string): string;
+    getFilePath(fileName: string): string;
+    private searchFileInDir;
+    extractFileNameFromUrl(fullUrl: string): string;
 }
