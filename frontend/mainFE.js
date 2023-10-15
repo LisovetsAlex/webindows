@@ -1,3 +1,3 @@
-import { get } from "../mainFE";
+import { get } from "./Apps/test";
 
 get();
