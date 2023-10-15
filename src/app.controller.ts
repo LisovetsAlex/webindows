@@ -9,19 +9,11 @@ export class AppController {
     constructor(private readonly appService: AppService) {}
 
     @Get("/:filepath(*)")
-    getFile(@Param() params: any, @Req() request: Request, @Res() res: Response) {
-        const path = request.originalUrl === "/" ? "/frontend/index.html" : "/frontend/" + request.originalUrl;
-        console.log(path);
-        const file = createReadStream(join(process.cwd(), path));
+    getFile(@Req() request: Request, @Res() res: Response) {
+        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
+        const fullUrl = join(process.cwd(), fileName);
 
-        const fileName = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
-        const fullUrl = request.protocol + "://" + request.get("host") + fileName;
-
-        if (!fullUrl) {
-            console.warn("NOT found: " + fullUrl + " | file name: " + fileName);
-            return;
-        }
-        file.pipe(res);
+        res.sendFile(fullUrl);
     }
     /*  send file to download
     @Get()
