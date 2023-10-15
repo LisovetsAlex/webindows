@@ -12,7 +12,7 @@ export class AppController {
         const fileName = params.filepath === "" ? "webindows/frontend/index.html" : "webindows/frontend/" + params.filepath;
         const fullUrl = this.appService.transformFilePath(join(process.cwd(), fileName));
         console.log("LOG: fullUrl: " + fullUrl);
-        console.log("LOG: req: " + request.originalUrl);
+        console.log("LOG: req: " + process.cwd());
         res.sendFile(fullUrl);
     }
 
