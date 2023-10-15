@@ -1,8 +1,8 @@
-import { Controller, Get, Param, Res, Req } from "@nestjs/common";
+import { Controller, Get, Res, Req } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { Response, Request } from "express";
-const path = require("path");
-import { createReadStream } from "fs";
+import fs from "fs";
+import path from "path";
 
 @Controller()
 export class AppController {
@@ -13,22 +13,13 @@ export class AppController {
         const options = {
             root: path.join(__dirname, "..", "./frontend"),
         };
-        console.log(path.join(__dirname, "./frontend"));
 
         const fileName = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
-        res.sendFile(fileName, options, function (err) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("Sent:", fileName);
-            }
-        });
+        if (!fs.existsSync(fileName)) res.status(404).send("File not found");
 
-        //const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
-        //const fullUrl = join(__dirname, "..", fileName);
-
-        //res.sendFile(fullUrl);
+        res.sendFile(fileName, options);
     }
+
     /*  send file to download
     @Get()
     getFile(@Res({ passthrough: true }) res: Response): StreamableFile {
