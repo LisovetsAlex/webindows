@@ -22,13 +22,14 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getFile(request, res) {
+        const fileName = this.appService.extractFileNameFromUrl(path.join(__dirname, "..", "./frontend", request.originalUrl));
+        if (fileName === "favicon.ico")
+            return;
         const options = {
             root: path.join(__dirname, "..", "./frontend"),
         };
-        const fileName = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
-        if (!fs.existsSync(fileName))
-            res.status(404).send("File not found");
-        res.sendFile(fileName, options);
+        const filePath = request.originalUrl === "/" ? "index.html" : request.originalUrl;
+        res.sendFile(filePath, options);
     }
 };
 exports.AppController = AppController;

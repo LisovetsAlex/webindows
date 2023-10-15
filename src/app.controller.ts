@@ -10,14 +10,16 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
+        const fileName = this.appService.extractFileNameFromUrl(path.join(__dirname, "..", "./frontend", request.originalUrl));
+        if (fileName === "favicon.ico") return;
+
         const options = {
             root: path.join(__dirname, "..", "./frontend"),
         };
 
-        const fileName = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
-        if (!fs.existsSync(fileName)) res.status(404).send("File not found");
+        const filePath = request.originalUrl === "/" ? "index.html" : request.originalUrl;
 
-        res.sendFile(fileName, options);
+        res.sendFile(filePath, options);
     }
     /*  send file to download
     @Get()
