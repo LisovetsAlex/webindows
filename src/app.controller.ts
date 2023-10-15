@@ -10,7 +10,7 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
-        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
+        const fileName = request.originalUrl === "/" ? "webindows/frontend/index.html" : "webindows/frontend" + request.originalUrl;
         const fullUrl = join(process.cwd(), fileName);
 
         res.sendFile(fullUrl);
