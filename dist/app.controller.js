@@ -22,8 +22,8 @@ let AppController = class AppController {
     }
     getFile(params, request, res) {
         const fileName = params.filepath === "" ? "frontend/index.html" : "frontend/" + params.filepath;
-        const fullUrl = (0, path_1.join)(process.cwd(), fileName);
-        console.log(fullUrl);
+        const fullUrl = this.appService.transformFilePath((0, path_1.join)(process.cwd(), fileName));
+        console.log("LOG: " + fullUrl);
         res.sendFile(fullUrl);
     }
 };

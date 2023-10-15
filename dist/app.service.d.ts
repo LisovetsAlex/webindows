@@ -1,5 +1,3 @@
 export declare class AppService {
-    getFilePath(fileName: string): string;
-    private searchFileInDir;
-    extractFileNameFromUrl(fullUrl: string): string;
+    transformFilePath(filePath: string): string;
 }
