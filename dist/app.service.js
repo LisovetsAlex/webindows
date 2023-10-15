@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 let AppService = class AppService {
     transformFilePath(filePath) {
         const parts = filePath.split("/");
-        const index = parts.indexOf("webindows");
+        const index = parts.indexOf("frontend");
         if (index !== -1) {
             const newPath = parts.slice(index).join("/");
             return `/${newPath}`;
