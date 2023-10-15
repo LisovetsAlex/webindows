@@ -2,23 +2,26 @@ import { Controller, Get, Param, Res, Req } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { Response, Request } from "express";
 import { join } from "path";
+import { createReadStream } from "fs";
 
 @Controller()
 export class AppController {
     constructor(private readonly appService: AppService) {}
 
     @Get("/:filepath(*)")
-    getFile(@Req() request: Request, @Res() res: Response) {
+    getFile(@Param() params: any, @Req() request: Request, @Res() res: Response) {
+        const path = request.originalUrl === "/" ? "/frontend/index.html" : "/frontend/" + request.originalUrl;
+        console.log(path);
+        const file = createReadStream(join(process.cwd(), path));
+
         const fileName = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
         const fullUrl = request.protocol + "://" + request.get("host") + fileName;
-
-        console.log(fullUrl);
 
         if (!fullUrl) {
             console.warn("NOT found: " + fullUrl + " | file name: " + fileName);
             return;
         }
-        res.sendFile(fullUrl);
+        file.pipe(res);
     }
     /*  send file to download
     @Get()
