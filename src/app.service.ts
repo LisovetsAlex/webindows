@@ -6,7 +6,7 @@ import * as path from "path";
 export class AppService {
     transformFilePath(filePath: string): string {
         const parts = filePath.split("/");
-        const index = parts.indexOf("frontend");
+        const index = parts.indexOf("webindows");
         if (index !== -1) {
             const newPath = parts.slice(index).join("/");
             return `/${newPath}`;
