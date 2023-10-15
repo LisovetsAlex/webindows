@@ -9,17 +9,16 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
-        const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-        const fileName = this.appService.extractFileNameFromUrl(fullUrl) || "index.html";
-        const filePath = this.appService.getFilePath(fileName);
+        const fileName = request.originalUrl === "/" ? "index.html" : request.originalUrl;
+        const fullUrl = request.protocol + "://" + request.get("host") + fileName;
 
         console.log(fullUrl);
 
-        if (!filePath) {
-            console.warn("NOT found: " + filePath + " | file name: " + fileName);
+        if (!fullUrl) {
+            console.warn("NOT found: " + fullUrl + " | file name: " + fileName);
             return;
         }
-        res.sendFile(filePath);
+        res.sendFile(fullUrl);
     }
     /*  send file to download
     @Get()
