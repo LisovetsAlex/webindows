@@ -10,9 +10,8 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
-        console.log(__dirname.replace(/\\dist$/, ""));
         const options = {
-            root: path.join(__dirname.replace(/\\dist$/, "")),
+            root: path.join(__dirname, ".."),
         };
 
         const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;

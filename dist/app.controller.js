@@ -21,9 +21,8 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getFile(request, res) {
-        console.log(__dirname.replace(/\\dist$/, ""));
         const options = {
-            root: path.join(__dirname.replace(/\\dist$/, "")),
+            root: path.join(__dirname, ".."),
         };
         const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
         res.sendFile(fileName, options, function (err) {
