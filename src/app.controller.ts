@@ -9,7 +9,7 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
-        const fileName = request.originalUrl === "/" ? "index.html" : request.originalUrl;
+        const fileName = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
         const fullUrl = request.protocol + "://" + request.get("host") + fileName;
 
         console.log(fullUrl);
