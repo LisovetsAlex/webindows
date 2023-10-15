@@ -11,7 +11,7 @@ export class AppController {
         const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
         const fileName = this.appService.extractFileNameFromUrl(fullUrl) || "index.html";
         const filePath = this.appService.getFilePath(fileName);
-
+        console.log(filePath);
         if (!filePath) {
             console.warn("NOT found: " + filePath + " | file name: " + fileName);
             return;
