@@ -21,7 +21,7 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getFile(params, request, res) {
-        const fileName = params.filepath === "" ? "frontend/index.html" : "frontend/" + params.filepath;
+        const fileName = params.filepath === "" ? "webindows/frontend/index.html" : "webindows/frontend/" + params.filepath;
         const fullUrl = this.appService.transformFilePath((0, path_1.join)(process.cwd(), fileName));
         console.log("LOG: " + fullUrl);
         res.sendFile(fullUrl);
