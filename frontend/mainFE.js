@@ -1,5 +1,3 @@
-export default function get() {
-    console.log(123);
-}
+import { get } from "../mainFE";
 
 get();
