@@ -1,3 +1,3 @@
-import { get } from "./Apps/test";
+import { get } from "./Apps/test.js";
 
 get();
