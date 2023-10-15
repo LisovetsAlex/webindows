@@ -8,6 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
+const fs = require("fs");
+const path = require("path");
 let AppService = class AppService {
     transformFilePath(filePath) {
         const parts = filePath.split("/");
@@ -19,6 +21,41 @@ let AppService = class AppService {
         else {
             return filePath;
         }
+    }
+    getFileExtension(filename) {
+        const parts = filename.split(".");
+        const extension = parts[parts.length - 1];
+        return extension;
+    }
+    getFilePath(fileName) {
+        const projectRootDir = process.cwd();
+        const filePath = this.searchFileInDir(projectRootDir, fileName);
+        if (!filePath)
+            return null;
+        const relativePath = path.relative(projectRootDir, filePath);
+        return path.resolve(relativePath);
+    }
+    searchFileInDir(dir, fileName) {
+        const files = fs.readdirSync(dir);
+        for (const file of files) {
+            const filePath = path.join(dir, file);
+            const stats = fs.statSync(filePath);
+            if (stats.isDirectory()) {
+                const foundFilePath = this.searchFileInDir(filePath, fileName);
+                if (foundFilePath) {
+                    return foundFilePath;
+                }
+            }
+            else if (file === fileName) {
+                return filePath;
+            }
+        }
+        return null;
+    }
+    extractFileNameFromUrl(fullUrl) {
+        const urlPath = new URL(fullUrl).pathname;
+        const fileNameWithParam = path.basename(urlPath);
+        return fileNameWithParam;
     }
 };
 exports.AppService = AppService;

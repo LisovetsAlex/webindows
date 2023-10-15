@@ -8,14 +8,16 @@ export class AppController {
     constructor(private readonly appService: AppService) {}
 
     @Get("/:filepath(*)")
-    getFile(@Param() params: any, @Req() request: Request, @Res() res: Response) {
-        const fileName = params.filepath === "" ? "webindows/frontend/index.html" : "webindows/frontend/" + params.filepath;
-        const fullUrl = join(process.cwd(), fileName);
-        console.log("LOG: fullUrl: " + fullUrl);
-        console.log("LOG: req: " + process.cwd());
-        res.sendFile(fullUrl);
+    getFile(@Req() request: Request, @Res() res: Response) {
+        const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
+        const fileName = this.appService.extractFileNameFromUrl(fullUrl) || "index.html";
+        const filePath = this.appService.getFilePath(fileName);
+        if (!filePath) {
+            console.warn("NOT found: " + filePath + " | file name: " + fileName);
+            return;
+        }
+        res.sendFile(filePath);
     }
-
     /*  send file to download
     @Get()
     getFile(@Res({ passthrough: true }) res: Response): StreamableFile {

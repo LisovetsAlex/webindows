@@ -15,27 +15,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const path_1 = require("path");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
-    getFile(params, request, res) {
-        const fileName = params.filepath === "" ? "webindows/frontend/index.html" : "webindows/frontend/" + params.filepath;
-        const fullUrl = (0, path_1.join)(process.cwd(), fileName);
-        console.log("LOG: fullUrl: " + fullUrl);
-        console.log("LOG: req: " + process.cwd());
-        res.sendFile(fullUrl);
+    getFile(request, res) {
+        const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
+        const fileName = this.appService.extractFileNameFromUrl(fullUrl) || "index.html";
+        const filePath = this.appService.getFilePath(fileName);
+        if (!filePath) {
+            console.warn("NOT found: " + filePath + " | file name: " + fileName);
+            return;
+        }
+        res.sendFile(filePath);
     }
 };
 exports.AppController = AppController;
 __decorate([
     (0, common_1.Get)("/:filepath(*)"),
-    __param(0, (0, common_1.Param)()),
-    __param(1, (0, common_1.Req)()),
-    __param(2, (0, common_1.Res)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getFile", null);
 exports.AppController = AppController = __decorate([
