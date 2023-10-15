@@ -20,19 +20,21 @@ let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
-    getFile(request, res) {
-        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend/" + request.originalUrl;
+    getFile(params, request, res) {
+        const fileName = params.filepath === "" ? "frontend/index.html" : "frontend/" + params.filepath;
         const fullUrl = (0, path_1.join)(process.cwd(), fileName);
+        console.log(fullUrl);
         res.sendFile(fullUrl);
     }
 };
 exports.AppController = AppController;
 __decorate([
     (0, common_1.Get)("/:filepath(*)"),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
+    __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getFile", null);
 exports.AppController = AppController = __decorate([

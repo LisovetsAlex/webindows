@@ -8,10 +8,10 @@ export class AppController {
     constructor(private readonly appService: AppService) {}
 
     @Get("/:filepath(*)")
-    getFile(@Req() request: Request, @Res() res: Response) {
-        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend/" + request.originalUrl;
+    getFile(@Param() params: any, @Req() request: Request, @Res() res: Response) {
+        const fileName = params.filepath === "" ? "frontend/index.html" : "frontend/" + params.filepath;
         const fullUrl = join(process.cwd(), fileName);
-
+        console.log(fullUrl);
         res.sendFile(fullUrl);
     }
 
