@@ -22,9 +22,10 @@ let AppController = class AppController {
     }
     getFile(request, res) {
         const options = {
-            root: path.join(__dirname, ".."),
+            root: path.join(__dirname, "..", "./frontend"),
         };
-        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
+        console.log(path.join(__dirname, "./frontend"));
+        const fileName = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
         res.sendFile(fileName, options, function (err) {
             if (err) {
                 console.log(err);

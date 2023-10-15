@@ -11,10 +11,11 @@ export class AppController {
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
         const options = {
-            root: path.join(__dirname, ".."),
+            root: path.join(__dirname, "..", "./frontend"),
         };
+        console.log(path.join(__dirname, "./frontend"));
 
-        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
+        const fileName = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
         res.sendFile(fileName, options, function (err) {
             if (err) {
                 console.log(err);
