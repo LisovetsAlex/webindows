@@ -10,7 +10,7 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
-        console.log(__dirname);
+        console.log(__dirname.replace(/\\dist$/, ""));
         const options = {
             root: path.join(__dirname.replace(/\\dist$/, "")),
         };

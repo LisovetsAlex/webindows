@@ -21,7 +21,7 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getFile(request, res) {
-        console.log(__dirname);
+        console.log(__dirname.replace(/\\dist$/, ""));
         const options = {
             root: path.join(__dirname.replace(/\\dist$/, "")),
         };
