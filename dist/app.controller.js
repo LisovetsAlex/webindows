@@ -25,7 +25,7 @@ let AppController = class AppController {
         if (request.originalUrl.includes("favicon.ico"))
             return;
         const options = {
-            root: path.join(__dirname, "..", "./frontend"),
+            root: path.join(__dirname, "..", !request.originalUrl.includes("dist") ? "./frontend/src" : "./frontend"),
         };
         const filePath = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
         res.sendFile(filePath, options);
