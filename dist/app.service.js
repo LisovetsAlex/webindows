@@ -8,13 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
-const path = require("path");
 let AppService = class AppService {
-    extractFileNameFromUrl(fullUrl) {
-        const urlPath = new URL(fullUrl).pathname;
-        const fileNameWithParam = path.basename(urlPath);
-        return fileNameWithParam;
-    }
 };
 exports.AppService = AppService;
 exports.AppService = AppService = __decorate([

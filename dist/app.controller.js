@@ -22,8 +22,7 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getFile(request, res) {
-        const fileName = this.appService.extractFileNameFromUrl(path.join(__dirname, "..", "./frontend", request.originalUrl));
-        if (fileName === "favicon.ico")
+        if (request.originalUrl.includes("favicon.ico"))
             return;
         const options = {
             root: path.join(__dirname, "..", "./frontend"),
