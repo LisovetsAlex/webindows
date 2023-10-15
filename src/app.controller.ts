@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Res, Req } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { Response, Request } from "express";
-import { join } from "path";
+const path = require("path");
 import { createReadStream } from "fs";
 
 @Controller()
@@ -10,10 +10,24 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
-        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
-        const fullUrl = join(__dirname, "..", fileName);
+        console.log(__dirname);
+        const options = {
+            root: path.join(__dirname.replace(/\\dist$/, "")),
+        };
 
-        res.sendFile(fullUrl);
+        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
+        res.sendFile(fileName, options, function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Sent:", fileName);
+            }
+        });
+
+        //const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
+        //const fullUrl = join(__dirname, "..", fileName);
+
+        //res.sendFile(fullUrl);
     }
     /*  send file to download
     @Get()

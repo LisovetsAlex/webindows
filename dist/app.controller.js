@@ -15,15 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const path_1 = require("path");
+const path = require("path");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
     getFile(request, res) {
+        console.log(__dirname);
+        const options = {
+            root: path.join(__dirname.replace(/\\dist$/, "")),
+        };
         const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend" + request.originalUrl;
-        const fullUrl = (0, path_1.join)(__dirname, "..", fileName);
-        res.sendFile(fullUrl);
+        res.sendFile(fileName, options, function (err) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("Sent:", fileName);
+            }
+        });
     }
 };
 exports.AppController = AppController;
