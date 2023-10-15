@@ -28,7 +28,7 @@ let AppController = class AppController {
         const options = {
             root: path.join(__dirname, "..", "./frontend"),
         };
-        const filePath = request.originalUrl === "/" ? "index.html" : request.originalUrl;
+        const filePath = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
         res.sendFile(filePath, options);
     }
 };
