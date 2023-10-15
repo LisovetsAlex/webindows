@@ -1,8 +1,8 @@
-import { Controller, Get, Res, Req } from "@nestjs/common";
+import { Controller, Get, Param, Res, Req } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { Response, Request } from "express";
-import fs from "fs";
-import path from "path";
+const path = require("path");
+const fs = require("fs");
 
 @Controller()
 export class AppController {
@@ -19,7 +19,6 @@ export class AppController {
 
         res.sendFile(fileName, options);
     }
-
     /*  send file to download
     @Get()
     getFile(@Res({ passthrough: true }) res: Response): StreamableFile {
