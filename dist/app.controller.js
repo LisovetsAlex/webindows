@@ -15,19 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
+const path_1 = require("path");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
     getFile(request, res) {
-        const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-        const fileName = this.appService.extractFileNameFromUrl(fullUrl) || "index.html";
-        const filePath = this.appService.getFilePath(fileName);
-        if (!filePath) {
-            console.warn("NOT found: " + filePath + " | file name: " + fileName);
-            return;
-        }
-        res.sendFile(filePath);
+        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend/" + request.originalUrl;
+        const fullUrl = (0, path_1.join)(process.cwd(), fileName);
+        res.sendFile(fullUrl);
     }
 };
 exports.AppController = AppController;

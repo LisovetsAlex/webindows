@@ -4,13 +4,6 @@ import * as path from "path";
 
 @Injectable()
 export class AppService {
-    getFileExtension(filename: string) {
-        const parts = filename.split(".");
-
-        const extension = parts[parts.length - 1];
-        return extension;
-    }
-
     getFilePath(fileName: string) {
         const projectRootDir = process.cwd();
 
@@ -18,8 +11,7 @@ export class AppService {
 
         if (!filePath) return null;
 
-        const relativePath = path.relative(projectRootDir, filePath);
-        return path.resolve(relativePath);
+        return filePath;
     }
 
     private searchFileInDir(dir: string, fileName: string): string | null {

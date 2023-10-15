@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Res, Req } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { Response, Request } from "express";
+import { join } from "path";
 
 @Controller()
 export class AppController {
@@ -8,15 +9,10 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
-        const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-        const fileName = this.appService.extractFileNameFromUrl(fullUrl) || "index.html";
-        const filePath = this.appService.getFilePath(fileName);
+        const fileName = request.originalUrl === "/" ? "frontend/index.html" : "frontend/" + request.originalUrl;
+        const fullUrl = join(process.cwd(), fileName);
 
-        if (!filePath) {
-            console.warn("NOT found: " + filePath + " | file name: " + fileName);
-            return;
-        }
-        res.sendFile(filePath);
+        res.sendFile(fullUrl);
     }
 
     /*  send file to download

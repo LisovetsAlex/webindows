@@ -11,18 +11,12 @@ const common_1 = require("@nestjs/common");
 const fs = require("fs");
 const path = require("path");
 let AppService = class AppService {
-    getFileExtension(filename) {
-        const parts = filename.split(".");
-        const extension = parts[parts.length - 1];
-        return extension;
-    }
     getFilePath(fileName) {
         const projectRootDir = process.cwd();
         const filePath = this.searchFileInDir(projectRootDir, fileName);
         if (!filePath)
             return null;
-        const relativePath = path.relative(projectRootDir, filePath);
-        return path.resolve(relativePath);
+        return filePath;
     }
     searchFileInDir(dir, fileName) {
         const files = fs.readdirSync(dir);
