@@ -9,9 +9,10 @@ export class AppController {
 
     @Get("/:filepath(*)")
     getFile(@Param() params: any, @Req() request: Request, @Res() res: Response) {
-        const fileName = params.filepath === "" ? "webindows/frontend/index.html" : "webindows/frontend/" + params.filepath;
+        const fileName = params.filepath === "" ? "frontend/index.html" : "frontend/" + params.filepath;
         const fullUrl = this.appService.transformFilePath(join(process.cwd(), fileName));
-        console.log("LOG: " + fullUrl);
+        console.log("LOG: fullUrl: " + fullUrl);
+        console.log("LOG: req: " + request.originalUrl);
         res.sendFile(fullUrl);
     }
 
