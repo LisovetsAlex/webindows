@@ -1,5 +1,6 @@
 import App from "../Apps/AppObj";
 import { drag, drop } from "./WebindowsWindowEvents";
+import { openApp } from "./WebindowsAppManager";
 
 const desktop = document.getElementById("id_desktop");
 
@@ -64,7 +65,8 @@ const webindowsLoadingScreen = function (duration) {
  * @return {void}
  */
 const createWindow = function (app) {
-    let windowElem = document.createElement("div");
+    const windowElem = document.createElement("div");
+    const frame = document.createElement("iframe");
 
     windowElem.setAttribute("id", `${app.name}`);
     windowElem.setAttribute("data-width", `350`);
@@ -72,12 +74,18 @@ const createWindow = function (app) {
     windowElem.style.width = 363;
     windowElem.style.height = 235;
 
+    frame.setAttribute("id", `${app.name}`);
+    frame.setAttribute("src", `${app.html}`);
+    frame.setAttribute("loading", `lazy`);
+    frame.style.width = 358;
+    frame.style.height = 198;
+
     windowElem.append(createWindowHeader(app));
+    windowElem.append(frame);
 
     windowElem.style.position = "absolute";
     windowElem.style.left = window.innerWidth / 2 - 100 + "px";
     windowElem.style.top = window.innerHeight / 2 - 200 + "px";
-    //window.append(frame);
 
     desktop.prepend(windowElem);
 };
