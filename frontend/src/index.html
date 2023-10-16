@@ -1,4 +1,4 @@
-<html lang="en" id="id_windows" onmousemove="Tick(event)" onmouseup="StartDrop()">
+<html lang="en" id="id_windows">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,11 +11,7 @@
     <body id="id_desktop">
         <div id="id_scripts">
             <script type="module" src="../dist/main.js"></script>
-            <script src="Apps/AppObj.js" defer></script>
-            <script src="Apps/Apps.js" defer></script>
-            <script src="WindowHandler.js" defer></script>
-            <script src="WindowsStart.js" defer></script>
-            <script src="WindowsWebJS.js" defer></script>
+            <script type="module" src="WindowsStart.js"></script>
         </div>
 
         <div id="turnOff" class="turnOff"></div>
@@ -30,17 +26,32 @@
 
         <div id="id_taskbar" class="winCl-Taskbar">
             <button id="buttonStart" class="winCl-btn">
-                <img src="Assets/Img_Start.PNG" style="height: 28px; width: 65px" />
+                <img
+                    src="Assets/Img_Start.PNG"
+                    style="height: 28px; width: 65px"
+                />
             </button>
 
             <img src="Assets/Img_Decor_Taskbar_01.PNG" />
 
             <div id="id_pinnedApps" class="winCl-PinnedApps">
-                <button class="winCl-PinnedBtn" onclick="OpenApp(`Order Manager`, 'App_OrderManagerHTML.html')">
-                    <img src="Assets/Img_OrderManager.PNG" style="width: 32px; height: 28px" />
+                <button
+                    class="winCl-PinnedBtn"
+                    onclick="OpenApp(`Order Manager`, 'App_OrderManagerHTML.html')"
+                >
+                    <img
+                        src="Assets/Img_OrderManager.PNG"
+                        style="width: 32px; height: 28px"
+                    />
                 </button>
-                <button class="winCl-PinnedBtn" onclick="OpenApp(`Background Changer`)">
-                    <img src="Assets/Img_Order3.PNG" style="width: 32px; height: 28px" />
+                <button
+                    class="winCl-PinnedBtn"
+                    onclick="OpenApp(`Background Changer`)"
+                >
+                    <img
+                        src="Assets/Img_Order3.PNG"
+                        style="width: 32px; height: 28px"
+                    />
                 </button>
             </div>
 
@@ -48,7 +59,13 @@
 
             <div id="id_minnedApps" class="winCl-MinnedApps"></div>
 
-            <button id="id_clockTaskBar" class="winCl-Input winCl-ClockTaskBar" disabled>12:00</button>
+            <button
+                id="id_clockTaskBar"
+                class="winCl-Input winCl-ClockTaskBar"
+                disabled
+            >
+                12:00
+            </button>
         </div>
     </body>
 </html>

@@ -1,7 +1,0 @@
-{
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "prettier.requireConfig": false,
-        "prettier.printWidth": 150,
-        "prettier.tabWidth": 4
-}

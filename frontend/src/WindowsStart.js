@@ -23,20 +23,41 @@ function StartButton(text, img, func) {
     this.img = img;
 }
 
-function StartHandler() {
+export default function StartHandler() {
     this.startFunctions = new StartFunctions();
     this.buttonGroup = new Array(0);
 
     this.loadButtons = function () {
-        let none;
-        this.buttonGroup.push(new StartButton("Windows Update", "Img_Program.PNG", none));
-        this.buttonGroup.push(new StartButton("Programme", "Img_Program.PNG", none));
-        this.buttonGroup.push(new StartButton("Dokumente", "Img_Order3.PNG", none));
-        this.buttonGroup.push(new StartButton("Einstellungen", "Img_Settings.PNG", none));
-        this.buttonGroup.push(new StartButton("Suchen", "Img_Search.PNG", none));
-        this.buttonGroup.push(new StartButton("Hilfe", "Img_HowBook.PNG", none));
-        this.buttonGroup.push(new StartButton("Ausführen...", "Img_Program.PNG", none));
-        this.buttonGroup.push(new StartButton("Beenden...", "Img_Stop.PNG", this.startFunctions.turnOff));
+        const NO_FUNCTION = undefined;
+
+        this.buttonGroup.push(
+            new StartButton("Windows Update", "Img_Program.PNG", NO_FUNCTION)
+        );
+        this.buttonGroup.push(
+            new StartButton("Programme", "Img_Program.PNG", NO_FUNCTION)
+        );
+        this.buttonGroup.push(
+            new StartButton("Dokumente", "Img_Order3.PNG", NO_FUNCTION)
+        );
+        this.buttonGroup.push(
+            new StartButton("Einstellungen", "Img_Settings.PNG", NO_FUNCTION)
+        );
+        this.buttonGroup.push(
+            new StartButton("Suchen", "Img_Search.PNG", NO_FUNCTION)
+        );
+        this.buttonGroup.push(
+            new StartButton("Hilfe", "Img_HowBook.PNG", NO_FUNCTION)
+        );
+        this.buttonGroup.push(
+            new StartButton("Ausführen...", "Img_Program.PNG", NO_FUNCTION)
+        );
+        this.buttonGroup.push(
+            new StartButton(
+                "Beenden...",
+                "Img_Stop.PNG",
+                this.startFunctions.turnOff
+            )
+        );
 
         this.bindButtons();
     };
@@ -72,12 +93,18 @@ function StartHandler() {
             (e) => {
                 let start = document.getElementById("windowStart");
 
-                if (start.style.display === "block" && !document.getElementById("windowStart").contains(e.target)) {
+                if (
+                    start.style.display === "block" &&
+                    !document.getElementById("windowStart").contains(e.target)
+                ) {
                     start.style.display = "none";
                     return;
                 }
 
-                if (document.getElementById("windowStart").contains(e.target) || document.getElementById("buttonStart").contains(e.target)) {
+                if (
+                    document.getElementById("windowStart").contains(e.target) ||
+                    document.getElementById("buttonStart").contains(e.target)
+                ) {
                     start.style.display = "block";
                     return;
                 } else {

@@ -1,3 +1,3 @@
-import { get } from "./Apps/test.js";
+import webindowsInit from "./WebWindows/WebindowsInit.js";
 
-get();
+webindowsInit();

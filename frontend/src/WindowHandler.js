@@ -1,9 +1,12 @@
-"use strict";
+import getAllApps from "./Apps/Apps";
+import WindowCreator from "./WebWindows/WindowCreator";
+import { Tick, StartDrop } from "./WindowsInterface";
 
-function WindowHandler() {
+export default function WindowHandler() {
     this.date = new Date();
+    this.windowCreator = new WindowCreator();
 
-    this.allApps = arrApps;
+    this.allApps = getAllApps();
     this.openApps = new Array(0);
     this.x = 0;
     this.y = 0;
@@ -17,28 +20,27 @@ function WindowHandler() {
         screen.style.display = "block";
         setTimeout(function () {
             screen.style.display = "none";
+            const elem = document.documentElement;
         }, 10);
 
-        let shortCut = document.createElement("div");
-        shortCut.setAttribute("id", "id_shortcuts");
         for (let i = 0; i < this.allApps.length; i++) {
-            shortCut.innerHTML += `<button id="${this.allApps[i].name}sc" class="winCl-ShortcutBtn winCl-Grabber" data-width="75" ondblclick="OpenApp('${this.allApps[i].name}', '${this.allApps[i].html}')" onmousedown="StartDrag('${this.allApps[i].name}sc')">
-                <img src="Assets/${this.allApps[i].img}" loading="lazy">
-                ${this.allApps[i].name}
-            </button>`;
+            this.windowCreator.createShortCut(this.allApps[i]);
         }
-        let desk = document.getElementById("id_desktop");
-        desk.append(shortCut);
+
+        this.bindButtons();
     };
 
     this.UpdateTime = function () {
         let clock = document.getElementById("id_clockTaskBar");
-        clock.innerHTML = String(this.date.getHours()) + ":" + String(this.date.getMinutes());
+        clock.innerHTML =
+            String(this.date.getHours()) + ":" + String(this.date.getMinutes());
     };
 
     this.TickMouse = function (event) {
-        if (event.clientX <= window.innerWidth && event.clientX >= 20) this.x = event.clientX;
-        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10) this.y = event.clientY;
+        if (event.clientX <= window.innerWidth && event.clientX >= 20)
+            this.x = event.clientX;
+        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10)
+            this.y = event.clientY;
 
         if (!this.isDragging) {
             const iframes = document.getElementsByTagName("iframe");
@@ -54,21 +56,24 @@ function WindowHandler() {
         }
 
         this.selectedObj.style.position = "absolute";
-        this.selectedObj.style.left = Number(this.x - Number(this.selectedObj.dataset.width) / 2) + "px";
+        this.selectedObj.style.left =
+            Number(this.x - Number(this.selectedObj.dataset.width) / 2) + "px";
         this.selectedObj.style.top = this.y - 10 + "px";
     };
 
     this.Drag = function (id) {
         this.SetSelectedObj(id);
         for (let i = 0; i < this.openApps.length; i++) {
-            if (this.openApps[i].name == id && this.openApps[i].isFullScreen) this.ExpandWindow(id);
+            if (this.openApps[i].name == id && this.openApps[i].isFullScreen)
+                this.ExpandWindow(id);
         }
 
         let arr = document.getElementsByClassName("winCl-BasicWindow");
         for (let i = 0; i < arr.length; i++) {
             arr[i].style["z-index"] = 1;
         }
-        if (!this.selectedObj.classList.contains("winCl-ShortcutBtn")) this.selectedObj.style["z-index"] = 2;
+        if (!this.selectedObj.classList.contains("winCl-ShortcutBtn"))
+            this.selectedObj.style["z-index"] = 2;
 
         this.isDragging = true;
     };
@@ -109,7 +114,9 @@ function WindowHandler() {
         htmlElem.style.width = 363;
         htmlElem.style.height = 235;
         htmlElem.innerHTML = `
-        <div class="winCl-WindowHeader winCl-Grabber" onmousedown="StartDrag('${name}')" onmouseup="StartDrop()">
+        <div class="winCl-WindowHeader winCl-Grabber" onmousedown="(e)=>${StartDrag(
+            name
+        )}" onmouseup="(e)=>${StartDrop()}">
             ${name}
             <button class="winCl-BtnHeader winCl-CloseIcon" onclick="CloseApp('${name}')">
             </button>

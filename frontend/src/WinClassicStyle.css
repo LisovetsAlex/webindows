@@ -160,6 +160,14 @@ body {
     border-bottom: 1px solid transparent;
 }
 
+.winCl-ShortcutImg {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+}
+
 .winCl-ShortcutBtn:hover {
     border-right: 1px dotted #303030;
     border-bottom: 1px dotted #303030;
