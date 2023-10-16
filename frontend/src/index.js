@@ -1,3 +1,3 @@
-import webindowsInit from "./WebWindows/WebindowsInit.js";
+import { sys } from "./WebWindows/System";
 
-webindowsInit();
+sys.init();
