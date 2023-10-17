@@ -24,21 +24,10 @@ let AppController = class AppController {
     getFile(request, res) {
         if (request.originalUrl.includes("favicon.ico"))
             return;
-        let url = "";
-        if (!request.originalUrl.includes("dist"))
-            url = "./frontend/src";
-        if (request.originalUrl.includes("dist"))
-            url = "./frontend";
-        if (request.originalUrl.includes("WebWindows"))
-            url = "./frontend/src/";
         const options = {
-            root: path.join(__dirname, "..", url),
+            root: path.join(__dirname, "..", !request.originalUrl.includes("dist") ? "./frontend/src" : "./frontend"),
         };
-        let filePath = request.originalUrl;
-        if (request.originalUrl.includes("WebWindows"))
-            filePath = request.originalUrl += ".js";
-        if (request.originalUrl === "/")
-            filePath = "/index.html";
+        const filePath = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
         res.sendFile(filePath, options);
     }
 };

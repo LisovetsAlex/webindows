@@ -25,13 +25,6 @@ function System() {
         for (let i = 0; i < this.apper.allApps.length; i++) {
             this.draw.createShortcut(this.apper.allApps[i]);
         }
-
-        this.requester.sendRequest(
-            "http://localhost:8080/demo-1.0-SNAPSHOT/api/products",
-            (res) => {
-                console.log(res);
-            }
-        );
     };
 
     this.initClock = function () {
@@ -43,8 +36,7 @@ function System() {
     this.tickTime = function () {
         let date = new Date();
         let clock = document.getElementById("id_clockTaskBar");
-        clock.innerHTML =
-            String(date.getHours()) + ":" + String(date.getMinutes());
+        clock.innerHTML = String(date.getHours()) + ":" + String(date.getMinutes());
     };
 
     this.setSelectedWindow = function (id) {
@@ -79,10 +71,8 @@ function System() {
     this.moveWindow = function (event) {
         if (!this.isDragging) return;
 
-        if (event.clientX <= window.innerWidth && event.clientX >= 20)
-            this.mouseX = event.clientX;
-        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10)
-            this.mouseY = event.clientY;
+        if (event.clientX <= window.innerWidth && event.clientX >= 20) this.mouseX = event.clientX;
+        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10) this.mouseY = event.clientY;
 
         this.draw.moveWindow(this.mouseX, this.mouseY, this.selectedWindow);
 
