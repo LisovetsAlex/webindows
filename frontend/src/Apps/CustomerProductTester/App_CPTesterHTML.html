@@ -1,0 +1,35 @@
+<div>
+    <script src="../Util_Drawer.js" defer></script>
+    <script src="./App_CPTesterJS.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="../../WinClassicStyle.css" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+</div>
+
+<body>
+    <div class="winCl-BasicWindow window" id="window">
+        <div class="table">
+            <div class="left">
+                <div class="btnGroup">
+                    <button
+                        id="sortText"
+                        class="winCl-Btn"
+                        onclick="requestAllProducts()"
+                    >
+                        Request All Products
+                    </button>
+
+                    <button
+                        id="sortText"
+                        class="winCl-Btn"
+                        onclick="createProduct()"
+                    >
+                        Create New Product
+                    </button>
+                </div>
+            </div>
+            <div class="right">
+                <p id="id_Shower" class="shower"></p>
+            </div>
+        </div>
+    </div>
+</body>
