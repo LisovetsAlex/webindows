@@ -60,4 +60,12 @@ export default function Apper() {
         }
         return false;
     };
+
+    this.deleteApp = function (name) {
+        for (let i = 0; i < this.allApps.length; i++) {
+            if (this.allApps[i].name == name) {
+                this.allApps.splice(i, 1);
+            }
+        }
+    }
 }
