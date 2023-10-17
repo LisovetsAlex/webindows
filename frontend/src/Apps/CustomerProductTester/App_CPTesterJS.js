@@ -52,10 +52,6 @@ function createProduct() {
         ["Name:", "Price:"],
         ["name", "price"],
         "submit",
-        "form",
-        "winCl-Input",
-        "",
-        "winCl-Btn",
         () => addProduct()
     );
 
