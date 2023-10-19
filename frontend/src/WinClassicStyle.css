@@ -117,6 +117,14 @@ option {
     user-select: all;
 }
 
+.winCl-BtnGroup {
+    display: flex;
+    margin-top: auto;
+    flex-direction: column;
+    align-items: center;
+    height: 190px;
+}
+
 .winCl-Input {
     cursor: text;
     color: black;
@@ -146,6 +154,17 @@ option {
     border-right: 2px solid #848484;
     border-bottom: 2px solid #848484;
     background-color: rgb(201, 201, 201);
+    padding: 3px 1px 3px 1px;
+    width: 100px;
+    margin: 3px;
+}
+.winCl-Btn:disabled {
+    cursor: default;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #848484;
+    border-top: 2px solid #848484;
+    background-color: rgb(204, 204, 204);
     padding: 3px 1px 3px 1px;
     width: 100px;
     margin: 3px;

@@ -12,12 +12,26 @@ function Button(btnid, text, func) {
     this.f = func;
 }
 
+function SelectList(id, options, size, width, height) {
+    this.id = id;
+    this.options = options;
+    this.size = size;
+    this.width = width;
+    this.height = height;
+}
+
+function SelectOption(id, text, value) {
+    this.id = id;
+    this.text = text;
+    this.value = value;
+}
+
 function Drawer() {
     this.createForm = function (form) {
         const formElem = document.createElement("form");
         const labelsElems = new Array();
         const inputElems = new Array();
-        const btnElem = document.createElement("button");
+        const btnElem = this.createButton(form.btn);
 
         formElem.setAttribute("id", form.formid);
         formElem.classList = "winCl-Form";
@@ -48,12 +62,6 @@ function Drawer() {
 
             formElem.append(field);
         }
-
-        btnElem.innerHTML = "Submit";
-        btnElem.setAttribute("id", form.btnId);
-        btnElem.classList = "winCl-Btn";
-        btnElem.onclick = form.submit;
-        btnElem.setAttribute("type", "button");
 
         formElem.append(btnElem);
 
@@ -91,5 +99,52 @@ function Drawer() {
         });
 
         return ulElem;
+    };
+
+    this.createSelectList = function (selectList) {
+        const selectElem = document.createElement("select");
+
+        selectElem.classList = "winCl-Selector";
+        selectElem.setAttribute("id", selectList.id);
+        selectElem.setAttribute("size", selectList.size);
+        selectElem.style.width = selectList.width;
+        selectElem.style.height = selectList.height;
+
+        selectList.options.forEach((element) => {
+            const option = document.createElement("option");
+            option.setAttribute("id", element.id);
+            option.setAttribute("value", element.value);
+            option.classList = "winCl-Option";
+            option.innerHTML = element.text;
+            selectElem.append(option);
+        });
+
+        return selectElem;
+    };
+
+    this.createButtonList = function (id, btnList, width, height) {
+        const group = document.createElement("div");
+
+        group.classList = "winCl-BtnGroup";
+        group.style.width = width;
+        group.style.height = height;
+        group.setAttribute("id", id);
+
+        btnList.forEach((element) => {
+            const btn = document.createElement("button");
+            btn.setAttribute("id", element.id);
+            btn.innerHTML = element.text;
+            btn.classList = "winCl-Btn";
+            btn.onclick = () => {
+                element.f();
+                group.childNodes.forEach((element) => {
+                    element.disabled = false;
+                });
+                btn.disabled = true;
+            };
+            group.append(btn);
+        });
+
+        return group;
     };
 }

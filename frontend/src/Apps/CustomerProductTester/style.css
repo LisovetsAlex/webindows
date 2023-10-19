@@ -11,18 +11,6 @@
     flex-direction: row;
 }
 
-.btnGroup {
-    display: flex;
-    margin-top: auto;
-    flex-direction: column;
-    align-items: center;
-
-    border: 5px;
-    border-right: 2px outset;
-    border-color: rgb(216, 216, 216);
-    height: 190px;
-}
-
 .left {
     width: 35%;
 }

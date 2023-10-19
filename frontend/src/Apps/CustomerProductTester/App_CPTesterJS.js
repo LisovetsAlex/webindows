@@ -1,3 +1,14 @@
+const baseurl = "http://localhost:8080/demo-1.0-SNAPSHOT/api/products";
+
+const draw = new Drawer();
+const grp = document.getElementById("left");
+const buttons = new Array();
+buttons.push(new Button("Request", "Request", requestAllProducts));
+buttons.push(new Button("Add", "Add", createProduct));
+buttons.push(new Button("Edit", "Edit", undefined));
+buttons.push(new Button("Remove", "Remove", undefined));
+grp.append(draw.createButtonList("btnGroup", buttons, "100%", "100%"));
+
 const sendRequest = function (url, callback) {
     fetch(url)
         .then(function (response) {
@@ -15,29 +26,36 @@ const sendRequest = function (url, callback) {
 };
 
 function requestAllProducts() {
-    sendRequest(
-        "http://localhost:8080/demo-1.0-SNAPSHOT/api/products",
-        (res) => {
-            const window = document.getElementById("id_Shower");
-            window.childNodes.forEach((element) => {
-                element.remove();
-            });
-            const draw = new Drawer();
-            console.log(JSON.parse(res).list[0].name);
-            window.append(draw.createList(JSON.parse(res).list));
+    sendRequest(`${baseurl}`, (res) => {
+        const window = document.getElementById("id_Shower");
+        window.childNodes.forEach((element) => {
+            element.remove();
+        });
+
+        const resList = JSON.parse(res).list;
+        const draw = new Drawer();
+        const options = new Array();
+
+        for (let i = 0; i < JSON.parse(res).list.length; i++) {
+            const option = new SelectOption(
+                resList[i].name,
+                `${resList[i].name}: ${resList[i].value}`,
+                resList[i].value
+            );
+            options.push(option);
         }
-    );
+
+        const list = new SelectList("list", options, 10, "100%", "150px");
+        window.append(draw.createSelectList(list));
+    });
 }
 function addProduct() {
     const name = document.getElementById("name").value;
     const price = document.getElementById("price").value;
 
-    sendRequest(
-        `http://localhost:8080/demo-1.0-SNAPSHOT/api/products/add?name=${name}&price=${price}`,
-        (res) => {
-            document.getElementById("id_Shower").innerHTML = res;
-        }
-    );
+    sendRequest(`${baseurl}/add?name=${name}&price=${price}`, (res) => {
+        document.getElementById("id_Shower").innerHTML = res;
+    });
 }
 
 function createProduct() {
@@ -51,8 +69,7 @@ function createProduct() {
         "form",
         ["Name:", "Price:"],
         ["name", "price"],
-        "submit",
-        () => addProduct()
+        new Button("Add", "add", addProduct)
     );
 
     window.append(draw.createForm(form));
