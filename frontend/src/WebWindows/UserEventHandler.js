@@ -4,6 +4,8 @@ function UEH() {
     this.initWindowEvents = function (buttonGroup) {
         let html = document.getElementById("id_windows");
 
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        
         html.addEventListener("mousemove", (e) => {
             this.mouseMove(e);
         });

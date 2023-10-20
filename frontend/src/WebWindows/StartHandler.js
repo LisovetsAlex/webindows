@@ -1,5 +1,6 @@
 import { ueh } from "./UserEventHandler";
 
+
 function StartButton(text, img, func) {
     this.text = text;
     this.func = func;
