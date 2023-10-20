@@ -1,21 +1,22 @@
 
 ## Installation
 
+In root folder
 ```bash
 $ npm install
 ```
 
+In webindows/frontend to build FE after changes in /WebWindows
+```bash
+$ npx webpack
+```
+
 ## Running the app
 
+In root folder
 ```bash
-# development
-$ npm run start
-
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
 ## License NEST.JS
