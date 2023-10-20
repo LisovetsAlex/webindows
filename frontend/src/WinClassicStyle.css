@@ -176,6 +176,7 @@ option {
     border-bottom: 2px solid #848484;
     background-color: rgb(201, 201, 201);
     padding: 3px 1px 3px 1px;
+    width: 100px;
     margin: 3px;
 }
 .winCl-Btn:disabled {
