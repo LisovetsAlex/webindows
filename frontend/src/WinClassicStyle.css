@@ -384,12 +384,12 @@ option {
 
 .textStart {
     transform: rotate(-90deg);
-    z-index: 2;
+    z-index: 999;
     position: absolute;
     width: max-content;
-    left: -134;
-    bottom: 144;
-    margin-left: -15px;
+    left: -125;
+    bottom: 130;
+    margin-left: 0;
 }
 
 .winStartBtn {
