@@ -1,3 +1,4 @@
+
 :root {
     
     --dark-blue0: rgb(2, 0, 36);
@@ -11,7 +12,7 @@
 
 }
 
-.noDrag, img {
+img {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
@@ -19,10 +20,15 @@
     -webkit-user-drag: none;
 }
 
+@font-face {
+    font-family: "Windows2000";
+    src: url("./Assets/W95FA.otf");
+}
+
 body {
     background-color: #0d8cbe;
     padding: 10px;
-    font-family: "Tahoma";
+    font-family: "Windows2000";
     margin: 0px;
     padding: 0px;
     width: 100%;
@@ -36,6 +42,22 @@ body {
     user-select: none; /* Standard syntax */
 }
 
+p,
+text,
+button,
+input,
+option {
+    font-family: "Windows2000";
+    outline: none;
+}
+
+.winCl-Field {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+}
+
 .winCl-WindowHeader {
     padding-top: 3px;
     margin-bottom: 9px;
@@ -43,7 +65,6 @@ body {
     height: 20px;
     color: var(--white);
     padding-left: 5px;
-    font-weight: bold;
     background: rgb(2, 0, 36);
     background: linear-gradient(
         90deg,
@@ -55,6 +76,7 @@ body {
 }
 
 .winCl-Text {
+    font-family: "Windows2000";
     font-size: small;
 }
 
@@ -83,9 +105,7 @@ body {
     z-index: 3;
     display: flex;
     flex-direction: row;
-    border-top: 3px solid rgb(255, 255, 255);
-    padding-top: 3px;
-    padding-bottom: 3px;
+    border-top: 3px solid rgb(225, 225, 225);
     width: 100%;
     position: absolute;
     bottom: 0px;
@@ -118,6 +138,14 @@ body {
     user-select: all;
 }
 
+.winCl-BtnGroup {
+    display: flex;
+    margin-top: auto;
+    flex-direction: column;
+    align-items: center;
+    height: 190px;
+}
+
 .winCl-Input {
     cursor: text;
     color: black;
@@ -128,6 +156,16 @@ body {
     background-color: var(--white);
     width: 75px;
     user-select: all;
+    margin-left: auto;
+    margin-block: 3px;
+}
+
+.winCl-Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 
 .winCl-Btn {
@@ -139,6 +177,21 @@ body {
     background-color: rgb(201, 201, 201);
     padding: 3px 1px 3px 1px;
     margin: 3px;
+}
+.winCl-Btn:disabled {
+    cursor: default;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #848484;
+    border-top: 2px solid #848484;
+    background-color: rgb(204, 204, 204);
+    padding: 3px 1px 3px 1px;
+    width: 100px;
+    margin: 3px;
+}
+
+.winCl-Label {
+    padding-right: 8px;
 }
 
 .winCl-PinnedApps {
@@ -174,6 +227,13 @@ body {
     margin: 5px;
     background-color: transparent;
     border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.winCl-List {
 }
 
 .winCl-ShortcutImg {

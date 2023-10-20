@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <div>
     <script src="App_CallbackSorterJS.js" defer></script>
     <link rel="stylesheet" type="text/css" href="../WinClassicStyle.css" />
@@ -5,7 +6,16 @@
 
 <body>
     <div class="winCl-BasicWindow">
-        <ul id="id_list" class="winCl-Selector" style="padding-left: 22px; margin-left: 32%; margin-top: 15px; overflow-y: scroll">
+        <ul
+            id="id_list"
+            class="winCl-Selector"
+            style="
+                padding-left: 22px;
+                margin-left: 32%;
+                margin-top: 15px;
+                overflow-y: scroll;
+            "
+        >
             <li value="6">one</li>
             <li value="5">Two</li>
             <li value="4">three</li>
@@ -14,9 +24,23 @@
         </ul>
 
         <div style="margin-left: 33%; width: 35%">
-            <button id="sortText" class="winCl-Btn" onclick="sortBy(false)" style="width: 95%">Sort By Text</button>
+            <button
+                id="sortText"
+                class="winCl-Btn"
+                onclick="sortBy(false)"
+                style="width: 95%"
+            >
+                Sort By Text
+            </button>
             <br />
-            <button id="sortValue" class="winCl-Btn" onclick="sortBy(true)" style="width: 95%">Sort By Value</button>
+            <button
+                id="sortValue"
+                class="winCl-Btn"
+                onclick="sortBy(true)"
+                style="width: 95%"
+            >
+                Sort By Value
+            </button>
             <br />
         </div>
     </div>

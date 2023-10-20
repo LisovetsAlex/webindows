@@ -1,9 +1,11 @@
 import Draw from "./Draw";
 import Apper from "./Apper";
+import { Requester } from "./Requester";
 import { ueh } from "./UserEventHandler";
 import { StartHandler } from "./StartHandler";
 
 function System() {
+    this.requester = new Requester();
     this.draw = new Draw();
     this.apper = new Apper();
     this.starter = new StartHandler();

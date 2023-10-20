@@ -1,4 +1,10 @@
-import App from "../Apps/AppObj";
+function App(name, html, icon) {
+    this.name = name;
+    this.isFullScreen = false;
+    this.isMinimized = false;
+    this.html = html;
+    this.img = icon;
+}
 
 export default function Apper() {
     this.allApps = new Array();
@@ -8,10 +14,25 @@ export default function Apper() {
         let arrApps = new Array(0);
         let obj = {};
 
-        obj = new App("Order Manager", `Apps/App_OrderManagerHTML.html`, "ImgTrans_OrderManager.png");
+        obj = new App(
+            "Order Manager",
+            `Apps/App_OrderManagerHTML.html`,
+            "ImgTrans_OrderManager.png"
+        );
         arrApps.push(obj);
 
-        obj = new App("Callback Sorter", `Apps/App_CallbackSorterHTML.html`, "Img_Program.PNG");
+        obj = new App(
+            "Callback Sorter",
+            `Apps/App_CallbackSorterHTML.html`,
+            "Img_Program.PNG"
+        );
+        arrApps.push(obj);
+
+        obj = new App(
+            "POS Aufgabe",
+            `Apps/CustomerProductTester/App_CPTesterHTML.html`,
+            "Img_Program.PNG"
+        );
         arrApps.push(obj);
 
         this.allApps = arrApps;
