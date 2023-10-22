@@ -12,6 +12,7 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const throttler_1 = require("@nestjs/throttler");
 const core_1 = require("@nestjs/core");
+const upload_controller_1 = require("./upload.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -25,7 +26,7 @@ exports.AppModule = AppModule = __decorate([
                 },
             ]),
         ],
-        controllers: [app_controller_1.AppController],
+        controllers: [app_controller_1.AppController, upload_controller_1.UploadController],
         providers: [
             app_service_1.AppService,
             {

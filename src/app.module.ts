@@ -3,6 +3,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { APP_GUARD } from "@nestjs/core";
+import { UploadController } from "./upload.controller";
 
 @Module({
     imports: [
@@ -13,7 +14,7 @@ import { APP_GUARD } from "@nestjs/core";
             },
         ]),
     ],
-    controllers: [AppController],
+    controllers: [AppController, UploadController],
     providers: [
         AppService,
         {

@@ -12,38 +12,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.UploadController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 const path = require("path");
 const fs = require("fs");
-let AppController = class AppController {
+let UploadController = class UploadController {
     constructor(appService) {
         this.appService = appService;
     }
     getFile(request, res) {
-        if (request.originalUrl.includes("favicon.ico"))
-            return;
-        const options = {
-            root: path.join(__dirname, "..", !request.originalUrl.includes("dist")
-                ? "./frontend/src"
-                : "./frontend"),
-        };
-        const filePath = request.originalUrl === "/" ? "/index.html" : request.originalUrl;
-        res.sendFile(filePath, options);
+        console.log(request);
     }
 };
-exports.AppController = AppController;
+exports.UploadController = UploadController;
 __decorate([
-    (0, common_1.Get)("/:filepath(*)"),
+    (0, common_1.Post)("app/:filepath(*)"),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
-], AppController.prototype, "getFile", null);
-exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(),
+], UploadController.prototype, "getFile", null);
+exports.UploadController = UploadController = __decorate([
+    (0, common_1.Controller)("upload"),
     __metadata("design:paramtypes", [app_service_1.AppService])
-], AppController);
-//# sourceMappingURL=app.controller.js.map
+], UploadController);
+//# sourceMappingURL=upload.controller.js.map

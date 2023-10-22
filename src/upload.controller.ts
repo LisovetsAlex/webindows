@@ -4,28 +4,13 @@ import { Response, Request } from "express";
 const path = require("path");
 const fs = require("fs");
 
-@Controller()
-export class AppController {
+@Controller("upload")
+export class UploadController {
     constructor(private readonly appService: AppService) {}
 
-    @Get("/:filepath(*)")
+    @Post("app/:filepath(*)")
     getFile(@Req() request: Request, @Res() res: Response) {
-        if (request.originalUrl.includes("favicon.ico")) return;
-
-        const options = {
-            root: path.join(
-                __dirname,
-                "..",
-                !request.originalUrl.includes("dist")
-                    ? "./frontend/src"
-                    : "./frontend"
-            ),
-        };
-
-        const filePath =
-            request.originalUrl === "/" ? "/index.html" : request.originalUrl;
-
-        res.sendFile(filePath, options);
+        console.log(request);
     }
     /*  send file to download
     @Get()

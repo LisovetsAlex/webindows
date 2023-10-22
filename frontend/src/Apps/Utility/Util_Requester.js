@@ -1,13 +1,17 @@
 /**
- * Sends a request to the specified URL and invokes the callback function with the response data.
+ * Sends a request to the specified URL and invokes the provided callback function with the response data.
  *
  * @param {string} url - The URL to send the request to.
  * @param {function} callback - The callback function to invoke with the response data.
- * @throws {Error} If the network response is not ok.
- * @return {void}
+ * @param {RequestInit} fetchOptions - The options to pass to the fetch function.
+ * @return {void} This function does not return a value.
  */
-const sendRequest = function (url, callback) {
-    fetch(url)
+const sendRequest = function (url, callback, fetchOptions) {
+    fetch(url, {
+        method: fetchOptions.method,
+        body: fetchOptions.body,
+        ...fetchOptions,
+    })
         .then(function (response) {
             if (!response.ok) {
                 throw new Error("Network response was not ok");

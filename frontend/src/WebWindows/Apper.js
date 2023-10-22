@@ -35,6 +35,13 @@ export default function Apper() {
         );
         arrApps.push(obj);
 
+        obj = new App(
+            "App Uploader",
+            `Apps/AppUploader/ui.html`,
+            "Img_Program.PNG"
+        );
+        arrApps.push(obj);
+
         this.allApps = arrApps;
     };
 
