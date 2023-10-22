@@ -1,7 +1,6 @@
 import Draw from "./Draw";
 import Apper from "./Apper";
 import { Requester } from "./Requester";
-import { ueh } from "./UserEventHandler";
 import { StartHandler } from "./StartHandler";
 
 function System() {
@@ -19,7 +18,7 @@ function System() {
         this.starter.initStartButtons();
         this.draw.webindowsLoadingScreen(100);
         this.apper.initAllApps();
-        ueh.initWindowEvents(this.starter.buttonGroup);
+        this.initWindowEvents();
 
         this.initClock();
         for (let i = 0; i < this.apper.allApps.length; i++) {
@@ -33,10 +32,26 @@ function System() {
         }, 1000);
     };
 
+    this.initWindowEvents = function () {
+        let html = document.getElementById("id_windows");
+
+        html.addEventListener("mousemove", (e) => {
+            this.moveWindow(e);
+        });
+        window.addEventListener("mouseup", (e) => {
+            this.drag(undefined);
+        });
+        window.addEventListener("mouseout", (event) => {
+            if (event.relatedTarget != null) return;
+            this.drag(undefined);
+        });
+    };
+
     this.tickTime = function () {
         let date = new Date();
         let clock = document.getElementById("id_clockTaskBar");
-        clock.innerHTML = String(date.getHours()) + ":" + String(date.getMinutes());
+        clock.innerHTML =
+            String(date.getHours()) + ":" + String(date.getMinutes());
     };
 
     this.setSelectedWindow = function (id) {
@@ -71,8 +86,10 @@ function System() {
     this.moveWindow = function (event) {
         if (!this.isDragging) return;
 
-        if (event.clientX <= window.innerWidth && event.clientX >= 20) this.mouseX = event.clientX;
-        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10) this.mouseY = event.clientY;
+        if (event.clientX <= window.innerWidth && event.clientX >= 20)
+            this.mouseX = event.clientX;
+        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10)
+            this.mouseY = event.clientY;
 
         this.draw.moveWindow(this.mouseX, this.mouseY, this.selectedWindow);
 

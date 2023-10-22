@@ -1,47 +1,6 @@
 import { sys } from "./System";
 
 function UEH() {
-    this.initWindowEvents = function (buttonGroup) {
-        let html = document.getElementById("id_windows");
-
-        html.addEventListener("mousemove", (e) => {
-            this.mouseMove(e);
-        });
-        window.addEventListener("mouseup", (e) => {
-            sys.drop();
-        });
-        window.addEventListener("mouseout", function (event) {
-            if (event.relatedTarget != null) return;
-            sys.drop();
-        });
-        this.bindStartButtons(buttonGroup);
-    };
-
-    this.bindStartButtons = function (buttonGroup) {
-        let group = document.getElementById("buttonGroup");
-
-        for (let i = 0; i < buttonGroup.length; i++) {
-            let button = document.createElement("button");
-
-            button.className = "winStartBtn";
-
-            button.onclick = () => {
-                buttonGroup[i].func();
-            };
-
-            button.innerHTML = `
-            <div style="display: inline-block; margin-top: -14px;">
-                <img alt="alt" src="Assets/${buttonGroup[i].img}" width="40" height="40">
-            </div>
-            <div style="padding-left:50px; margin-top:-26px;">
-                ${buttonGroup[i].text}
-            </div>
-            `;
-
-            group.append(button);
-        }
-    };
-
     this.drag = function (name) {
         sys.drag(name);
     };

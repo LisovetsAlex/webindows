@@ -151,10 +151,13 @@ export default function Draw() {
         for (let i = 0; i < arr.length; i++) {
             arr[i].style["z-index"] = 1;
         }
-        if (!window.classList.contains("winCl-ShortcutBtn")) window.style["z-index"] = 2;
+        if (!window.classList.contains("winCl-ShortcutBtn"))
+            window.style["z-index"] = 2;
     };
 
     this.moveWindow = function (x, y, window) {
+        if (window == undefined) return;
+
         window.style.position = "absolute";
         window.style.left = Number(x - Number(window.dataset.width) / 2) + "px";
         window.style.top = y - 10 + "px";

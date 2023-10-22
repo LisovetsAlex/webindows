@@ -1,6 +1,4 @@
-
 :root {
-    
     --dark-blue0: rgb(2, 0, 36);
     --dark-blue5: rgb(8, 8, 111);
     --dark-blue23: rgb(9, 9, 121);
@@ -10,6 +8,7 @@
 
     --white: #fff;
 
+    --font: "Monaco";
 }
 
 img {
@@ -19,16 +18,10 @@ img {
     -moz-user-select: none;
     -webkit-user-drag: none;
 }
-
-@font-face {
-    font-family: "Windows2000";
-    src: url("./Assets/W95FA.otf");
-}
-
 body {
+    font-family: var(--font);
     background-color: #0d8cbe;
     padding: 10px;
-    font-family: "Windows2000";
     margin: 0px;
     padding: 0px;
     width: 100%;
@@ -47,7 +40,7 @@ text,
 button,
 input,
 option {
-    font-family: "Windows2000";
+    font-family: var(--font);
     outline: none;
 }
 
@@ -76,7 +69,7 @@ option {
 }
 
 .winCl-Text {
-    font-family: "Windows2000";
+    font-family: var(--font);
     font-size: small;
 }
 
