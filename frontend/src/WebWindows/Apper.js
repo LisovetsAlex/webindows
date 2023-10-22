@@ -16,21 +16,21 @@ export default function Apper() {
 
         obj = new App(
             "Order Manager",
-            `Apps/App_OrderManagerHTML.html`,
+            `Apps/OrderManager/ui.html`,
             "ImgTrans_OrderManager.png"
         );
         arrApps.push(obj);
 
         obj = new App(
             "Callback Sorter",
-            `Apps/App_CallbackSorterHTML.html`,
+            `Apps/CallbackSorter/ui.html`,
             "Img_Program.PNG"
         );
         arrApps.push(obj);
 
         obj = new App(
             "POS Aufgabe",
-            `Apps/CustomerProductTester/App_CPTesterHTML.html`,
+            `Apps/CustomerProductTester/ui.html`,
             "Img_Program.PNG"
         );
         arrApps.push(obj);
@@ -88,5 +88,5 @@ export default function Apper() {
                 this.allApps.splice(i, 1);
             }
         }
-    }
+    };
 }
