@@ -46,7 +46,7 @@ function StartHandler() {
             "click",
             (e) => {
                 let start = document.getElementById("windowStart");
-
+                console.log("test");
                 if (
                     start.style.display === "block" &&
                     !document.getElementById("windowStart").contains(e.target)
