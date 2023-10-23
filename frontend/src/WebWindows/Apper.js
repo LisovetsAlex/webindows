@@ -65,6 +65,7 @@ export default function Apper() {
         }
     };
 
+
     this.appShown = function (name) {
         for (let i = 0; i < this.openedApps.length; i++) {
             if (this.openedApps[i].name == name) {

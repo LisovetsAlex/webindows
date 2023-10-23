@@ -373,6 +373,7 @@ option {
         rgba(9, 9, 121, 1) 23%,
         rgba(0, 106, 255, 1) 100%
     );
+
     width: 40px;
     position: absolute;
     bottom: 1px;
@@ -452,3 +453,5 @@ option {
     top: 0;
     left: 0;
 }
+
+

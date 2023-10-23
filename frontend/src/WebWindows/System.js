@@ -16,6 +16,7 @@ function System() {
     this.isDragging = false;
 
     this.init = function () {
+
         this.starter.initStartButtons();
         this.draw.webindowsLoadingScreen(100);
         this.apper.initAllApps();

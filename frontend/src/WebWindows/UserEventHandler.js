@@ -7,15 +7,19 @@ function UEH() {
         document.addEventListener('contextmenu', event => event.preventDefault());
         
         html.addEventListener("mousemove", (e) => {
+            
             this.mouseMove(e);
         });
+
         window.addEventListener("mouseup", (e) => {
             sys.drop();
         });
+
         window.addEventListener("mouseout", function (event) {
             if (event.relatedTarget != null) return;
             sys.drop();
         });
+
         this.bindStartButtons(buttonGroup);
     };
 
@@ -39,6 +43,12 @@ function UEH() {
                 ${buttonGroup[i].text}
             </div>
             `;
+
+            button.addEventListener("mouseOver", (e) => {
+                if(buttonGroup[i].hasSubFolder) {
+                    console.warn("has subfolder");
+                } 
+            });
 
             group.append(button);
         }
