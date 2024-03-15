@@ -20,8 +20,6 @@ function System() {
         this.apper.initAllApps();
         this.initWindowEvents();
 
-        console.log("init");
-
         this.initClock();
         for (let i = 0; i < this.apper.allApps.length; i++) {
             this.draw.createShortcut(this.apper.allApps[i]);
