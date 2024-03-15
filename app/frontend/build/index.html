@@ -1,0 +1,70 @@
+<html lang="en" id="id_windows">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>Windows Web</title>
+
+        <link rel="stylesheet" type="text/css" href="index.css" />
+    </head>
+
+    <body id="id_desktop">
+        <div id="id_scripts">
+            <script src="bundle.js" defer></script>
+        </div>
+
+        <div id="turnOff" class="turnOff"></div>
+
+        <div id="windowStart" class="windowStart">
+            <div class="imageStart">
+                <h2 class="textStart">Windows 2000 Professional</h2>
+            </div>
+
+            <div id="buttonGroup" class="startBtnGroup"></div>
+        </div>
+
+        <div id="id_taskbar" class="winCl-Taskbar">
+            <button id="buttonStart" class="winCl-btn">
+                <img
+                    src="Assets/Img_Start.PNG"
+                    style="height: 28px; width: 65px"
+                />
+            </button>
+
+            <img src="Assets/Img_Decor_Taskbar_01.PNG" />
+
+            <div id="id_pinnedApps" class="winCl-PinnedApps">
+                <button
+                    class="winCl-PinnedBtn"
+                    onclick="OpenApp(`Order Manager`, 'App_OrderManagerHTML.html')"
+                >
+                    <img
+                        src="Assets/Img_OrderManager.PNG"
+                        style="width: 32px; height: 28px"
+                    />
+                </button>
+                <button
+                    class="winCl-PinnedBtn"
+                    onclick="OpenApp(`Background Changer`)"
+                >
+                    <img
+                        src="Assets/Img_Order3.PNG"
+                        style="width: 32px; height: 28px"
+                    />
+                </button>
+            </div>
+
+            <img src="Assets/Img_Decor_Taskbar_02.PNG" />
+
+            <div id="id_minnedApps" class="winCl-MinnedApps"></div>
+
+            <button
+                id="id_clockTaskBar"
+                class="winCl-Input winCl-ClockTaskBar"
+                disabled
+            >
+                12:00
+            </button>
+        </div>
+    </body>
+</html>

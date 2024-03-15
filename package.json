@@ -1,23 +1,26 @@
 {
-  "name": "webwindows",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.3",
-    "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-middleware": "^7.0.0",
-    "webpack-hot-middleware": "^2.26.1"
-  },
-  "devDependencies": {
-    "css-loader": "^6.10.0",
-    "style-loader": "^3.3.4"
-  }
+    "name": "webwindows",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --config webpack.config.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.18.3",
+        "webpack": "^5.90.3",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-middleware": "^7.0.0",
+        "webpack-hot-middleware": "^2.26.1"
+    },
+    "devDependencies": {
+        "copy-webpack-plugin": "^12.0.2",
+        "css-loader": "^6.10.0",
+        "html-loader": "^5.0.0",
+        "style-loader": "^3.3.4"
+    }
 }

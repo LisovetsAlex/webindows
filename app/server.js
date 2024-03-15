@@ -7,17 +7,8 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
-const compiler = webpack(webpackConfig);
 
-app.use(
-    webpackDevMiddleware(compiler, {
-        publicPath: webpackConfig.output.publicPath,
-    })
-);
-
-app.use(webpackHotMiddleware(compiler));
-
-app.use(express.static("app/frontend/public"));
+app.use(express.static(path.join(__dirname, "app/frontend/build")));
 
 app.get("/Apps/:filepath(*)", (req, res) => {
     const filepath = req.params.filepath;
@@ -33,6 +24,10 @@ app.get("/Apps/:filepath(*)", (req, res) => {
         }
         res.sendFile(filePathInAppsDir);
     });
+});
+
+app.get("/:filepath(*)", (req, res) => {
+    res.sendFile(path.join(__dirname, "/frontend/build", req.params.filepath));
 });
 
 app.get("/", (req, res) => {
