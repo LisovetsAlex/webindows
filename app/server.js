@@ -4,8 +4,13 @@ const fs = require("fs");
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "app/frontend/build")));
+app.listen(3000, () => {
+    console.log(`App is running on port 3000`);
+});
 
+/**
+ * Sends all files from the App folder.
+ */
 app.get("/Apps/:filepath(*)", (req, res) => {
     const filepath = req.params.filepath;
     const filePathInAppsDir = path.join(
@@ -22,15 +27,16 @@ app.get("/Apps/:filepath(*)", (req, res) => {
     });
 });
 
+/**
+ * Sends all files from the build folder.
+ */
 app.get("/:filepath(*)", (req, res) => {
     res.sendFile(path.join(__dirname, "/frontend/build", req.params.filepath));
 });
 
+/**
+ * Sends entry html file.
+ */
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/frontend/public/index.html");
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
 });
