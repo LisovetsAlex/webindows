@@ -1,17 +1,20 @@
 const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: "./app/frontend/src/index.js",
     output: {
-        path: path.resolve(__dirname, "app/frontend/build"),
+        path: path.resolve(__dirname, "app/frontend/public"),
         filename: "bundle.js",
+        publicPath: "/",
     },
-    mode: "production",
+    mode: "development",
     devtool: "inline-source-map",
-    plugins: [
-        new CopyPlugin({
-            patterns: [{ from: "app/frontend/public", to: "." }],
-        }),
-    ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"],
+            },
+        ],
+    },
 };

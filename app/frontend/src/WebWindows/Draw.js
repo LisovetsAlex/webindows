@@ -2,6 +2,7 @@ import { ueh } from "./UserEventHandler";
 
 export default function Draw() {
     this.desktop = document.getElementById("id_desktop");
+    this.resizeTimer = undefined;
 
     this.createShortcut = function (app) {
         const shortCut = document.createElement("div");
@@ -53,6 +54,10 @@ export default function Draw() {
     this.createWindow = function (app) {
         const windowElem = document.createElement("div");
         const frame = document.createElement("iframe");
+        const resizeHandleLeft = document.createElement("div");
+        const resizeHandleRight = document.createElement("div");
+        const resizeHandleTop = document.createElement("div");
+        const resizeHandleBottom = document.createElement("div");
 
         windowElem.setAttribute("id", `${app.name}`);
         windowElem.setAttribute("data-width", `350`);
@@ -68,10 +73,37 @@ export default function Draw() {
 
         windowElem.append(this.createWindowHeader(app));
         windowElem.append(frame);
+        windowElem.append(resizeHandleLeft);
+        windowElem.append(resizeHandleRight);
+        windowElem.append(resizeHandleTop);
+        windowElem.append(resizeHandleBottom);
 
         windowElem.style.position = "absolute";
         windowElem.style.left = window.innerWidth / 2 - 100 + "px";
         windowElem.style.top = window.innerHeight / 2 - 200 + "px";
+
+        resizeHandleLeft.classList.add("resize-handle-hori");
+        resizeHandleLeft.classList.add("left");
+        resizeHandleRight.classList.add("resize-handle-hori");
+        resizeHandleRight.classList.add("right");
+        resizeHandleTop.classList.add("resize-handle-vert");
+        resizeHandleTop.classList.add("top");
+        resizeHandleBottom.classList.add("resize-handle-vert");
+        resizeHandleBottom.classList.add("bottom");
+
+        resizeHandleBottom.addEventListener("mousedown", (e) => {
+            ueh.addEvent({
+                name: "resizeBottom",
+                event: "mousemove",
+                callback: () => {
+                    console.log(getDistanceBetweenElementAndMouse(windowElem));
+                },
+            });
+        });
+        document.addEventListener("mouseup", () => {
+            if (this.resizeTimer === undefined) return;
+            clearInterval(this.resizeTimer);
+        });
 
         this.desktop.prepend(windowElem);
     };
@@ -176,4 +208,17 @@ export default function Draw() {
         screen.style.backgroundImage = "";
         screen.style.backgroundColor = "black";
     };
+}
+
+function getDistanceBetweenElementAndMouse(element) {
+    const rect = element.getBoundingClientRect();
+    const elementX = rect.left + rect.width / 2;
+    const elementY = rect.top + rect.height / 2;
+    const mouseX = ueh.getMousePosition().x;
+    const mouseY = ueh.getMousePosition().y;
+
+    const distance = Math.sqrt(
+        Math.pow(elementX - mouseX, 2) + Math.pow(elementY - mouseY, 2)
+    );
+    return distance;
 }
