@@ -1,10 +1,13 @@
 import { ueh } from "./UserEventHandler";
 
-export default function Draw() {
-    this.desktop = document.getElementById("id_desktop");
-    this.resizeTimer = undefined;
+export default class RenderController {
+    constructor(eventController, mouse) {
+        this.mouse = mouse;
+        this.eventController = eventController;
+        this.desktop = document.getElementById("id_desktop");
+    }
 
-    this.createShortcut = function (app) {
+    createShortcut(app) {
         const shortCut = document.createElement("div");
         const btn = document.createElement("button");
         const img = document.createElement("img");
@@ -32,26 +35,26 @@ export default function Draw() {
         shortCut.append(btn);
 
         this.desktop.append(shortCut);
-    };
+    }
 
-    this.removeWindow = function (name) {
+    removeWindow(name) {
         const window = document.getElementById(name);
         window.remove();
 
         const mini = document.getElementById(`${name}mini`);
         mini.remove();
-    };
+    }
 
-    this.webindowsLoadingScreen = function (duration) {
+    webindowsLoadingScreen(duration) {
         let screen = document.getElementById("turnOff");
         screen.style.backgroundImage = "url('Assets/Img_LoadingWindows.PNG')";
         screen.style.display = "block";
         setTimeout(function () {
             screen.style.display = "none";
         }, duration);
-    };
+    }
 
-    this.createWindow = function (app) {
+    createWindow(app) {
         const windowElem = document.createElement("div");
         const frame = document.createElement("iframe");
         const resizeHandleLeft = document.createElement("div");
@@ -70,6 +73,14 @@ export default function Draw() {
         frame.setAttribute("loading", `lazy`);
         frame.style.width = 358;
         frame.style.height = 198;
+        frame.onload = () => {
+            this.eventController.addFrame(frame);
+            const iframe =
+                frame.contentDocument || frame.contentWindow.document;
+            iframe.addEventListener("mousemove", (e) => {
+                sendMousemoveToParent(e, frame);
+            });
+        };
 
         windowElem.append(this.createWindowHeader(app));
         windowElem.append(frame);
@@ -91,24 +102,36 @@ export default function Draw() {
         resizeHandleBottom.classList.add("resize-handle-vert");
         resizeHandleBottom.classList.add("bottom");
 
-        resizeHandleBottom.addEventListener("mousedown", (e) => {
-            ueh.addEvent({
-                name: "resizeBottom",
+        resizeHandleBottom.addEventListener("mousedown", () => {
+            this.eventController.addFrameEvent({
+                name: `${app.name}_resizeBottom`,
                 event: "mousemove",
                 callback: () => {
-                    console.log(getDistanceBetweenElementAndMouse(windowElem));
+                    const frameHeight =
+                        this.getDistanceBetweenElementAndMouse(frame);
+                    const windowHeight =
+                        this.getDistanceBetweenElementAndMouse(windowElem);
+
+                    windowElem.style.height = Math.max(windowHeight, 50) + "px";
+                    frame.style.height = frameHeight + "px";
                 },
             });
         });
-        document.addEventListener("mouseup", () => {
-            if (this.resizeTimer === undefined) return;
-            clearInterval(this.resizeTimer);
+
+        this.eventController.addEvent({
+            name: `${app.name}_resizeBottom_up`,
+            event: "mouseup",
+            callback: () => {
+                this.eventController.removeFrameEvent(
+                    `${app.name}_resizeBottom`
+                );
+            },
         });
 
         this.desktop.prepend(windowElem);
-    };
+    }
 
-    this.createWindowHeader = function (app) {
+    createWindowHeader(app) {
         const windowHeader = document.createElement("div");
         const closeBtn = document.createElement("button");
         const expandBtn = document.createElement("button");
@@ -147,9 +170,9 @@ export default function Draw() {
         this.createHiddenApp(app);
 
         return windowHeader;
-    };
+    }
 
-    this.createHiddenApp = function (app) {
+    createHiddenApp(app) {
         const mini = document.createElement("button");
         const miniApps = document.getElementById("id_minnedApps");
 
@@ -166,59 +189,71 @@ export default function Draw() {
                     </p>
                     `;
         miniApps.prepend(mini);
-    };
+    }
 
-    this.hideWindow = function (name) {
+    hideWindow(name) {
         const window = document.getElementById(name);
         window.style.display = "none";
-    };
+    }
 
-    this.showWindow = function (name) {
+    showWindow(name) {
         const window = document.getElementById(name);
         window.style.display = "block";
-    };
+    }
 
-    this.adjustZIndex = function (window) {
+    adjustZIndex(window) {
         const arr = document.getElementsByClassName("winCl-BasicWindow");
         for (let i = 0; i < arr.length; i++) {
             arr[i].style["z-index"] = 1;
         }
         if (!window.classList.contains("winCl-ShortcutBtn"))
             window.style["z-index"] = 2;
-    };
+    }
 
-    this.moveWindow = function (x, y, window) {
+    moveWindow(x, y, window) {
         if (window == undefined) return;
 
         window.style.position = "absolute";
         window.style.left = Number(x - Number(window.dataset.width) / 2) + "px";
         window.style.top = y - 10 + "px";
-    };
+    }
 
-    this.showTurnOffScreen = function () {
+    showTurnOffScreen() {
         let screen = document.getElementById("turnOff");
 
         screen.style.backgroundImage = "url('Assets/Img_ShutDown.PNG')";
         screen.style.display = "block";
-    };
+    }
 
-    this.black = function () {
+    black() {
         let screen = document.getElementById("turnOff");
 
         screen.style.backgroundImage = "";
         screen.style.backgroundColor = "black";
-    };
+    }
+
+    getDistanceBetweenElementAndMouse(element) {
+        const rect = element.getBoundingClientRect();
+        const elementY = rect.top + (rect.height / 2) * 0;
+        const mouseY = this.mouse.y;
+
+        const distance = mouseY - elementY;
+
+        return distance;
+    }
 }
 
-function getDistanceBetweenElementAndMouse(element) {
-    const rect = element.getBoundingClientRect();
-    const elementX = rect.left + rect.width / 2;
-    const elementY = rect.top + rect.height / 2;
-    const mouseX = ueh.getMousePosition().x;
-    const mouseY = ueh.getMousePosition().y;
+function sendMousemoveToParent(event, iframe) {
+    const iframeRect = iframe.getBoundingClientRect();
+    const offsetX = iframeRect.left + event.clientX;
+    const offsetY = iframeRect.top + event.clientY;
 
-    const distance = Math.sqrt(
-        Math.pow(elementX - mouseX, 2) + Math.pow(elementY - mouseY, 2)
+    window.parent.postMessage(
+        {
+            type: "mousemove",
+            clientX: offsetX,
+            clientY: offsetY,
+        },
+        "*"
     );
-    return distance;
 }

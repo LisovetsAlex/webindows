@@ -6,7 +6,7 @@ function StartButton(text, img, func) {
     this.img = img;
 }
 
-function StartHandler() {
+function StartController() {
     this.buttonGroup = new Array(0);
 
     this.initStartButtons = function () {
@@ -95,4 +95,4 @@ function StartHandler() {
     };
 }
 
-export { StartHandler };
+export { StartController as StartHandler };

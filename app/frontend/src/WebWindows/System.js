@@ -1,217 +1,149 @@
-import Draw from "./Draw";
-import Apper from "./Apper";
-import { Requester } from "./Requester";
-import { StartHandler } from "./StartHandler";
-import EventHandler from "./EventHandler";
+import RenderController from "./RenderController";
+import AppsController from "./AppsController";
+import MouseController from "./MouseController";
+import { StartHandler as StartController } from "./StartController";
+import EventController from "./EventController";
 
-function System() {
-    this.requester = new Requester();
-    this.draw = new Draw();
-    this.apper = new Apper();
-    this.starter = new StartHandler();
-    this.eventHandler = new EventHandler();
+export class System {
+    constructor() {
+        this.eventController = new EventController();
+        this.mouse = new MouseController(this.eventController);
+        this.renderController = new RenderController(
+            this.eventController,
+            this.mouse
+        );
+        this.appsController = new AppsController();
+        this.starterController = new StartController();
 
-    this.selectedWindow = undefined;
-    this.mouseX = 0;
-    this.mouseY = 0;
-    this.isDragging = false;
-    this.mouseYVel = 0;
-    this.mouseXVel = 0;
-    this.lastTick = 0;
-    this.holdingLMB = false;
-    this.events = new Array();
+        this.selectedWindow = undefined;
+    }
 
-    this.init = function () {
-        this.starter.initStartButtons();
-        this.draw.webindowsLoadingScreen(100);
-        this.apper.initAllApps();
+    init() {
+        this.starterController.initStartButtons();
+        this.renderController.webindowsLoadingScreen(100);
+        this.appsController.initAllApps();
         this.initWindowEvents();
 
         this.initClock();
-        for (let i = 0; i < this.apper.allApps.length; i++) {
-            this.draw.createShortcut(this.apper.allApps[i]);
+        for (let i = 0; i < this.appsController.allApps.length; i++) {
+            this.renderController.createShortcut(
+                this.appsController.allApps[i]
+            );
         }
-    };
 
-    this.initClock = function () {
+        this.tick();
+    }
+
+    tick() {
+        setInterval(() => {}, 60 / 1000);
+    }
+
+    initClock() {
         setInterval(() => {
             this.tickTime();
         }, 1000);
-    };
+    }
 
-    this.initWindowEvents = function () {
-        let html = document.getElementById("id_windows");
-
-        html.addEventListener("mousedown", (e) => {
-            callEvent("mousedown", e);
-            this.holdingLMB = true;
+    initWindowEvents() {
+        this.eventController.addEvent({
+            name: "System_mousemove",
+            event: "mousemove",
+            callback: (e) => {
+                this.moveWindow(e);
+            },
         });
-        html.addEventListener("mousemove", (e) => {
-            if (e.clientX <= window.innerWidth && e.clientX >= 20)
-                this.mouseX = e.clientX;
-            if (e.clientY <= window.innerHeight - 100 && e.clientY >= 10)
-                this.mouseY = e.clientY;
-
-            this.callEvent("mousemove", e);
-
-            this.moveWindow(e);
-            this.calculateMouseVelocity(e);
+        this.eventController.addEvent({
+            name: "System_mouseup",
+            event: "mouseup",
+            callback: () => {
+                this.drag(undefined);
+            },
         });
-        window.addEventListener("mouseup", (e) => {
-            this.holdingLMB = false;
-            this.drag(undefined);
+        this.eventController.addEvent({
+            name: "System_mouseout",
+            event: "mouseout",
+            callback: (e) => {
+                if (e.relatedTarget != null) return;
+                this.drag(undefined);
+            },
         });
-        window.addEventListener("mouseout", (event) => {
-            if (event.relatedTarget != null) return;
-            this.drag(undefined);
-        });
-    };
+    }
 
-    this.tickTime = function () {
+    tickTime() {
         let date = new Date();
         let clock = document.getElementById("id_clockTaskBar");
         clock.innerHTML =
             String(date.getHours()) + ":" + String(date.getMinutes());
-    };
+    }
 
-    this.setSelectedWindow = function (id) {
+    setSelectedWindow(id) {
         this.selectedWindow = document.getElementById(id);
-    };
+    }
 
-    this.drag = function (id) {
+    drag(id) {
         if (id == undefined) {
-            this.isDragging = false;
+            this.mouse.isDragging = false;
             this.setSelectedWindow(undefined);
             return;
         }
 
         this.setSelectedWindow(id);
-        this.isDragging = true;
+        this.mouse.isDragging = true;
 
         if (sys.selectedWindow == undefined) return;
-        this.draw.adjustZIndex(this.selectedWindow);
+        this.renderController.adjustZIndex(this.selectedWindow);
+    }
 
-        /*
-        for (let i = 0; i < this.openApps.length; i++) {
-            if (this.openApps[i].name == id && this.openApps[i].isFullScreen)
-                this.ExpandWindow(id);
-        }*/
-    };
-
-    this.drop = function () {
+    drop() {
         this.selectedWindow = undefined;
-        this.isDragging = false;
-    };
+        this.mouse.isDragging = false;
+    }
 
-    this.moveWindow = function (event) {
-        if (!this.isDragging) return;
+    moveWindow() {
+        if (!this.mouse.isDragging) return;
 
-        this.draw.moveWindow(this.mouseX, this.mouseY, this.selectedWindow);
+        this.renderController.moveWindow(
+            this.mouse.x,
+            this.mouse.y,
+            this.selectedWindow
+        );
+    }
 
-        /*
-        if (!isDragging) {
-            const iframes = document.getElementsByTagName("iframe");
-            for (let i = 0; i < iframes.length; i++) {
-                iframes[i].style.scale = 1;
-            }
-            return;
-        }
-    
-        const iframes = document.getElementsByTagName("iframe");
-        for (let i = 0; i < iframes.length; i++) {
-            iframes[i].style.scale = 0;
-        }
-        */
-    };
+    openApp(app) {
+        if (this.appsController.isAppOpened(app.name)) return;
 
-    this.openApp = function (app) {
-        if (this.apper.isAppOpened(app.name)) return;
+        this.renderController.createWindow(app);
+        this.appsController.appOpened(app);
+    }
 
-        this.draw.createWindow(app);
-        this.apper.appOpened(app);
-    };
+    closeApp(name) {
+        if (!this.appsController.isAppOpened(name)) return;
 
-    this.closeApp = function (name) {
-        if (!this.apper.isAppOpened(name)) return;
+        this.renderController.removeWindow(name);
+        this.appsController.appClosed(name);
+    }
 
-        this.draw.removeWindow(name);
-        this.apper.appClosed(name);
-    };
-
-    this.toggleHideApp = function (name) {
-        if (this.apper.isAppHidden(name)) {
-            this.draw.showWindow(name);
-            this.apper.appShown(name);
+    toggleHideApp(name) {
+        if (this.appsController.isAppHidden(name)) {
+            this.renderController.showWindow(name);
+            this.appsController.appShown(name);
             return;
         }
 
-        this.draw.hideWindow(name);
-        this.apper.appHidden(name);
-    };
+        this.renderController.hideWindow(name);
+        this.appsController.appHidden(name);
+    }
 
-    this.turnOff = function () {
+    turnOff() {
         // let audio = new Audio("");
         // audio.play();
 
-        this.draw.showTurnOffScreen();
+        this.renderController.showTurnOffScreen();
 
         setTimeout(() => {
-            this.draw.black();
+            this.renderController.black();
         }, 6000);
-    };
-
-    this.calculateMouseVelocity = function (event) {
-        if (!this.lastX) this.lastX = null;
-        if (!this.lastY) this.lastY = null;
-
-        let velocityX = 0;
-        let velocityY = 0;
-
-        const currentX = event.clientX;
-        const currentY = event.clientY;
-
-        if (this.lastX !== null && this.lastY !== null) {
-            const deltaX = currentX - this.lastX;
-            const deltaY = currentY - this.lastY;
-
-            const timeDiff = performance.now() - this.lastTick;
-
-            velocityX = (deltaX / timeDiff).toFixed(2);
-            velocityY = (deltaY / timeDiff).toFixed(2);
-        }
-
-        this.lastX = currentX;
-        this.lastY = currentY;
-        this.lastTick = performance.now();
-
-        velocityX = Math.max(-1, Math.min(1, velocityX));
-        velocityY = Math.max(-1, Math.min(1, velocityY));
-
-        this.mouseYVel = Number(velocityY);
-        this.mouseXVel = Number(velocityX);
-    };
-
-    this.addEvent = function (obj) {
-        this.events.push(obj);
-        document.addEventListener(obj.event, obj.callback);
-    };
-
-    this.removeEvent = function (name) {
-        for (let i = 0; i < this.events.length; i++) {
-            if (this.events[i].name == name) {
-                this.events.splice(i, 1);
-                return;
-            }
-        }
-    };
-
-    this.callEvent = function (e, name) {
-        for (let i = 0; i < this.events.length; i++) {
-            if (this.events[i].name == name) {
-                this.events[i].callback(e);
-            }
-        }
-    };
+    }
 }
 
 const sys = new System();

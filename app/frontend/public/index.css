@@ -53,7 +53,7 @@ option {
 
 .winCl-WindowHeader {
     padding-top: 3px;
-    margin-bottom: 9px;
+    margin-bottom: 3px;
     padding-right: 5px;
     height: 20px;
     color: var(--white);
@@ -89,8 +89,17 @@ option {
     border-bottom: 2px solid #848484;
     padding: 2px;
     background-color: rgb(201, 201, 201);
-    height: 190px;
-    width: 350px;
+    height: 100vh;
+    width: 100vw;
+    box-shadow: black 2px 2px 10px 0px;
+}
+
+.winCl-Window {
+    z-index: 1;
+    background-color: rgb(201, 201, 201);
+    height: calc(100vh - 16px);
+    width: calc(100vw - 16px);
+    padding: 8px;
     box-shadow: black 2px 2px 10px 0px;
 }
 
@@ -115,6 +124,7 @@ option {
     width: 30%;
     height: 50%;
     margin: 3px;
+    margin-top: 0;
 }
 
 .winCl-Selector:hover,
@@ -463,23 +473,19 @@ option {
 }
 
 .resize-handle-vert.top {
-    border: 1px solid red;
     top: -5px;
     left: -1%;
 }
 
 .resize-handle-vert.bottom {
-    border: 1px solid red;
     bottom: -5px;
     left: -1%;
 }
 
 .resize-handle-hori.left {
-    border: 1px solid red;
     left: -5px;
 }
 
 .resize-handle-hori.right {
-    border: 1px solid red;
     right: -5px;
 }

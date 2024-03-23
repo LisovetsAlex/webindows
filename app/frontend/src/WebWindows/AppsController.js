@@ -1,16 +1,20 @@
-function App(name, html, icon) {
-    this.name = name;
-    this.isFullScreen = false;
-    this.isMinimized = false;
-    this.html = html;
-    this.img = icon;
+export class App {
+    constructor(name, html, icon) {
+        this.name = name;
+        this.isFullScreen = false;
+        this.isMinimized = false;
+        this.html = html;
+        this.img = icon;
+    }
 }
 
-export default function Apper() {
-    this.allApps = new Array();
-    this.openedApps = new Array();
+export default class AppsController {
+    constructor() {
+        this.allApps = new Array();
+        this.openedApps = new Array();
+    }
 
-    this.initAllApps = function () {
+    initAllApps() {
         let arrApps = new Array(0);
         let obj = {};
 
@@ -43,57 +47,57 @@ export default function Apper() {
         arrApps.push(obj);
 
         this.allApps = arrApps;
-    };
+    }
 
-    this.isAppOpened = function (name) {
+    isAppOpened(name) {
         for (let i = 0; i < this.openedApps.length; i++) {
             if (this.openedApps[i].name == name) return true;
         }
         return false;
-    };
+    }
 
-    this.appOpened = function (app) {
+    appOpened(app) {
         this.openedApps.push(app);
-    };
+    }
 
-    this.appClosed = function (name) {
+    appClosed(name) {
         for (let i = 0; i < this.openedApps.length; i++) {
             if (this.openedApps[i].name == name) {
                 this.openedApps.splice(i, 1);
             }
         }
-    };
+    }
 
-    this.appHidden = function (name) {
+    appHidden(name) {
         for (let i = 0; i < this.openedApps.length; i++) {
             if (this.openedApps[i].name == name) {
                 this.openedApps[i].isMinimized = true;
             }
         }
-    };
+    }
 
-    this.appShown = function (name) {
+    appShown(name) {
         for (let i = 0; i < this.openedApps.length; i++) {
             if (this.openedApps[i].name == name) {
                 this.openedApps[i].isMinimized = false;
             }
         }
-    };
+    }
 
-    this.isAppHidden = function (name) {
+    isAppHidden(name) {
         for (let i = 0; i < this.openedApps.length; i++) {
             if (this.openedApps[i].name == name) {
                 return this.openedApps[i].isMinimized;
             }
         }
         return false;
-    };
+    }
 
-    this.deleteApp = function (name) {
+    deleteApp(name) {
         for (let i = 0; i < this.allApps.length; i++) {
             if (this.allApps[i].name == name) {
                 this.allApps.splice(i, 1);
             }
         }
-    };
+    }
 }
