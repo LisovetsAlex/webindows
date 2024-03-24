@@ -1,14 +1,6 @@
 import { sys } from "./System";
 
 function UEH() {
-    this.drag = function (name) {
-        sys.drag(name);
-    };
-
-    this.drop = function () {
-        sys.drag(undefined);
-    };
-
     this.mouseMove = function (event) {
         sys.moveWindow(event);
     };

@@ -37,8 +37,8 @@ export default class MouseController {
             name: "MouseController_mousemove",
             event: "mousemove",
             callback: (e) => {
-                if (e.clientX <= window.innerWidth && e.clientX >= 20) this.x = e.clientX;
-                if (e.clientY <= window.innerHeight - 100 && e.clientY >= 10) this.y = e.clientY;
+                if (e.clientX <= window.innerWidth && e.clientX >= 1) this.x = e.clientX;
+                if (e.clientY <= window.innerHeight - 50 && e.clientY >= 1) this.y = e.clientY;
             },
         });
 
@@ -52,7 +52,7 @@ export default class MouseController {
 
     tick() {
         setInterval(() => {
-            //this.debug();
+            this.debug();
         }, 50);
     }
 

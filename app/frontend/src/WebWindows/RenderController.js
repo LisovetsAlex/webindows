@@ -22,8 +22,24 @@ export default class RenderController {
         btn.addEventListener("dblclick", () => {
             ueh.openApp(app);
         });
+
         btn.addEventListener("mousedown", () => {
-            ueh.drag(`${app.name}sc`);
+            const savedX = this.mouse.x;
+            const savedOffset = shortCut.offsetLeft;
+            this.eventController.addEvent({
+                name: `${app.name}sc_drag`,
+                event: "mousemove",
+                callback: () => {
+                    this.moveWindow(savedX, savedOffset, shortCut);
+                },
+            });
+        });
+        this.eventController.addEvent({
+            name: `${app.name}sc_drag_up`,
+            event: "mouseup",
+            callback: () => {
+                this.eventController.removeEvent(`${app.name}sc_drag`);
+            },
         });
 
         img.setAttribute("src", `Assets/${app.img}`);
@@ -73,8 +89,8 @@ export default class RenderController {
         frame.setAttribute("id", `${app.name}`);
         frame.setAttribute("src", `${app.html}`);
         frame.setAttribute("loading", `lazy`);
-        frame.style.width = 358;
-        frame.style.height = 198;
+        frame.style.width = parseInt(windowElem.style.width) - 5;
+        frame.style.height = parseInt(windowElem.style.height) - 37;
         frame.onload = () => {
             this.eventController.addFrame(frame);
             const iframe = frame.contentDocument || frame.contentWindow.document;
@@ -197,12 +213,16 @@ export default class RenderController {
                     const ySide = this.mouse.y - windowElem.offsetTop;
                     const hypo = calculateDistance({ x: savedLeft + savedWidth, y: windowElem.offsetTop }, { x: this.mouse.x, y: this.mouse.y });
                     const xSide = Math.sqrt(-1 * ySide * ySide + hypo * hypo);
-                    windowElem.style.left = this.mouse.x + "px";
-                    frame.style.left = this.mouse.x + "px";
-                    windowElem.style.height = Math.max(ySide, 50) + "px";
-                    frame.style.height = Math.max(ySide - 37, 20) + "px";
-                    windowElem.style.width = Math.max(xSide, 200) + "px";
-                    frame.style.width = Math.max(xSide - 5, 195) + "px";
+                    if (xSide > 200) {
+                        windowElem.style.left = this.mouse.x + "px";
+                        windowElem.style.width = Math.max(xSide, 200) + "px";
+                        frame.style.width = Math.max(xSide - 5, 195) + "px";
+                    }
+                    if (ySide > 50) {
+                        frame.style.left = this.mouse.x + "px";
+                        windowElem.style.height = Math.max(ySide, 50) + "px";
+                        frame.style.height = Math.max(ySide - 37, 20) + "px";
+                    }
                 },
             });
         });
@@ -227,12 +247,24 @@ export default class RenderController {
         windowHeader.classList.add("winCl-WindowHeader");
         windowHeader.classList.add("winCl-Grabber");
         windowHeader.addEventListener("mousedown", () => {
-            ueh.drag(`${app.name}`);
+            const savedX = this.mouse.x;
+            const window = document.getElementById(app.name);
+            const savedOffset = window.offsetLeft;
+            this.eventController.addEvent({
+                name: `${app.name}_drag`,
+                event: "mousemove",
+                callback: () => {
+                    this.moveWindow(savedX, savedOffset, window);
+                },
+            });
         });
-        windowHeader.addEventListener("mouseup", () => {
-            ueh.drop();
+        this.eventController.addEvent({
+            name: `${app.name}_drag_up`,
+            event: "mouseup",
+            callback: () => {
+                this.eventController.removeEvent(`${app.name}_drag`);
+            },
         });
-
         closeBtn.classList.add("winCl-BtnHeader");
         closeBtn.classList.add("winCl-CloseIcon");
         closeBtn.addEventListener("mousedown", (e) => {
@@ -296,12 +328,14 @@ export default class RenderController {
         if (!window.classList.contains("winCl-ShortcutBtn")) window.style["z-index"] = 2;
     }
 
-    moveWindow(x, y, window) {
-        if (window == undefined) return;
+    moveWindow(startDragX, startDragOffset, window) {
+        if (window === undefined) return;
+
+        const diff = Math.abs(startDragX - startDragOffset);
 
         window.style.position = "absolute";
-        window.style.left = Number(x - Number(window.dataset.width) / 2) + "px";
-        window.style.top = y - 10 + "px";
+        window.style.left = this.mouse.x - diff + "px";
+        window.style.top = this.mouse.y - 10 + "px";
     }
 
     showTurnOffScreen() {

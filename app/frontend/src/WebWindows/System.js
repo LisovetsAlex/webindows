@@ -47,21 +47,6 @@ export class System {
                 this.moveWindow(e);
             },
         });
-        this.eventController.addEvent({
-            name: "System_mouseup",
-            event: "mouseup",
-            callback: () => {
-                this.drag(undefined);
-            },
-        });
-        this.eventController.addEvent({
-            name: "System_mouseout",
-            event: "mouseout",
-            callback: (e) => {
-                if (e.relatedTarget != null) return;
-                this.drag(undefined);
-            },
-        });
     }
 
     tickTime() {
@@ -72,25 +57,6 @@ export class System {
 
     setSelectedWindow(id) {
         this.selectedWindow = document.getElementById(id);
-    }
-
-    drag(id) {
-        if (id == undefined) {
-            this.mouse.isDragging = false;
-            this.setSelectedWindow(undefined);
-            return;
-        }
-
-        this.setSelectedWindow(id);
-        this.mouse.isDragging = true;
-
-        if (sys.selectedWindow == undefined) return;
-        this.renderController.adjustZIndex(this.selectedWindow);
-    }
-
-    drop() {
-        this.selectedWindow = undefined;
-        this.mouse.isDragging = false;
     }
 
     moveWindow() {
