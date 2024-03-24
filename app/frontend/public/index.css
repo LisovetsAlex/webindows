@@ -59,13 +59,7 @@ option {
     color: var(--white);
     padding-left: 5px;
     background: rgb(2, 0, 36);
-    background: linear-gradient(
-        90deg,
-        var(--dark-blue0) 0%,
-        var(--dark-blue5) 5%,
-        var(--dark-blue23) 23%,
-        var(--light-blue) 100%
-    );
+    background: linear-gradient(90deg, var(--dark-blue0) 0%, var(--dark-blue5) 5%, var(--dark-blue23) 23%, var(--light-blue) 100%);
 }
 
 .winCl-Text {
@@ -369,14 +363,7 @@ option {
 }
 
 .imageStart {
-    background: linear-gradient(
-        180deg,
-        rgba(2, 0, 36, 1) 0%,
-        rgba(6, 5, 80, 1) 0%,
-        rgba(8, 8, 111, 1) 5%,
-        rgba(9, 9, 121, 1) 23%,
-        rgba(0, 106, 255, 1) 100%
-    );
+    background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, rgba(6, 5, 80, 1) 0%, rgba(8, 8, 111, 1) 5%, rgba(9, 9, 121, 1) 23%, rgba(0, 106, 255, 1) 100%);
     width: 40px;
     position: absolute;
     bottom: 1px;
@@ -459,7 +446,7 @@ option {
 
 .resize-handle-hori {
     position: absolute;
-    width: 5px;
+    width: 8px;
     height: 100%;
     top: 0;
     cursor: ew-resize;
@@ -468,8 +455,27 @@ option {
 .resize-handle-vert {
     position: absolute;
     width: 100%;
-    height: 5px;
+    height: 8px;
     cursor: ns-resize;
+}
+
+.resize-handle-diag {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+}
+
+.resize-handle-diag.right-bottom {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.resize-handle-diag.left-bottom {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+    border: solid red 1px;
 }
 
 .resize-handle-vert.top {

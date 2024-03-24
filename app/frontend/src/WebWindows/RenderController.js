@@ -61,6 +61,8 @@ export default class RenderController {
         const resizeHandleRight = document.createElement("div");
         const resizeHandleTop = document.createElement("div");
         const resizeHandleBottom = document.createElement("div");
+        const resizeHandleDRB = document.createElement("div");
+        const resizeHandleDLB = document.createElement("div");
 
         windowElem.setAttribute("id", `${app.name}`);
         windowElem.setAttribute("data-width", `350`);
@@ -87,6 +89,8 @@ export default class RenderController {
         windowElem.append(resizeHandleRight);
         windowElem.append(resizeHandleTop);
         windowElem.append(resizeHandleBottom);
+        windowElem.append(resizeHandleDRB);
+        windowElem.append(resizeHandleDLB);
 
         windowElem.style.position = "absolute";
         windowElem.style.left = window.innerWidth / 2 - 100 + "px";
@@ -100,6 +104,10 @@ export default class RenderController {
         resizeHandleTop.classList.add("top");
         resizeHandleBottom.classList.add("resize-handle-vert");
         resizeHandleBottom.classList.add("bottom");
+        resizeHandleDRB.classList.add("resize-handle-diag");
+        resizeHandleDRB.classList.add("right-bottom");
+        resizeHandleDLB.classList.add("resize-handle-diag");
+        resizeHandleDLB.classList.add("left-bottom");
 
         resizeHandleBottom.addEventListener("mousedown", () => {
             const savedY = this.mouse.y;
@@ -159,6 +167,42 @@ export default class RenderController {
                     frame.style.left = this.mouse.x + "px";
                     windowElem.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthWindow), 200) + "px";
                     frame.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthFrame), 195) + "px";
+                },
+            });
+        });
+
+        resizeHandleDRB.addEventListener("mousedown", () => {
+            this.eventController.addFrameEvent({
+                name: `${app.name}_resize`,
+                event: "mousemove",
+                callback: () => {
+                    const ySide = this.mouse.y - windowElem.offsetTop;
+                    const hypo = calculateDistance({ x: windowElem.offsetLeft, y: windowElem.offsetTop }, { x: this.mouse.x, y: this.mouse.y });
+                    const xSide = Math.sqrt(-1 * ySide * ySide + hypo * hypo);
+                    windowElem.style.height = Math.max(ySide, 50) + "px";
+                    frame.style.height = Math.max(ySide - 37, 20) + "px";
+                    windowElem.style.width = Math.max(xSide, 200) + "px";
+                    frame.style.width = Math.max(xSide - 5, 195) + "px";
+                },
+            });
+        });
+
+        resizeHandleDLB.addEventListener("mousedown", () => {
+            const savedWidth = parseInt(windowElem.style.width);
+            const savedLeft = windowElem.offsetLeft;
+            this.eventController.addFrameEvent({
+                name: `${app.name}_resize`,
+                event: "mousemove",
+                callback: () => {
+                    const ySide = this.mouse.y - windowElem.offsetTop;
+                    const hypo = calculateDistance({ x: savedLeft + savedWidth, y: windowElem.offsetTop }, { x: this.mouse.x, y: this.mouse.y });
+                    const xSide = Math.sqrt(-1 * ySide * ySide + hypo * hypo);
+                    windowElem.style.left = this.mouse.x + "px";
+                    frame.style.left = this.mouse.x + "px";
+                    windowElem.style.height = Math.max(ySide, 50) + "px";
+                    frame.style.height = Math.max(ySide - 37, 20) + "px";
+                    windowElem.style.width = Math.max(xSide, 200) + "px";
+                    frame.style.width = Math.max(xSide - 5, 195) + "px";
                 },
             });
         });
@@ -288,4 +332,10 @@ function sendMousemoveToParent(event, iframe) {
         },
         "*"
     );
+}
+
+function calculateDistance(vector1, vector2) {
+    const deltaX = vector2.x - vector1.x;
+    const deltaY = vector2.y - vector1.y;
+    return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 }
