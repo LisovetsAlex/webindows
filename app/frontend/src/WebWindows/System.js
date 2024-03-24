@@ -8,10 +8,7 @@ export class System {
     constructor() {
         this.eventController = new EventController();
         this.mouse = new MouseController(this.eventController);
-        this.renderController = new RenderController(
-            this.eventController,
-            this.mouse
-        );
+        this.renderController = new RenderController(this.eventController, this.mouse);
         this.appsController = new AppsController();
         this.starterController = new StartController();
 
@@ -26,9 +23,7 @@ export class System {
 
         this.initClock();
         for (let i = 0; i < this.appsController.allApps.length; i++) {
-            this.renderController.createShortcut(
-                this.appsController.allApps[i]
-            );
+            this.renderController.createShortcut(this.appsController.allApps[i]);
         }
 
         this.tick();
@@ -72,8 +67,7 @@ export class System {
     tickTime() {
         let date = new Date();
         let clock = document.getElementById("id_clockTaskBar");
-        clock.innerHTML =
-            String(date.getHours()) + ":" + String(date.getMinutes());
+        clock.innerHTML = String(date.getHours()) + ":" + String(date.getMinutes());
     }
 
     setSelectedWindow(id) {
@@ -102,11 +96,7 @@ export class System {
     moveWindow() {
         if (!this.mouse.isDragging) return;
 
-        this.renderController.moveWindow(
-            this.mouse.x,
-            this.mouse.y,
-            this.selectedWindow
-        );
+        this.renderController.moveWindow(this.mouse.x, this.mouse.y, this.selectedWindow);
     }
 
     openApp(app) {

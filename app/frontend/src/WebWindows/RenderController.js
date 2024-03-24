@@ -75,8 +75,7 @@ export default class RenderController {
         frame.style.height = 198;
         frame.onload = () => {
             this.eventController.addFrame(frame);
-            const iframe =
-                frame.contentDocument || frame.contentWindow.document;
+            const iframe = frame.contentDocument || frame.contentWindow.document;
             iframe.addEventListener("mousemove", (e) => {
                 sendMousemoveToParent(e, frame);
             });
@@ -103,28 +102,72 @@ export default class RenderController {
         resizeHandleBottom.classList.add("bottom");
 
         resizeHandleBottom.addEventListener("mousedown", () => {
+            const savedY = this.mouse.y;
+            const savedHeightWindow = windowElem.style.height;
+            const savedHeightFrame = frame.style.height;
             this.eventController.addFrameEvent({
-                name: `${app.name}_resizeBottom`,
+                name: `${app.name}_resize`,
                 event: "mousemove",
                 callback: () => {
-                    const frameHeight =
-                        this.getDistanceBetweenElementAndMouse(frame);
-                    const windowHeight =
-                        this.getDistanceBetweenElementAndMouse(windowElem);
+                    windowElem.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow), 50) + "px";
+                    frame.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightFrame), 20) + "px";
+                },
+            });
+        });
 
-                    windowElem.style.height = Math.max(windowHeight, 50) + "px";
-                    frame.style.height = frameHeight + "px";
+        resizeHandleTop.addEventListener("mousedown", () => {
+            const savedY = this.mouse.y;
+            const savedHeightWindow = windowElem.style.height;
+            const savedHeightFrame = frame.style.height;
+            this.eventController.addFrameEvent({
+                name: `${app.name}_resize`,
+                event: "mousemove",
+                callback: () => {
+                    if (savedY - this.mouse.y + parseInt(savedHeightWindow) < 50) return;
+                    windowElem.style.top = this.mouse.y + "px";
+                    frame.style.top = this.mouse.y - 37 + "px";
+                    windowElem.style.height = Math.max(savedY - this.mouse.y + parseInt(savedHeightWindow), 50) + "px";
+                    frame.style.height = Math.max(savedY - this.mouse.y + parseInt(savedHeightFrame), 20) + "px";
+                },
+            });
+        });
+
+        resizeHandleRight.addEventListener("mousedown", () => {
+            const savedX = this.mouse.x;
+            const savedWidthWindow = windowElem.style.width;
+            const savedWidthFrame = frame.style.width;
+            this.eventController.addFrameEvent({
+                name: `${app.name}_resize`,
+                event: "mousemove",
+                callback: () => {
+                    windowElem.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthWindow), 200) + "px";
+                    frame.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthFrame), 195) + "px";
+                },
+            });
+        });
+
+        resizeHandleLeft.addEventListener("mousedown", () => {
+            const savedX = this.mouse.x;
+            const savedWidthWindow = windowElem.style.width;
+            const savedWidthFrame = frame.style.width;
+            this.eventController.addFrameEvent({
+                name: `${app.name}_resize`,
+                event: "mousemove",
+                callback: () => {
+                    if (savedX - this.mouse.x + parseInt(savedWidthWindow) < 200) return;
+                    windowElem.style.left = this.mouse.x + "px";
+                    frame.style.left = this.mouse.x + "px";
+                    windowElem.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthWindow), 200) + "px";
+                    frame.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthFrame), 195) + "px";
                 },
             });
         });
 
         this.eventController.addEvent({
-            name: `${app.name}_resizeBottom_up`,
+            name: `${app.name}_resize_up`,
             event: "mouseup",
             callback: () => {
-                this.eventController.removeFrameEvent(
-                    `${app.name}_resizeBottom`
-                );
+                this.eventController.removeFrameEvent(`${app.name}_resize`);
             },
         });
 
@@ -206,8 +249,7 @@ export default class RenderController {
         for (let i = 0; i < arr.length; i++) {
             arr[i].style["z-index"] = 1;
         }
-        if (!window.classList.contains("winCl-ShortcutBtn"))
-            window.style["z-index"] = 2;
+        if (!window.classList.contains("winCl-ShortcutBtn")) window.style["z-index"] = 2;
     }
 
     moveWindow(x, y, window) {
@@ -230,16 +272,6 @@ export default class RenderController {
 
         screen.style.backgroundImage = "";
         screen.style.backgroundColor = "black";
-    }
-
-    getDistanceBetweenElementAndMouse(element) {
-        const rect = element.getBoundingClientRect();
-        const elementY = rect.top + (rect.height / 2) * 0;
-        const mouseY = this.mouse.y;
-
-        const distance = mouseY - elementY;
-
-        return distance;
     }
 }
 

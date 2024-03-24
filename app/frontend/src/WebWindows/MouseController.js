@@ -9,8 +9,6 @@ export default class MouseController {
         this.isHoldingLMB = false;
         this.lastTick = performance.now();
 
-        this.tick();
-
         this.eventController.addEvent({
             name: "MouseController_message",
             event: "message",
@@ -39,10 +37,8 @@ export default class MouseController {
             name: "MouseController_mousemove",
             event: "mousemove",
             callback: (e) => {
-                if (e.clientX <= window.innerWidth && e.clientX >= 20)
-                    this.x = e.clientX;
-                if (e.clientY <= window.innerHeight - 100 && e.clientY >= 10)
-                    this.y = e.clientY;
+                if (e.clientX <= window.innerWidth && e.clientX >= 20) this.x = e.clientX;
+                if (e.clientY <= window.innerHeight - 100 && e.clientY >= 10) this.y = e.clientY;
             },
         });
 
@@ -50,12 +46,14 @@ export default class MouseController {
         this.debugWindow = document.createElement("div");
         this.debugWindow.id = "MouseController_debug";
         windows.appendChild(this.debugWindow);
+
+        this.tick();
     }
 
     tick() {
-        /* setInterval(() => {
-            this.debug();
-        }, 30 / 1000); */
+        setInterval(() => {
+            //this.debug();
+        }, 50);
     }
 
     debug() {

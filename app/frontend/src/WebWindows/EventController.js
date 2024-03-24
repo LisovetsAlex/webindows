@@ -1,3 +1,9 @@
+/**
+ * Event
+ * @param {string} name - Unique name for the event
+ * @param {string} event - The name of the html event
+ * @param {function} callback - The callback function that will be executed when the event is triggered
+ */
 export class Event {
     constructor(name, event, callback) {
         this.name = name;
@@ -6,6 +12,9 @@ export class Event {
     }
 }
 
+/**
+ * Handles window events
+ */
 export default class EventHandler {
     constructor() {
         this.events = new Array();
@@ -46,21 +55,34 @@ export default class EventHandler {
         }
     }
 
+    /**
+     * Adds the given event
+     * @param {Event} obj - The event object
+     */
     addEvent(obj) {
+        if (this.events.includes(obj)) {
+            this.events[this.events.indexOf(obj)] = obj;
+            return;
+        }
         this.events.push(obj);
-        this.initEvents();
     }
 
+    /**
+     * The given iframe will trigger all added events.
+     *
+     * Iframes act like a separate document and normal window. events don't trigger on them,
+     * so we need to get their document and trigger events there too.
+     */
     addFrame(iframe) {
-        this.iframes.push(
-            iframe.contentDocument || iframe.contentWindow.document
-        );
+        this.iframes.push(iframe.contentDocument || iframe.contentWindow.document);
         this.initEvents();
     }
 
+    /**
+     * Given events will be triggered only on iframes and not on the whole window
+     */
     addFrameEvent(obj) {
         this.frameEvents.push(obj);
-        this.initEvents();
     }
 
     removeEvent(name) {
@@ -69,7 +91,6 @@ export default class EventHandler {
                 this.events.splice(i, 1);
             }
         }
-        this.initEvents();
     }
 
     removeFrameEvent(name) {
@@ -78,7 +99,6 @@ export default class EventHandler {
                 this.frameEvents.splice(i, 1);
             }
         }
-        this.initEvents();
     }
 
     callEvents(e, name) {
