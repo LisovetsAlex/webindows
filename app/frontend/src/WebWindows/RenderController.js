@@ -1,8 +1,9 @@
 import { ueh } from "./UserEventHandler";
 
 export default class RenderController {
-    constructor(eventController, mouse) {
+    constructor(eventController, mouse, appsController) {
         this.mouse = mouse;
+        this.appsController = appsController;
         this.eventController = eventController;
         this.desktop = document.getElementById("id_desktop");
     }
@@ -30,7 +31,7 @@ export default class RenderController {
                 name: `${app.name}sc_drag`,
                 event: "mousemove",
                 callback: () => {
-                    this.moveWindow(savedX, savedOffset, shortCut);
+                    this.moveElement(savedX, savedOffset, shortCut, true);
                 },
             });
         });
@@ -81,21 +82,24 @@ export default class RenderController {
         const resizeHandleDLB = document.createElement("div");
 
         windowElem.setAttribute("id", `${app.name}`);
-        windowElem.setAttribute("data-width", `350`);
         windowElem.classList.add("winCl-BasicWindow");
-        windowElem.style.width = 363;
-        windowElem.style.height = 235;
+        windowElem.style.width = app.width;
+        windowElem.style.height = app.height;
 
         frame.setAttribute("id", `${app.name}`);
         frame.setAttribute("src", `${app.html}`);
         frame.setAttribute("loading", `lazy`);
         frame.style.width = parseInt(windowElem.style.width) - 5;
         frame.style.height = parseInt(windowElem.style.height) - 37;
+        frame.classList.add("winCl-Frame");
         frame.onload = () => {
             this.eventController.addFrame(frame);
             const iframe = frame.contentDocument || frame.contentWindow.document;
             iframe.addEventListener("mousemove", (e) => {
                 sendMousemoveToParent(e, frame);
+            });
+            iframe.addEventListener("mousedown", (e) => {
+                this.adjustZIndex(windowElem);
             });
         };
 
@@ -111,6 +115,8 @@ export default class RenderController {
         windowElem.style.position = "absolute";
         windowElem.style.left = window.innerWidth / 2 - 100 + "px";
         windowElem.style.top = window.innerHeight / 2 - 200 + "px";
+        app.position.x = parseInt(windowElem.style.left);
+        app.position.y = parseInt(windowElem.style.top);
 
         resizeHandleLeft.classList.add("resize-handle-hori");
         resizeHandleLeft.classList.add("left");
@@ -127,14 +133,16 @@ export default class RenderController {
 
         resizeHandleBottom.addEventListener("mousedown", () => {
             const savedY = this.mouse.y;
-            const savedHeightWindow = windowElem.style.height;
-            const savedHeightFrame = frame.style.height;
+            const savedHeightWindow = this.mouse.y - windowElem.offsetTop;
             this.eventController.addFrameEvent({
                 name: `${app.name}_resize`,
                 event: "mousemove",
                 callback: () => {
+                    if (app.isFullScreen) return;
                     windowElem.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow), 50) + "px";
-                    frame.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightFrame), 20) + "px";
+                    frame.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow) - 37, 20) + "px";
+                    this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
+                    this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
             });
         });
@@ -147,11 +155,14 @@ export default class RenderController {
                 name: `${app.name}_resize`,
                 event: "mousemove",
                 callback: () => {
+                    if (app.isFullScreen) return;
                     if (savedY - this.mouse.y + parseInt(savedHeightWindow) < 50) return;
                     windowElem.style.top = this.mouse.y + "px";
                     frame.style.top = this.mouse.y - 37 + "px";
                     windowElem.style.height = Math.max(savedY - this.mouse.y + parseInt(savedHeightWindow), 50) + "px";
                     frame.style.height = Math.max(savedY - this.mouse.y + parseInt(savedHeightFrame), 20) + "px";
+                    this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
+                    this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
             });
         });
@@ -164,8 +175,11 @@ export default class RenderController {
                 name: `${app.name}_resize`,
                 event: "mousemove",
                 callback: () => {
+                    if (app.isFullScreen) return;
                     windowElem.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthWindow), 200) + "px";
                     frame.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthFrame), 195) + "px";
+                    this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
+                    this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
             });
         });
@@ -178,11 +192,14 @@ export default class RenderController {
                 name: `${app.name}_resize`,
                 event: "mousemove",
                 callback: () => {
+                    if (app.isFullScreen) return;
                     if (savedX - this.mouse.x + parseInt(savedWidthWindow) < 200) return;
                     windowElem.style.left = this.mouse.x + "px";
                     frame.style.left = this.mouse.x + "px";
                     windowElem.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthWindow), 200) + "px";
                     frame.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthFrame), 195) + "px";
+                    this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
+                    this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
             });
         });
@@ -192,6 +209,7 @@ export default class RenderController {
                 name: `${app.name}_resize`,
                 event: "mousemove",
                 callback: () => {
+                    if (app.isFullScreen) return;
                     const ySide = this.mouse.y - windowElem.offsetTop;
                     const hypo = calculateDistance({ x: windowElem.offsetLeft, y: windowElem.offsetTop }, { x: this.mouse.x, y: this.mouse.y });
                     const xSide = Math.sqrt(-1 * ySide * ySide + hypo * hypo);
@@ -199,6 +217,8 @@ export default class RenderController {
                     frame.style.height = Math.max(ySide - 37, 20) + "px";
                     windowElem.style.width = Math.max(xSide, 200) + "px";
                     frame.style.width = Math.max(xSide - 5, 195) + "px";
+                    this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
+                    this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
             });
         });
@@ -210,6 +230,7 @@ export default class RenderController {
                 name: `${app.name}_resize`,
                 event: "mousemove",
                 callback: () => {
+                    if (app.isFullScreen) return;
                     const ySide = this.mouse.y - windowElem.offsetTop;
                     const hypo = calculateDistance({ x: savedLeft + savedWidth, y: windowElem.offsetTop }, { x: this.mouse.x, y: this.mouse.y });
                     const xSide = Math.sqrt(-1 * ySide * ySide + hypo * hypo);
@@ -223,6 +244,8 @@ export default class RenderController {
                         windowElem.style.height = Math.max(ySide, 50) + "px";
                         frame.style.height = Math.max(ySide - 37, 20) + "px";
                     }
+                    this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
+                    this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
             });
         });
@@ -233,6 +256,10 @@ export default class RenderController {
             callback: () => {
                 this.eventController.removeFrameEvent(`${app.name}_resize`);
             },
+        });
+
+        windowElem.addEventListener("mousedown", () => {
+            this.adjustZIndex(windowElem);
         });
 
         this.desktop.prepend(windowElem);
@@ -250,11 +277,13 @@ export default class RenderController {
             const savedX = this.mouse.x;
             const window = document.getElementById(app.name);
             const savedOffset = window.offsetLeft;
-            this.eventController.addEvent({
+            this.eventController.addFrameEvent({
                 name: `${app.name}_drag`,
                 event: "mousemove",
                 callback: () => {
-                    this.moveWindow(savedX, savedOffset, window);
+                    this.moveElement(savedX, savedOffset, window);
+                    if (app.isFullScreen) return;
+                    this.appsController.moved(app.name, window.style.left, window.style.top);
                 },
             });
         });
@@ -262,18 +291,31 @@ export default class RenderController {
             name: `${app.name}_drag_up`,
             event: "mouseup",
             callback: () => {
-                this.eventController.removeEvent(`${app.name}_drag`);
+                this.eventController.removeFrameEvent(`${app.name}_drag`);
             },
         });
         closeBtn.classList.add("winCl-BtnHeader");
         closeBtn.classList.add("winCl-CloseIcon");
-        closeBtn.addEventListener("mousedown", (e) => {
+        closeBtn.addEventListener("mousedown", () => {
             ueh.closeApp(app.name);
         });
 
         expandBtn.classList.add("winCl-BtnHeader");
         expandBtn.classList.add("winCl-ExpandIcon");
-        expandBtn.addEventListener("mousedown", () => {});
+
+        expandBtn.addEventListener("mousedown", () => {
+            const window = document.getElementById(app.name);
+            if (app.isFullScreen) {
+                this.unexpandWindow(app, window);
+                this.appsController.toggleExpand(app.name);
+                return;
+            }
+            if (!app.isFullScreen) {
+                this.expandWindow(window);
+                this.appsController.toggleExpand(app.name);
+                return;
+            }
+        });
 
         hideBtn.classList.add("winCl-BtnHeader");
         hideBtn.classList.add("winCl-MinimizeIcon");
@@ -328,14 +370,18 @@ export default class RenderController {
         if (!window.classList.contains("winCl-ShortcutBtn")) window.style["z-index"] = 2;
     }
 
-    moveWindow(startDragX, startDragOffset, window) {
-        if (window === undefined) return;
+    moveElement(startDragX, startDragOffset, elem, useGrid = false) {
+        if (elem === undefined) return;
+        if (!elem.querySelector(".winCl-ShortcutBtn")) this.adjustZIndex(elem);
 
         const diff = Math.abs(startDragX - startDragOffset);
 
-        window.style.position = "absolute";
-        window.style.left = this.mouse.x - diff + "px";
-        window.style.top = this.mouse.y - 10 + "px";
+        const x = useGrid ? this.alignToGrid(this.mouse.x - diff, this.mouse.y).x : this.mouse.x - diff;
+        const y = useGrid ? this.alignToGrid(this.mouse.x - diff, this.mouse.y).y : this.mouse.y - 10;
+
+        elem.style.position = "absolute";
+        elem.style.left = x + "px";
+        elem.style.top = y + "px";
     }
 
     showTurnOffScreen() {
@@ -351,13 +397,37 @@ export default class RenderController {
         screen.style.backgroundImage = "";
         screen.style.backgroundColor = "black";
     }
+
+    expandWindow(window) {
+        if (!window) return;
+        const frame = window.querySelector("iframe");
+        frame.style.width = "calc(100% - 5px)";
+        frame.style.height = "calc(100% - 37px)";
+        window.style.width = "calc(100% - 6px)";
+        window.style.height = "calc(100% - 50px)";
+        window.style.top = "0px";
+        window.style.left = "0px";
+    }
+
+    unexpandWindow(app, window) {
+        if (!window) return;
+        window.style.width = `${app.width}px`;
+        window.style.height = `${app.height}px`;
+        window.style.top = `${app.position.y}px`;
+        window.style.left = `${app.position.x}px`;
+    }
+
+    alignToGrid(x, y) {
+        const gridX = Math.round(x / 75) * 75;
+        const gridY = Math.round(y / 75) * 75;
+        return { x: gridX, y: gridY };
+    }
 }
 
 function sendMousemoveToParent(event, iframe) {
     const iframeRect = iframe.getBoundingClientRect();
     const offsetX = iframeRect.left + event.clientX;
     const offsetY = iframeRect.top + event.clientY;
-
     window.parent.postMessage(
         {
             type: "mousemove",

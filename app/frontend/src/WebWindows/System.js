@@ -7,21 +7,19 @@ import EventController from "./EventController";
 export class System {
     constructor() {
         this.eventController = new EventController();
-        this.mouse = new MouseController(this.eventController);
-        this.renderController = new RenderController(this.eventController, this.mouse);
         this.appsController = new AppsController();
+        this.mouse = new MouseController(this.eventController);
+        this.renderController = new RenderController(this.eventController, this.mouse, this.appsController);
         this.starterController = new StartController();
-
-        this.selectedWindow = undefined;
     }
 
     init() {
         this.starterController.initStartButtons();
         this.renderController.webindowsLoadingScreen(100);
         this.appsController.initAllApps();
-        this.initWindowEvents();
 
         this.initClock();
+
         for (let i = 0; i < this.appsController.allApps.length; i++) {
             this.renderController.createShortcut(this.appsController.allApps[i]);
         }
@@ -39,42 +37,22 @@ export class System {
         }, 1000);
     }
 
-    initWindowEvents() {
-        this.eventController.addEvent({
-            name: "System_mousemove",
-            event: "mousemove",
-            callback: (e) => {
-                this.moveWindow(e);
-            },
-        });
-    }
-
     tickTime() {
-        let date = new Date();
-        let clock = document.getElementById("id_clockTaskBar");
-        clock.innerHTML = String(date.getHours()) + ":" + String(date.getMinutes());
-    }
-
-    setSelectedWindow(id) {
-        this.selectedWindow = document.getElementById(id);
-    }
-
-    moveWindow() {
-        if (!this.mouse.isDragging) return;
-
-        this.renderController.moveWindow(this.mouse.x, this.mouse.y, this.selectedWindow);
+        const clock = document.getElementById("id_clockTaskBar");
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        clock.innerHTML = hours + ":" + minutes;
     }
 
     openApp(app) {
         if (this.appsController.isAppOpened(app.name)) return;
-
         this.renderController.createWindow(app);
         this.appsController.appOpened(app);
     }
 
     closeApp(name) {
         if (!this.appsController.isAppOpened(name)) return;
-
         this.renderController.removeWindow(name);
         this.appsController.appClosed(name);
     }
@@ -91,9 +69,6 @@ export class System {
     }
 
     turnOff() {
-        // let audio = new Audio("");
-        // audio.play();
-
         this.renderController.showTurnOffScreen();
 
         setTimeout(() => {
