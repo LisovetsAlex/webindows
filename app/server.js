@@ -9,6 +9,8 @@ const fs = require("fs");
 const app = express();
 const compiler = webpack(webpackConfig);
 
+console.log(process.env.NODE_ENV);
+
 app.use(
     webpackDevMiddleware(compiler, {
         publicPath: webpackConfig.output.publicPath,
@@ -21,11 +23,7 @@ app.use(express.static("app/frontend/public"));
 
 app.get("/Apps/:filepath(*)", (req, res) => {
     const filepath = req.params.filepath;
-    const filePathInAppsDir = path.join(
-        __dirname,
-        "./frontend/src/Apps",
-        filepath
-    );
+    const filePathInAppsDir = path.join(__dirname, "./frontend/src/Apps", filepath);
 
     fs.access(filePathInAppsDir, fs.constants.F_OK, (err) => {
         if (err) {
