@@ -1,149 +1,80 @@
-import Draw from "./Draw";
-import Apper from "./Apper";
-import { Requester } from "./Requester";
-import { StartHandler } from "./StartHandler";
+import RenderController from "./RenderController";
+import AppsController from "./AppsController";
+import MouseController from "./MouseController";
+import { StartHandler as StartController } from "./StartController";
+import EventController from "./EventController";
 
-function System() {
-    this.requester = new Requester();
-    this.draw = new Draw();
-    this.apper = new Apper();
-    this.starter = new StartHandler();
+export class System {
+    constructor() {
+        this.eventController = new EventController();
+        this.appsController = new AppsController();
+        this.mouse = new MouseController(this.eventController);
+        this.renderController = new RenderController(this.eventController, this.mouse, this.appsController);
+        this.starterController = new StartController();
+    }
 
-    this.selectedWindow = undefined;
-    this.mouseX = 0;
-    this.mouseY = 0;
-    this.isDragging = false;
-
-    this.init = function () {
-        this.starter.initStartButtons();
-        this.draw.webindowsLoadingScreen(100);
-        this.apper.initAllApps();
-        this.initWindowEvents();
+    init() {
+        this.starterController.initStartButtons();
+        this.renderController.webindowsLoadingScreen(100);
+        this.appsController.initAllApps();
 
         this.initClock();
-        for (let i = 0; i < this.apper.allApps.length; i++) {
-            this.draw.createShortcut(this.apper.allApps[i]);
-        }
-    };
 
-    this.initClock = function () {
+        for (let i = 0; i < this.appsController.allApps.length; i++) {
+            this.renderController.createShortcut(this.appsController.allApps[i]);
+        }
+
+        this.tick();
+    }
+
+    tick() {
+        setInterval(() => {}, 60 / 1000);
+    }
+
+    initClock() {
         setInterval(() => {
             this.tickTime();
         }, 1000);
-    };
+    }
 
-    this.initWindowEvents = function () {
-        let html = document.getElementById("id_windows");
+    tickTime() {
+        const clock = document.getElementById("id_clockTaskBar");
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        clock.innerHTML = hours + ":" + minutes;
+    }
 
-        html.addEventListener("mousemove", (e) => {
-            this.moveWindow(e);
-        });
-        window.addEventListener("mouseup", (e) => {
-            this.drag(undefined);
-        });
-        window.addEventListener("mouseout", (event) => {
-            if (event.relatedTarget != null) return;
-            this.drag(undefined);
-        });
-    };
+    openApp(app) {
+        if (this.appsController.isAppOpened(app.name)) return;
+        this.renderController.createWindow(app);
+        this.appsController.appOpened(app);
+    }
 
-    this.tickTime = function () {
-        let date = new Date();
-        let clock = document.getElementById("id_clockTaskBar");
-        clock.innerHTML =
-            String(date.getHours()) + ":" + String(date.getMinutes());
-    };
+    closeApp(name) {
+        if (!this.appsController.isAppOpened(name)) return;
+        this.renderController.removeWindow(name);
+        this.appsController.appClosed(name);
+    }
 
-    this.setSelectedWindow = function (id) {
-        this.selectedWindow = document.getElementById(id);
-    };
-
-    this.drag = function (id) {
-        if (id == undefined) {
-            this.isDragging = false;
-            this.setSelectedWindow(undefined);
+    toggleHideApp(name) {
+        if (this.appsController.isAppHidden(name)) {
+            this.renderController.showWindow(name);
+            this.appsController.appShown(name);
             return;
         }
 
-        this.setSelectedWindow(id);
-        this.isDragging = true;
+        this.renderController.hideWindow(name);
+        this.appsController.appHidden(name);
+    }
 
-        if (sys.selectedWindow == undefined) return;
-        this.draw.adjustZIndex(this.selectedWindow);
-
-        /*
-        for (let i = 0; i < this.openApps.length; i++) {
-            if (this.openApps[i].name == id && this.openApps[i].isFullScreen)
-                this.ExpandWindow(id);
-        }*/
-    };
-
-    this.drop = function () {
-        this.selectedWindow = undefined;
-        this.isDragging = false;
-    };
-
-    this.moveWindow = function (event) {
-        if (!this.isDragging) return;
-
-        if (event.clientX <= window.innerWidth && event.clientX >= 20)
-            this.mouseX = event.clientX;
-        if (event.clientY <= window.innerHeight - 100 && event.clientY >= 10)
-            this.mouseY = event.clientY;
-
-        this.draw.moveWindow(this.mouseX, this.mouseY, this.selectedWindow);
-
-        /*
-        if (!isDragging) {
-            const iframes = document.getElementsByTagName("iframe");
-            for (let i = 0; i < iframes.length; i++) {
-                iframes[i].style.scale = 1;
-            }
-            return;
-        }
-    
-        const iframes = document.getElementsByTagName("iframe");
-        for (let i = 0; i < iframes.length; i++) {
-            iframes[i].style.scale = 0;
-        }
-        */
-    };
-
-    this.openApp = function (app) {
-        if (this.apper.isAppOpened(app.name)) return;
-
-        this.draw.createWindow(app);
-        this.apper.appOpened(app);
-    };
-
-    this.closeApp = function (name) {
-        if (!this.apper.isAppOpened(name)) return;
-
-        this.draw.removeWindow(name);
-        this.apper.appClosed(name);
-    };
-
-    this.toggleHideApp = function (name) {
-        if (this.apper.isAppHidden(name)) {
-            this.draw.showWindow(name);
-            this.apper.appShown(name);
-            return;
-        }
-
-        this.draw.hideWindow(name);
-        this.apper.appHidden(name);
-    };
-
-    this.turnOff = function () {
-        // let audio = new Audio("");
-        // audio.play();
-
-        this.draw.showTurnOffScreen();
+    turnOff() {
+        this.renderController.showTurnOffScreen();
 
         setTimeout(() => {
-            this.draw.black();
+            this.renderController.black();
         }, 6000);
-    };
+    }
 }
 
 const sys = new System();

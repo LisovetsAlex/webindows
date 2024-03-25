@@ -53,19 +53,13 @@ option {
 
 .winCl-WindowHeader {
     padding-top: 3px;
-    margin-bottom: 9px;
+    margin-bottom: 3px;
     padding-right: 5px;
     height: 20px;
     color: var(--white);
     padding-left: 5px;
     background: rgb(2, 0, 36);
-    background: linear-gradient(
-        90deg,
-        var(--dark-blue0) 0%,
-        var(--dark-blue5) 5%,
-        var(--dark-blue23) 23%,
-        var(--light-blue) 100%
-    );
+    background: linear-gradient(90deg, var(--dark-blue0) 0%, var(--dark-blue5) 5%, var(--dark-blue23) 23%, var(--light-blue) 100%);
 }
 
 .winCl-Text {
@@ -89,9 +83,20 @@ option {
     border-bottom: 2px solid #848484;
     padding: 2px;
     background-color: rgb(201, 201, 201);
-    height: 190px;
-    width: 350px;
-    box-shadow: black 2px 2px 10px 0px;
+    height: 100vh;
+    width: 100vw;
+    box-shadow: rgba(0, 0, 0, 0.253) 0px 2px 16px 4px;
+}
+
+.winCl-Window {
+    z-index: 1;
+    background-color: rgb(201, 201, 201);
+    height: calc(100vh - 16px);
+    width: calc(100vw - 16px);
+    padding: 8px;
+}
+
+.winCl-Frame {
 }
 
 .winCl-Taskbar {
@@ -115,6 +120,7 @@ option {
     width: 30%;
     height: 50%;
     margin: 3px;
+    margin-top: 0;
 }
 
 .winCl-Selector:hover,
@@ -359,14 +365,7 @@ option {
 }
 
 .imageStart {
-    background: linear-gradient(
-        180deg,
-        rgba(2, 0, 36, 1) 0%,
-        rgba(6, 5, 80, 1) 0%,
-        rgba(8, 8, 111, 1) 5%,
-        rgba(9, 9, 121, 1) 23%,
-        rgba(0, 106, 255, 1) 100%
-    );
+    background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, rgba(6, 5, 80, 1) 0%, rgba(8, 8, 111, 1) 5%, rgba(9, 9, 121, 1) 23%, rgba(0, 106, 255, 1) 100%);
     width: 40px;
     position: absolute;
     bottom: 1px;
@@ -445,4 +444,55 @@ option {
 
     top: 0;
     left: 0;
+}
+
+.resize-handle-hori {
+    position: absolute;
+    width: 8px;
+    height: 100%;
+    top: 0;
+    cursor: ew-resize;
+}
+
+.resize-handle-vert {
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    cursor: ns-resize;
+}
+
+.resize-handle-diag {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+}
+
+.resize-handle-diag.right-bottom {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.resize-handle-diag.left-bottom {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+}
+
+.resize-handle-vert.top {
+    top: -5px;
+    left: -1%;
+}
+
+.resize-handle-vert.bottom {
+    bottom: -5px;
+    left: -1%;
+}
+
+.resize-handle-hori.left {
+    left: -5px;
+}
+
+.resize-handle-hori.right {
+    right: -5px;
 }

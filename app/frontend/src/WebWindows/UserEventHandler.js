@@ -1,33 +1,25 @@
 import { sys } from "./System";
 
-function UEH() {
-    this.drag = function (name) {
-        sys.drag(name);
-    };
-
-    this.drop = function () {
-        sys.drag(undefined);
-    };
-
-    this.mouseMove = function (event) {
+class UEH {
+    mouseMove(event) {
         sys.moveWindow(event);
-    };
+    }
 
-    this.openApp = function (app) {
+    openApp(app) {
         sys.openApp(app);
-    };
+    }
 
-    this.closeApp = function (name) {
+    closeApp(name) {
         sys.closeApp(name);
-    };
+    }
 
-    this.toggleHideApp = function (name) {
+    toggleHideApp(name) {
         sys.toggleHideApp(name);
-    };
+    }
 
-    this.turnOff = function () {
+    turnOff() {
         sys.turnOff();
-    };
+    }
 }
 
 const ueh = new UEH();
