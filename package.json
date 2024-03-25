@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "app": "node app/server.js"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --config webpack.config.js"
     },
     "keywords": [],
     "author": "",
@@ -17,7 +18,9 @@
         "webpack-hot-middleware": "^2.26.1"
     },
     "devDependencies": {
+        "copy-webpack-plugin": "^12.0.2",
         "css-loader": "^6.10.0",
+        "html-loader": "^5.0.0",
         "style-loader": "^3.3.4"
     }
 }
