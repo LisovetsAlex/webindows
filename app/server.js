@@ -31,7 +31,6 @@ if (process.env.NODE_ENV === "production") {
 app.get("/Apps/:filepath(*)", (req, res) => {
     const filepath = req.params.filepath;
     const filePathInAppsDir = path.join(__dirname, "./frontend/src/Apps", filepath);
-
     fs.access(filePathInAppsDir, fs.constants.F_OK, (err) => {
         if (err) {
             return res.status(404).send("File not found");
