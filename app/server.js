@@ -9,17 +9,24 @@ const fs = require("fs");
 const app = express();
 const compiler = webpack(webpackConfig);
 
-console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === "development") {
+    app.use(
+        webpackDevMiddleware(compiler, {
+            publicPath: webpackConfig.output.publicPath,
+        })
+    );
 
-app.use(
-    webpackDevMiddleware(compiler, {
-        publicPath: webpackConfig.output.publicPath,
-    })
-);
+    app.use(webpackHotMiddleware(compiler));
 
-app.use(webpackHotMiddleware(compiler));
+    app.use(express.static("app/frontend/public"));
+}
 
-app.use(express.static("app/frontend/public"));
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "app/frontend/build")));
+    app.get("/:filepath(*)", (req, res) => {
+        res.sendFile(path.join(__dirname, "/frontend/build", req.params.filepath));
+    });
+}
 
 app.get("/Apps/:filepath(*)", (req, res) => {
     const filepath = req.params.filepath;
