@@ -93,12 +93,23 @@ export default class RenderController {
         frame.style.height = parseInt(windowElem.style.height) - 37;
         frame.classList.add("winCl-Frame");
         frame.onload = () => {
-            this.eventController.addFrame(frame);
             const iframe = frame.contentDocument || frame.contentWindow.document;
+            const inside = iframe.getElementsByTagName("iframe")[0];
+            const insideDoc = inside.contentDocument || inside.contentWindow.document;
+
+            this.eventController.addFrame(frame);
+            this.eventController.addFrame(inside);
+
+            insideDoc.addEventListener("mousemove", (e) => {
+                sendMousemoveToParent(e, inside);
+            });
+            insideDoc.addEventListener("mousedown", () => {
+                this.adjustZIndex(windowElem);
+            });
             iframe.addEventListener("mousemove", (e) => {
                 sendMousemoveToParent(e, frame);
             });
-            iframe.addEventListener("mousedown", (e) => {
+            iframe.addEventListener("mousedown", () => {
                 this.adjustZIndex(windowElem);
             });
         };
@@ -296,14 +307,14 @@ export default class RenderController {
         });
         closeBtn.classList.add("winCl-BtnHeader");
         closeBtn.classList.add("winCl-CloseIcon");
-        closeBtn.addEventListener("mousedown", () => {
+        closeBtn.addEventListener("click", () => {
             ueh.closeApp(app.name);
         });
 
         expandBtn.classList.add("winCl-BtnHeader");
         expandBtn.classList.add("winCl-ExpandIcon");
 
-        expandBtn.addEventListener("mousedown", () => {
+        expandBtn.addEventListener("click", () => {
             const window = document.getElementById(app.name);
             if (app.isFullScreen) {
                 this.unexpandWindow(app, window);
@@ -319,7 +330,7 @@ export default class RenderController {
 
         hideBtn.classList.add("winCl-BtnHeader");
         hideBtn.classList.add("winCl-MinimizeIcon");
-        hideBtn.addEventListener("mousedown", () => {
+        hideBtn.addEventListener("click", () => {
             ueh.toggleHideApp(app.name);
         });
 

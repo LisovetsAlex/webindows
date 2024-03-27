@@ -21,16 +21,16 @@ export default class AppsController {
         let arrApps = new Array(0);
         let obj = {};
 
-        obj = new App("Order Manager", `Apps/OrderManager/ui.html`, "ImgTrans_OrderManager.png", { width: 350, height: 200 });
+        obj = new App("Order Manager", `apps/OrderManager/ui.html`, "ImgTrans_OrderManager.png", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("Callback Sorter", `Apps/CallbackSorter/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
+        obj = new App("Callback Sorter", `apps/CallbackSorter/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("POS Aufgabe", `Apps/CustomerProductTester/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
+        obj = new App("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("Visual Studio Code", `http://127.0.0.1:8080/`, "Img_Program.PNG", { width: 350, height: 200 });
+        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
         this.allApps = arrApps;

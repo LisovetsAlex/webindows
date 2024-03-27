@@ -3,11 +3,7 @@ export default class MouseController {
         this.eventController = eventController;
         this.x = 0;
         this.y = 0;
-        this.isDragging = false;
-        this.velY = 0;
-        this.velX = 0;
         this.isHoldingLMB = false;
-        this.lastTick = performance.now();
 
         this.eventController.addEvent({
             name: "MouseController_message",
@@ -52,7 +48,7 @@ export default class MouseController {
 
     tick() {
         setInterval(() => {
-            //this.debug();
+            this.debug();
         }, 50);
     }
 
@@ -66,10 +62,6 @@ export default class MouseController {
                 <tr>
                     <td>Y:</td>
                     <td><span id="yValue" style="color: green;">${this.y}</span></td>
-                </tr>
-                <tr>
-                    <td>Dragging:</td>
-                    <td><span id="draggingValue" style="color: green;">${this.isDragging}</span></td>
                 </tr>
                 <tr>
                     <td>Holding LMB:</td>

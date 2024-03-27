@@ -7,11 +7,12 @@ const webpackConfig = require("../../webpack.config");
 const path = require("path");
 
 /**
- * Starts development server for webwindows, will watch and hotreload all changes in /src
+ * Starts development server for webindows, will watch and hot-reload all changes in ./frontend/src
  */
 function startDevServer() {
     const app = express();
     const compiler = webpack(webpackConfig);
+    const port = process.env.PORT || 3000;
 
     app.use(
         webpackDevMiddleware(compiler, {
@@ -32,10 +33,11 @@ function startDevServer() {
         res.sendFile(__dirname + "/public/index.html");
     });
 
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-        console.log(`Dev. Server: http://localhost:${PORT}`);
+    app.listen(port, () => {
+        console.log(`Development server started at: http://localhost:${port}`);
     });
+
+    return app;
 }
 
 module.exports = startDevServer;
