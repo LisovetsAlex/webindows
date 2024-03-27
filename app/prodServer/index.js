@@ -4,7 +4,7 @@ const path = require("path");
 function startProdServer() {
     const app = express();
 
-    app.use(express.static(path.join(__dirname, "app/build")));
+    app.use(express.static(path.join(__dirname, "../build")));
     app.get("/:filepath(*)", (req, res) => {
         res.sendFile(path.join(__dirname, "../build", req.params.filepath));
     });
