@@ -15,33 +15,27 @@ if (process.env.NODE_ENV === "development") {
             publicPath: webpackConfig.output.publicPath,
         })
     );
-
     app.use(webpackHotMiddleware(compiler));
-
-    app.use(express.static("app/frontend/public"));
+    app.use(express.static("app/public"));
+    app.get("/Apps/:filepath(*)", (req, res) => {
+        const filepath = req.params.filepath;
+        const filePathInAppsDir = path.join(__dirname, "./src/apps", filepath);
+        fs.access(filePathInAppsDir, fs.constants.F_OK, (err) => {
+            if (err) return res.status(404).send("File not found");
+            res.sendFile(filePathInAppsDir);
+        });
+    });
+    app.get("/", (req, res) => {
+        res.sendFile(__dirname + "/public/index.html");
+    });
 }
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "app/frontend/build")));
+    app.use(express.static(path.join(__dirname, "app/build")));
     app.get("/:filepath(*)", (req, res) => {
-        res.sendFile(path.join(__dirname, "/frontend/build", req.params.filepath));
+        res.sendFile(path.join(__dirname, "/build", req.params.filepath));
     });
 }
-
-app.get("/Apps/:filepath(*)", (req, res) => {
-    const filepath = req.params.filepath;
-    const filePathInAppsDir = path.join(__dirname, "./frontend/src/Apps", filepath);
-    fs.access(filePathInAppsDir, fs.constants.F_OK, (err) => {
-        if (err) {
-            return res.status(404).send("File not found");
-        }
-        res.sendFile(filePathInAppsDir);
-    });
-});
-
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/frontend/public/index.html");
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

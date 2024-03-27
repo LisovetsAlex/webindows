@@ -1,9 +1,14 @@
 {
-    "version": 2,
+    "version": 270320241328,
     "builds": [
         {
             "src": "app/server.js",
             "use": "@vercel/node"
+        },
+        {
+            "src": "package.json",
+            "use": "@vercel/static-build",
+            "config": { "distDir": "app/build" }
         }
     ],
     "routes": [
