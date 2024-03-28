@@ -28,7 +28,7 @@ export class System {
     }
 
     tick() {
-        setInterval(() => {}, 60 / 1000);
+        //setInterval(() => {}, 60 / 1000);
     }
 
     initClock() {

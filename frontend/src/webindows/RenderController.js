@@ -95,17 +95,20 @@ export default class RenderController {
         frame.onload = () => {
             const iframe = frame.contentDocument || frame.contentWindow.document;
             const inside = iframe.getElementsByTagName("iframe")[0];
-            const insideDoc = inside.contentDocument || inside.contentWindow.document;
+
+            if (inside) {
+                const insideDoc = inside.contentDocument || inside.contentWindow.document;
+                this.eventController.addFrame(inside);
+                insideDoc.addEventListener("mousemove", (e) => {
+                    sendMousemoveToParent(e, inside);
+                });
+                insideDoc.addEventListener("mousedown", () => {
+                    this.adjustZIndex(windowElem);
+                });
+            }
 
             this.eventController.addFrame(frame);
-            this.eventController.addFrame(inside);
 
-            insideDoc.addEventListener("mousemove", (e) => {
-                sendMousemoveToParent(e, inside);
-            });
-            insideDoc.addEventListener("mousedown", () => {
-                this.adjustZIndex(windowElem);
-            });
             iframe.addEventListener("mousemove", (e) => {
                 sendMousemoveToParent(e, frame);
             });

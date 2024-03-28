@@ -6,8 +6,8 @@
     "scripts": {
         "docker": "docker-compose up -d",
         "build": "webpack --config webpack.config.js",
-        "start:dev": "set NODE_ENV=development&& babel-node backend/main.js",
-        "start:prod": "set NODE_ENV=production&& babel-node backend/main.js"
+        "start:dev": "babel-node backend/main.js",
+        "start:prod": "babel-node backend/main.js"
     },
     "keywords": [],
     "author": "",

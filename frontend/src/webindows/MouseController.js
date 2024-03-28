@@ -48,7 +48,7 @@ export default class MouseController {
 
     tick() {
         setInterval(() => {
-            this.debug();
+            //this.debug();
         }, 50);
     }
 

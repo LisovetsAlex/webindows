@@ -12,5 +12,8 @@ services:
         image: mongo
         ports:
             - "27017:27017"
+        command: mongod
+        env_file:
+            - .env
         volumes:
             - "./mongo-data:/data/db"
