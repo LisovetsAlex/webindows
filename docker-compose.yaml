@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+    code-server:
+        image: codercom/code-server
+        ports:
+            - "127.0.0.1:8080:8080"
+        volumes:
+            - "./:/home/coder/project"
+            - "./config.yaml:/home/coder/.config/code-server/config.yaml"
+    mongodb:
+        image: mongo
+        ports:
+            - "27017:27017"
+        command: mongod
+        env_file:
+            - .env
+        volumes:
+            - "./mongo-data:/data/db"
