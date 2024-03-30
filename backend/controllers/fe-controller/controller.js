@@ -8,12 +8,12 @@ class FEController {
 
     @Route("GET", "/")
     getIndex(req, res) {
-        res.sendFile(path.join(__dirname, "../../../build/index.html"));
+        res.sendFile(path.join(__dirname, "../../../fe-build/index.html"));
     }
 
     @Route("GET", "/:filepath(*)")
     getFiles(req, res) {
-        res.sendFile(path.join(__dirname, "../../../build", req.params.filepath));
+        res.sendFile(path.join(__dirname, "../../../fe-build", req.params.filepath));
     }
 }
 

@@ -1,13 +1,10 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 
-/**
- * Configuration for production of frontend
- */
 module.exports = {
-    entry: "./frontend/index.js",
+    entry: "./index.js",
     output: {
-        path: path.resolve(__dirname, "build"),
+        path: path.resolve(__dirname, "../fe-build"),
         filename: "bundle.js",
     },
     mode: "production",
@@ -16,8 +13,8 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: "frontend/public", to: "." },
-                { from: "frontend/src/apps", to: "./apps" },
+                { from: "public", to: "." },
+                { from: "src/apps", to: "./apps" },
             ],
         }),
     ],

@@ -3,16 +3,18 @@ const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
 const fs = require("fs");
-const webpackConfig = require("../../webpack.config");
+const webpackConfig = require("./webpack.config");
 const path = require("path");
 
 /**
  * Starts development server for webindows, will watch and hot-reload all changes in ./frontend/src
  */
 function startDevServer() {
+    console.log("Starting development server...");
+
     const app = express();
     const compiler = webpack(webpackConfig);
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 3001;
 
     app.use(
         webpackDevMiddleware(compiler, {
@@ -30,7 +32,7 @@ function startDevServer() {
         });
     });
     app.get("/", (req, res) => {
-        res.sendFile(__dirname + "/public/index.html");
+        res.sendFile(__dirname + "../../frontend/public/index.html");
     });
 
     app.listen(port, () => {
@@ -40,4 +42,4 @@ function startDevServer() {
     return app;
 }
 
-module.exports = startDevServer;
+startDevServer();

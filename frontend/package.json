@@ -1,0 +1,25 @@
+{
+    "name": "frontend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "webpack --config webpack.config.js",
+        "dev": "node devServer.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "webpack": "^5.90.3",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-middleware": "^7.0.0",
+        "webpack-hot-middleware": "^2.26.1"
+    },
+    "devDependencies": {
+        "copy-webpack-plugin": "^12.0.2",
+        "express": "^4.18.3",
+        "css-loader": "^6.10.0",
+        "html-loader": "^5.0.0",
+        "style-loader": "^3.3.4"
+    }
+}
