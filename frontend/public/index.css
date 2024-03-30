@@ -16,6 +16,8 @@
     --font: fontFamily;
 
     font-size: small;
+
+    cursor: url(Assets/Windows95_Cursor.cur), default;
 }
 
 img {
@@ -27,7 +29,7 @@ img {
 }
 body {
     font-family: var(--font);
-    background-color: #0d8cbe;
+    background: url(Assets/Img_Bg_Fields.jpg) no-repeat center center fixed;
     padding: 10px;
     margin: 0px;
     padding: 0px;
