@@ -94,18 +94,6 @@ export default class RenderController {
         frame.classList.add("winCl-Frame");
         frame.onload = () => {
             const iframe = frame.contentDocument || frame.contentWindow.document;
-            const inside = iframe.getElementsByTagName("iframe")[0];
-
-            if (inside) {
-                const insideDoc = inside.contentDocument || inside.contentWindow.document;
-                this.eventController.addFrame(inside);
-                insideDoc.addEventListener("mousemove", (e) => {
-                    sendMousemoveToParent(e, inside);
-                });
-                insideDoc.addEventListener("mousedown", () => {
-                    this.adjustZIndex(windowElem);
-                });
-            }
 
             this.eventController.addFrame(frame);
 
@@ -153,6 +141,7 @@ export default class RenderController {
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.disableIframes();
                     windowElem.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow), 50) + "px";
                     frame.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow) - 30, 20) + "px";
                     this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
@@ -171,6 +160,7 @@ export default class RenderController {
                 callback: () => {
                     if (app.isFullScreen) return;
                     if (savedY - this.mouse.y + parseInt(savedHeightWindow) < 50) return;
+                    this.disableIframes();
                     windowElem.style.top = this.mouse.y + "px";
                     frame.style.top = this.mouse.y - 30 + "px";
                     windowElem.style.height = Math.max(savedY - this.mouse.y + parseInt(savedHeightWindow), 50) + "px";
@@ -190,6 +180,7 @@ export default class RenderController {
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.disableIframes();
                     windowElem.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthWindow), 200) + "px";
                     frame.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthFrame), 199) + "px";
                     this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
@@ -208,6 +199,7 @@ export default class RenderController {
                 callback: () => {
                     if (app.isFullScreen) return;
                     if (savedX - this.mouse.x + parseInt(savedWidthWindow) < 200) return;
+                    this.disableIframes();
                     windowElem.style.left = this.mouse.x + "px";
                     frame.style.left = this.mouse.x + "px";
                     windowElem.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthWindow), 200) + "px";
@@ -224,6 +216,7 @@ export default class RenderController {
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.disableIframes();
                     const ySide = this.mouse.y - windowElem.offsetTop;
                     const hypo = calculateDistance({ x: windowElem.offsetLeft, y: windowElem.offsetTop }, { x: this.mouse.x, y: this.mouse.y });
                     const xSide = Math.sqrt(-1 * ySide * ySide + hypo * hypo);
@@ -245,6 +238,7 @@ export default class RenderController {
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.disableIframes();
                     const ySide = this.mouse.y - windowElem.offsetTop;
                     const hypo = calculateDistance({ x: savedLeft + savedWidth, y: windowElem.offsetTop }, { x: this.mouse.x, y: this.mouse.y });
                     const xSide = Math.sqrt(-1 * ySide * ySide + hypo * hypo);
@@ -269,6 +263,7 @@ export default class RenderController {
             event: "mouseup",
             callback: () => {
                 this.eventController.removeFrameEvent(`${app.name}_resize`);
+                this.enableIframes();
             },
         });
 
@@ -295,6 +290,7 @@ export default class RenderController {
                 name: `${app.name}_drag`,
                 event: "mousemove",
                 callback: () => {
+                    this.disableIframes();
                     this.moveElement(savedX, savedOffset, window);
                     if (app.isFullScreen) return;
                     this.appsController.moved(app.name, window.style.left, window.style.top);
@@ -305,6 +301,7 @@ export default class RenderController {
             name: `${app.name}_drag_up`,
             event: "mouseup",
             callback: () => {
+                this.enableIframes();
                 this.eventController.removeFrameEvent(`${app.name}_drag`);
             },
         });
@@ -435,6 +432,20 @@ export default class RenderController {
         const gridX = Math.round(x / 75) * 75;
         const gridY = Math.round(y / 75) * 75;
         return { x: gridX, y: gridY };
+    }
+
+    disableIframes() {
+        const iframes = document.getElementsByTagName("iframe");
+        for (let i = 0; i < iframes.length; i++) {
+            iframes[i].style.pointerEvents = "none";
+        }
+    }
+
+    enableIframes() {
+        const iframes = document.getElementsByTagName("iframe");
+        for (let i = 0; i < iframes.length; i++) {
+            iframes[i].style.pointerEvents = "auto";
+        }
     }
 }
 
