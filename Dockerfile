@@ -22,6 +22,6 @@ COPY --from=build-fe /app/frontend/build /app/frontend/build
 
 WORKDIR /app/backend
 
-EXPOSE 3000
+EXPOSE 3069
 
 CMD ["npm", "start"]
