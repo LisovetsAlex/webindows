@@ -89,8 +89,8 @@ export default class RenderController {
         frame.setAttribute("id", `${app.name}`);
         frame.setAttribute("src", `${app.html}`);
         frame.setAttribute("loading", `lazy`);
-        frame.style.width = parseInt(windowElem.style.width) - 5;
-        frame.style.height = parseInt(windowElem.style.height) - 37;
+        frame.style.width = parseInt(windowElem.style.width) - 1;
+        frame.style.height = parseInt(windowElem.style.height) - 30;
         frame.classList.add("winCl-Frame");
         frame.onload = () => {
             const iframe = frame.contentDocument || frame.contentWindow.document;
@@ -154,7 +154,7 @@ export default class RenderController {
                 callback: () => {
                     if (app.isFullScreen) return;
                     windowElem.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow), 50) + "px";
-                    frame.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow) - 37, 20) + "px";
+                    frame.style.height = Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow) - 30, 20) + "px";
                     this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
                     this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
@@ -172,7 +172,7 @@ export default class RenderController {
                     if (app.isFullScreen) return;
                     if (savedY - this.mouse.y + parseInt(savedHeightWindow) < 50) return;
                     windowElem.style.top = this.mouse.y + "px";
-                    frame.style.top = this.mouse.y - 37 + "px";
+                    frame.style.top = this.mouse.y - 30 + "px";
                     windowElem.style.height = Math.max(savedY - this.mouse.y + parseInt(savedHeightWindow), 50) + "px";
                     frame.style.height = Math.max(savedY - this.mouse.y + parseInt(savedHeightFrame), 20) + "px";
                     this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
@@ -191,7 +191,7 @@ export default class RenderController {
                 callback: () => {
                     if (app.isFullScreen) return;
                     windowElem.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthWindow), 200) + "px";
-                    frame.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthFrame), 195) + "px";
+                    frame.style.width = Math.max(this.mouse.x - savedX + parseInt(savedWidthFrame), 199) + "px";
                     this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
                     this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
@@ -211,7 +211,7 @@ export default class RenderController {
                     windowElem.style.left = this.mouse.x + "px";
                     frame.style.left = this.mouse.x + "px";
                     windowElem.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthWindow), 200) + "px";
-                    frame.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthFrame), 195) + "px";
+                    frame.style.width = Math.max(savedX - this.mouse.x + parseInt(savedWidthFrame), 198) + "px";
                     this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
                     this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
@@ -228,9 +228,9 @@ export default class RenderController {
                     const hypo = calculateDistance({ x: windowElem.offsetLeft, y: windowElem.offsetTop }, { x: this.mouse.x, y: this.mouse.y });
                     const xSide = Math.sqrt(-1 * ySide * ySide + hypo * hypo);
                     windowElem.style.height = Math.max(ySide, 50) + "px";
-                    frame.style.height = Math.max(ySide - 37, 20) + "px";
+                    frame.style.height = Math.max(ySide - 30, 20) + "px";
                     windowElem.style.width = Math.max(xSide, 200) + "px";
-                    frame.style.width = Math.max(xSide - 5, 195) + "px";
+                    frame.style.width = Math.max(xSide - 1, 199) + "px";
                     this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
                     this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
                 },
@@ -251,12 +251,12 @@ export default class RenderController {
                     if (xSide > 200) {
                         windowElem.style.left = this.mouse.x + "px";
                         windowElem.style.width = Math.max(xSide, 200) + "px";
-                        frame.style.width = Math.max(xSide - 5, 195) + "px";
+                        frame.style.width = Math.max(xSide - 1, 199) + "px";
                     }
                     if (ySide > 50) {
                         frame.style.left = this.mouse.x + "px";
                         windowElem.style.height = Math.max(ySide, 50) + "px";
-                        frame.style.height = Math.max(ySide - 37, 20) + "px";
+                        frame.style.height = Math.max(ySide - 30, 20) + "px";
                     }
                     this.appsController.moved(app.name, windowElem.style.left, windowElem.style.top);
                     this.appsController.resized(app.name, windowElem.style.width, windowElem.style.height);
@@ -415,8 +415,8 @@ export default class RenderController {
     expandWindow(window) {
         if (!window) return;
         const frame = window.querySelector("iframe");
-        frame.style.width = "calc(100% - 5px)";
-        frame.style.height = "calc(100% - 37px)";
+        frame.style.width = "calc(100% - 1px)";
+        frame.style.height = "calc(100% - 30px)";
         window.style.width = "calc(100% - 6px)";
         window.style.height = "calc(100% - 50px)";
         window.style.top = "0px";

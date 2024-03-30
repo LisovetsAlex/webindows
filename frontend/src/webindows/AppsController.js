@@ -30,7 +30,7 @@ export default class AppsController {
         obj = new App("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
+        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_VSC.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
         this.allApps = arrApps;
