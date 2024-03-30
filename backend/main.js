@@ -1,4 +1,3 @@
-const startDevServer = require("./server/startDevServer");
 const startProdServer = require("./server/startProdServer");
 const connectToDB = require("./db-connection/index");
 const registerRoutes = require("./decorators/registerRoutes");
@@ -6,7 +5,7 @@ const dotenv = require("dotenv");
 
 async function createApp() {
     dotenv.config();
-    const app = process.env.NODE_ENV === "production" ? startProdServer() : startDevServer();
+    const app = startProdServer();
     const db = await connectToDB();
 
     registerRoutes(app, db);

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 function connectToDB() {
     return new Promise((resolve, reject) => {
-        mongoose.connect("mongodb://localhost:27017/TEST_DB");
+        mongoose.connect("mongodb://mongodb:27017/TEST_DB");
         const db = mongoose.connection;
 
         db.on("error", (err) => {
