@@ -1,0 +1,49 @@
+<!-- index.html (Web App) -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="./stylz.css" />
+        <link rel="stylesheet" type="text/css" href="../../index.css" />
+        <script src="./code.js" defer></script>
+        <title>Browser</title>
+    </head>
+    <body class="browser_body">
+        <div class="browser_group_row winCl-Border-Thin">
+            <img src="../../Assets/Img_Divider_Left.PNG" style="height: 50px; width: 15px; margin-right: 3px; margin-left: 2px" />
+            <button id="id_back" class="browser_backBtn browser_group_col" onclick="back()">
+                <img src="../../Assets/Img_Arrow_Left.PNG" />
+                <p>Back</p>
+            </button>
+            <button id="id_forward" class="browser_backBtn browser_group_col" onclick="forward()">
+                <img src="../../Assets/Img_Arrow_Right.PNG" />
+                <p>Forward</p>
+            </button>
+            <button id="id_reload" class="browser_backBtn browser_group_col" onclick="reload()">
+                <img src="../../Assets/Img_Reload_File.PNG" />
+                <p>Refresh</p>
+            </button>
+            <a id="id_home" class="browser_backBtn browser_group_col" target="iframe_content" href="https://www.google.com">
+                <img src="../../Assets/Img_Home.PNG" />
+                <p>Home</p>
+            </a>
+            <img src="../../Assets/Img_Divider_Mid.PNG" style="height: 50px; width: 15px; margin-inline: 3px" />
+        </div>
+        <div class="browser_group_row winCl-Border-Thin">
+            <img src="../../Assets/Img_Divider_Left.PNG" style="height: 32px; width: 15px; margin-right: 3px; margin-left: 2px" />
+            <p id="id_addr" class="browser_addrBtn">Address</p>
+            <input class="browser_input winCl-Input" id="id_url" placeholder="Insert address like https://www.google.com..." />
+            <button id="id_go" class="browser_goBtn browser_group_row winCl-Border-Thin" onclick="go()">
+                <img src="../../Assets/Img_Go.PNG" style="height: 16px" />
+                <p>Go</p>
+            </button>
+        </div>
+        <iframe
+            id="id_iframe"
+            src="https://www.google.com"
+            name="iframe_content"
+            style="width: 100%; height: 97vh; border: 0; background-color: white"
+        ></iframe>
+    </body>
+</html>

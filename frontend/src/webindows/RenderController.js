@@ -414,8 +414,8 @@ export default class RenderController {
         const frame = window.querySelector("iframe");
         frame.style.width = "calc(100% - 1px)";
         frame.style.height = "calc(100% - 30px)";
-        window.style.width = "calc(100% - 6px)";
-        window.style.height = "calc(100% - 50px)";
+        window.style.width = "calc(100% - 3px)";
+        window.style.height = "calc(100% - 30px)";
         window.style.top = "0px";
         window.style.left = "0px";
     }

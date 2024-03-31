@@ -3,6 +3,12 @@
     src: url(./Assets/w2000_font.ttf);
 }
 
+img,
+p {
+    margin: 0;
+    padding: 0;
+}
+
 :root {
     --dark-blue0: rgb(2, 0, 36);
     --dark-blue5: rgb(8, 8, 111);
@@ -167,10 +173,7 @@ option {
     border-right: 2px solid #b0b0b0;
     border-bottom: 2px solid #b0b0b0;
     background-color: var(--white);
-    width: 75px;
     user-select: all;
-    margin-left: auto;
-    margin-block: 3px;
 }
 
 .winCl-Form {
@@ -181,6 +184,20 @@ option {
     margin: 0;
 }
 
+.winCl-Border-Thin {
+    border-left: 1px solid rgb(255, 255, 255);
+    border-top: 1px solid rgb(255, 255, 255);
+    border-right: 1px solid rgb(137, 137, 137);
+    border-bottom: 1px solid rgb(137, 137, 137);
+}
+
+.winCl-Border-Thicc {
+    border-left: 2px solid rgb(255, 255, 255);
+    border-top: 2px solid rgb(255, 255, 255);
+    border-right: 2px solid rgb(137, 137, 137);
+    border-bottom: 2px solid rgb(137, 137, 137);
+}
+
 .winCl-Btn {
     cursor: pointer;
     border-left: 2px solid var(--white);
@@ -189,8 +206,6 @@ option {
     border-bottom: 2px solid #848484;
     background-color: rgb(201, 201, 201);
     padding: 3px 1px 3px 1px;
-    width: 100px;
-    margin: 3px;
 }
 .winCl-Btn:disabled {
     cursor: default;
@@ -238,6 +253,7 @@ option {
     width: 75px;
     height: 75px;
     color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     margin: 5px;
     background-color: transparent;
     border: 1px solid transparent;
