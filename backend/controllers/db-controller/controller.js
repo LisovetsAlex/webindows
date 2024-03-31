@@ -1,17 +1,26 @@
-const DBService = require("./service");
+const UserService = require("./service.js");
 const Controller = require("../../decorators/Controller");
 const Route = require("../../decorators/Route");
 
 @Controller("/db")
-class DBController {
-    constructor(db) {
-        this.service = new DBService(db);
+class UserController {
+    constructor() {
+        this.service = new UserService();
     }
 
-    @Route("GET", "/test")
+    @Route("POST", "/login")
     getData(req, res) {
-        res.send("This is a test!");
+        this.service.loginUser(req.body.username, req.body.password).then((result) => {
+            res.send(result);
+        });
+    }
+
+    @Route("POST", "/register")
+    getData(req, res) {
+        this.service.registerUser(req.body.username, req.body.password).then((result) => {
+            res.send(result);
+        });
     }
 }
 
-module.exports = DBController;
+module.exports = UserController;
