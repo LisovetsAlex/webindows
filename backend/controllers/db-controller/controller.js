@@ -9,14 +9,14 @@ class UserController {
     }
 
     @Route("POST", "/login")
-    getData(req, res) {
+    loginUser(req, res) {
         this.service.loginUser(req.body.username, req.body.password).then((result) => {
             res.send(result);
         });
     }
 
     @Route("POST", "/register")
-    getData(req, res) {
+    registerUser(req, res) {
         this.service.registerUser(req.body.username, req.body.password).then((result) => {
             res.send(result);
         });
