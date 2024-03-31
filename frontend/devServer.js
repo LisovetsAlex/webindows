@@ -9,13 +9,19 @@ const path = require("path");
 /**
  * Starts development server for webindows, will watch and hot-reload all changes in ./frontend/src
  */
-function startDevServer() {
+async function startDevServer() {
     console.log("Starting development server...");
 
     const app = express();
     const compiler = webpack(webpackConfig);
     const port = process.env.PORT || 3001;
 
+    app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        next();
+    });
     app.use(
         webpackDevMiddleware(compiler, {
             publicPath: webpackConfig.output.publicPath,
