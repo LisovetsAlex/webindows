@@ -3,6 +3,7 @@ const DBService = require("./service");
 const Controller = require("../../decorators/Controller");
 const Route = require("../../decorators/Route");
 const { AppModel } = require("../../Models/app.model");
+const { convertToPartialApp } = require("../../Utils/PartialAppConverter");
 
 @Controller("/db/apps")
 class DBController {
@@ -43,15 +44,15 @@ class DBController {
 
     @Route("PUT", "/update")
     async update(req, res) {
-        const app = await AppModel.findById(req.body.id);
+        const oldData = await AppModel.findById(req.body.id);
+        const newData = req.body.newData;
+        const obj = convertToPartialApp(newData, oldData);
 
-        const newApp = req.body.newData;
-
-        // await AppModel.updateOne({ _id: req.body.id }, { $set: req.body.newData }).then((data) => {
-        //     console.log("Successfully updated app");
-        //     console.log(data);
-        //     res.send(data);
-        // });
+        await AppModel.updateOne({ _id: req.body.id }, { $set: obj }).then((data) => {
+            console.log("Successfully updated app");
+            console.log(data);
+            res.send(data);
+        });
     }
 
     @Route("DELETE", "/delete")
