@@ -1,29 +1,30 @@
-function convertToPartialApp(newData, oldData) {
+function convertToPartialAppSettings(newData, oldData) {
     const obj = {};
     obj.name = newData.name === undefined ? oldData.name : newData.name;
-    obj.html = newData.html === undefined ? oldData.html : newData.html;
-    obj.img = newData.img === undefined ? oldData.img : newData.img;
+
     obj.settings = newData.settings === undefined ? oldData.settings : newData.settings;
 
-    if (newData.settings !== undefined) {
-        obj.settings.isFullScreen = newData.settings.isFullScreen === undefined ? oldData.settings.isFullScreen : newData.settings.isFullScreen;
+    if (newData.settings === undefined) return obj;
 
-        obj.settings.position = newData.settings.position === undefined ? oldData.settings.position : newData.settings.position;
+    obj.settings.description = newData.settings.description === undefined ? oldData.settings.description : newData.settings.description;
 
-        if (newData.settings.position !== undefined) {
-            obj.settings.position.x = newData.settings.position.x === undefined ? oldData.settings.position.x : newData.settings.position.x;
-            obj.settings.position.y = newData.settings.position.y === undefined ? oldData.settings.position.y : newData.settings.position.y;
-        }
+    obj.settings.icon = newData.settings.icon === undefined ? oldData.settings.icon : newData.settings.icon;
 
-        obj.settings.scale = newData.settings.scale === undefined ? oldData.settings.scale : newData.settings.scale;
+    if (newData.settings.icon === undefined) return obj;
 
-        if (newData.settings.scale !== undefined) {
-            obj.settings.scale.width = newData.settings.scale.width === undefined ? oldData.settings.scale.width : newData.settings.scale.width;
-            obj.settings.scale.height = newData.settings.scale.height === undefined ? oldData.settings.scale.height : newData.settings.scale.height;
-        }
-    }
+    obj.settings.icon.type = newData.settings.icon.type === undefined ? oldData.settings.icon.type : newData.settings.icon.type;
+    obj.settings.icon.default = newData.settings.icon.default === undefined ? oldData.settings.icon.default : newData.settings.icon.default;
+
+    obj.settings.defaultScale = newData.settings.defaultScale === undefined ? oldData.settings.defaultScale : newData.settings.defaultScale;
+
+    if (newData.settings.defaultScale === undefined) return obj;
+
+    obj.settings.defaultScale.width =
+        newData.settings.defaultScale.width === undefined ? oldData.settings.defaultScale.width : newData.settings.defaultScale.width;
+    obj.settings.defaultScale.height =
+        newData.settings.defaultScale.height === undefined ? oldData.settings.defaultScale.height : newData.settings.defaultScale.height;
 
     return obj;
 }
 
-module.exports = { convertToPartialApp };
+module.exports = { convertToPartialAppSettings };
