@@ -1,8 +1,12 @@
 const express = require("express");
 
 function startProdServer() {
+    console.log("Starting server...");
     const app = express();
     const PORT = process.env.PORT || 3000;
+
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
     app.listen(PORT, () => {
         console.log(`Production server started at: http://localhost:${PORT}`);
@@ -11,4 +15,6 @@ function startProdServer() {
     return app;
 }
 
-module.exports = startProdServer;
+const app = startProdServer();
+
+module.exports = app;

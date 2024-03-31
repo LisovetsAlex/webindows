@@ -1,5 +1,4 @@
-const startDevServer = require("./server/startDevServer");
-const startProdServer = require("./server/startProdServer");
+const app = require("./server/startProdServer");
 const connectToDB = require("./db-connection/index");
 const registerRoutes = require("./decorators/registerRoutes");
 const dotenv = require("dotenv");

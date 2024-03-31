@@ -64,4 +64,4 @@ class DBController {
     }
 }
 
-module.exports = DBController;
+module.exports = UserController;

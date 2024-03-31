@@ -1,23 +1,27 @@
 const express = require("express");
 const controllers = require("../controllers/controllers");
 
-function registerRoutes(app, db) {
+function registerRoutes(app) {
     controllers.forEach((Controller) => {
         try {
-            const instance = new Controller(db);
+            const instance = new Controller();
             const basePath = instance.basePath;
             const router = express.Router();
 
-            if (!instance.routes) return;
+            if (!instance.routes) {
+                console.log(`No routes found for controller: ${Controller.name}`);
+                return;
+            }
+
+            console.log(`Registered controller routes: ${Controller.name}`);
 
             instance.routes.forEach((route) => {
                 const { path, handler, method } = route;
-                router[method](path, handler);
+                router[method](path, (req, res) => handler(instance, req, res));
+                console.log(`   - Route (${method}): ${basePath + path}`);
             });
 
             app.use(basePath, router);
-
-            console.log(`Registered controller: ${Controller.name}`);
         } catch (err) {
             throw new Error(`Error registering controller: ${Controller.name}`);
         }

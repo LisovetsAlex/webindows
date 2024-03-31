@@ -1,3 +1,14 @@
+@font-face {
+    font-family: fontFamily;
+    src: url(./Assets/w2000_font.ttf);
+}
+
+img,
+p {
+    margin: 0;
+    padding: 0;
+}
+
 :root {
     --dark-blue0: rgb(2, 0, 36);
     --dark-blue5: rgb(8, 8, 111);
@@ -8,7 +19,11 @@
 
     --white: #fff;
 
-    --font: "Monaco";
+    --font: fontFamily;
+
+    font-size: small;
+
+    cursor: url(Assets/Windows95_Cursor.cur), default;
 }
 
 img {
@@ -20,7 +35,7 @@ img {
 }
 body {
     font-family: var(--font);
-    background-color: #0d8cbe;
+    background: url(Assets/Img_Bg_Fields.jpg) no-repeat center center fixed;
     padding: 10px;
     margin: 0px;
     padding: 0px;
@@ -81,7 +96,6 @@ option {
     border-top: 2px solid var(--white);
     border-right: 2px solid #848484;
     border-bottom: 2px solid #848484;
-    padding: 2px;
     background-color: rgb(201, 201, 201);
     height: 100vh;
     width: 100vw;
@@ -91,12 +105,18 @@ option {
 .winCl-Window {
     z-index: 1;
     background-color: rgb(201, 201, 201);
-    height: calc(100vh - 16px);
-    width: calc(100vw - 16px);
-    padding: 8px;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
 }
 
 .winCl-Frame {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .winCl-Taskbar {
@@ -153,10 +173,7 @@ option {
     border-right: 2px solid #b0b0b0;
     border-bottom: 2px solid #b0b0b0;
     background-color: var(--white);
-    width: 75px;
     user-select: all;
-    margin-left: auto;
-    margin-block: 3px;
 }
 
 .winCl-Form {
@@ -167,6 +184,20 @@ option {
     margin: 0;
 }
 
+.winCl-Border-Thin {
+    border-left: 1px solid rgb(255, 255, 255);
+    border-top: 1px solid rgb(255, 255, 255);
+    border-right: 1px solid rgb(137, 137, 137);
+    border-bottom: 1px solid rgb(137, 137, 137);
+}
+
+.winCl-Border-Thicc {
+    border-left: 2px solid rgb(255, 255, 255);
+    border-top: 2px solid rgb(255, 255, 255);
+    border-right: 2px solid rgb(137, 137, 137);
+    border-bottom: 2px solid rgb(137, 137, 137);
+}
+
 .winCl-Btn {
     cursor: pointer;
     border-left: 2px solid var(--white);
@@ -175,8 +206,6 @@ option {
     border-bottom: 2px solid #848484;
     background-color: rgb(201, 201, 201);
     padding: 3px 1px 3px 1px;
-    width: 100px;
-    margin: 3px;
 }
 .winCl-Btn:disabled {
     cursor: default;
@@ -224,6 +253,7 @@ option {
     width: 75px;
     height: 75px;
     color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     margin: 5px;
     background-color: transparent;
     border: 1px solid transparent;

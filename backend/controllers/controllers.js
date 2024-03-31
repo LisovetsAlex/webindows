@@ -1,6 +1,6 @@
-const DBController = require("./db-controller/controller");
+const UserController = require("./db-controller/controller");
 const FEController = require("./fe-controller/controller");
 
-const controllers = [DBController, FEController];
+const controllers = [UserController, FEController];
 
 module.exports = controllers;

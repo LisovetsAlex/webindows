@@ -73,8 +73,10 @@ export default class AppsController {
         return false;
     }
 
-    appOpened(app) {
-        this.openedApps.push(app);
+    openApp(name) {
+        const app = this.allApps.find((app) => app.name == name);
+        this.openedApps.push(new App(app.name, app.html, app.img, { width: app.width, height: app.height }));
+        return this.openedApps[this.openedApps.length - 1];
     }
 
     appClosed(name) {
@@ -105,6 +107,14 @@ export default class AppsController {
         for (let i = 0; i < this.openedApps.length; i++) {
             if (this.openedApps[i].name == name) {
                 this.openedApps[i].isFullScreen = !this.openedApps[i].isFullScreen;
+            }
+        }
+    }
+
+    getOpenedApp(name) {
+        for (let i = 0; i < this.openedApps.length; i++) {
+            if (this.openedApps[i].name == name) {
+                return this.openedApps[i];
             }
         }
     }

@@ -1,0 +1,54 @@
+.browser_body {
+    width: 100%;
+    height: 100%;
+}
+
+.browser_backBtn {
+    cursor: pointer;
+    background-color: rgb(204, 204, 204);
+    width: 50px;
+    height: 50px;
+    border: 0;
+}
+
+.browser_forwardBtn {
+    width: 50px;
+    height: 50px;
+    border: 0;
+}
+
+.browser_goBtn {
+    cursor: pointer;
+    padding-block: 5px;
+    padding-inline: 12px;
+}
+.browser_goBtn:active {
+    border-left: 1px solid rgb(137, 137, 137);
+    border-top: 1px solid rgb(137, 137, 137);
+    border-right: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.browser_input {
+    width: 100%;
+}
+
+.browser_group_row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(204, 204, 204);
+}
+
+.browser_group_col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(204, 204, 204);
+}
+
+.browser_addrBtn {
+    padding: 0;
+    margin: 0;
+    padding-right: 8px;
+}

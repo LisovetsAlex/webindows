@@ -45,10 +45,10 @@ export class System {
         clock.innerHTML = hours + ":" + minutes;
     }
 
-    openApp(app) {
-        if (this.appsController.isAppOpened(app.name)) return;
-        this.renderController.createWindow(app);
-        this.appsController.appOpened(app);
+    openApp(name) {
+        if (this.appsController.isAppOpened(name)) return;
+        const openedApp = this.appsController.openApp(name);
+        this.renderController.createWindow(openedApp);
     }
 
     closeApp(name) {
