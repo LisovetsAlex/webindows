@@ -4,34 +4,34 @@ const AppService = require("./app.service");
 
 @Controller("/db/apps")
 class AppController {
-    constructor(db) {
-        this.service = new AppService(db);
+    constructor() {
+        this.service = new AppService();
     }
 
     @Route("GET", "/all")
     async getAll(req, res) {
-        AppService.getAllApps().then((data) => {
+        this.service.getAllApps().then((data) => {
             res.send(data);
         });
     }
 
     @Route("POST", "/create")
     async create(req, res) {
-        AppService.createApp(req.body.name, req.body.data).then((data) => {
+        this.service.createApp(req.body.name, req.body.data).then((data) => {
             res.send(data);
         });
     }
 
     @Route("PUT", "/update")
     async update(req, res) {
-        AppService.updateSettings(req.body.id, req.body.data).then((data) => {
+        this.service.updateSettings(req.body.id, req.body.data).then((data) => {
             res.send(data);
         });
     }
 
     @Route("DELETE", "/delete")
     async delete(req, res) {
-        AppService.deleteApp(req.body.id).then((data) => {
+        this.service.deleteApp(req.body.id).then((data) => {
             res.send(data);
         });
     }
