@@ -5,8 +5,8 @@ class UEH {
         sys.moveWindow(event);
     }
 
-    openApp(app) {
-        sys.openApp(app);
+    openApp(name) {
+        sys.openApp(name);
     }
 
     closeApp(name) {

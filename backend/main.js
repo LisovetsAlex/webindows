@@ -10,9 +10,17 @@ async function createApp() {
 
     registerRoutes(app, db);
 
+    process.on("SIGTERM", () => shutdown(app));
+    process.on("SIGINT", () => shutdown(app));
+
     return app;
 }
 
-const app = createApp();
+async function shutdown(app) {
+    console.log("Shutting down...");
 
-module.exports = app;
+    await app.close();
+    process.exit(0);
+}
+
+createApp();

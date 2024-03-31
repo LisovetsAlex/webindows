@@ -27,7 +27,7 @@ npm run dev
 4. Run App Express Server in /backend:
 
 ```
-npm run start
+npm run start:dev
 ```
 
 5. Production is localhost:3069 after running Docker

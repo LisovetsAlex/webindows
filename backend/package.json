@@ -4,7 +4,8 @@
     "description": "",
     "main": "main.js",
     "scripts": {
-        "start": "set NODE_ENV=production&& babel-node main.js"
+        "start:dev": "set NODE_ENV=development&& set MONGODB_URL=mongodb://localhost:27017/TEST_DB&& babel-node main.js",
+        "start": "babel-node main.js"
     },
     "author": "",
     "license": "ISC",
