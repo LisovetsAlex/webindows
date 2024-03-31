@@ -33,10 +33,10 @@ export default class AppsController {
         obj = new App("WWW?", `apps/CustomerProductTester/ui.html`, "Img_HowBook.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_VSC.PNG", { width: 350, height: 200 });
+        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_VSC.PNG", { width: 1200, height: 700 });
         arrApps.push(obj);
 
-        obj = new App("Internet", `apps/Browser/ui.html`, "Img_Internet.PNG", { width: 700, height: 450 });
+        obj = new App("Internet", `apps/Browser/ui.html`, "Img_Internet.PNG", { width: 1200, height: 700 });
         arrApps.push(obj);
 
         this.allApps = arrApps;
@@ -49,8 +49,10 @@ export default class AppsController {
         return false;
     }
 
-    appOpened(app) {
-        this.openedApps.push(app);
+    openApp(name) {
+        const app = this.allApps.find((app) => app.name == name);
+        this.openedApps.push(new App(app.name, app.html, app.img, { width: app.width, height: app.height }));
+        return this.openedApps[this.openedApps.length - 1];
     }
 
     appClosed(name) {
@@ -81,6 +83,14 @@ export default class AppsController {
         for (let i = 0; i < this.openedApps.length; i++) {
             if (this.openedApps[i].name == name) {
                 this.openedApps[i].isFullScreen = !this.openedApps[i].isFullScreen;
+            }
+        }
+    }
+
+    getOpenedApp(name) {
+        for (let i = 0; i < this.openedApps.length; i++) {
+            if (this.openedApps[i].name == name) {
+                return this.openedApps[i];
             }
         }
     }
