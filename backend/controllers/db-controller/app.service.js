@@ -13,9 +13,9 @@ class AppService {
         }
     }
 
-    async createApp(data) {
+    async createApp(name, data) {
         try {
-            if (await AppsModel.findOne({ name: data.name })) return { msg: "false", app: null };
+            if (await AppsModel.findOne({ name: name })) return { msg: "false", app: null };
 
             const newDocument = await AppsModel.create(data);
             return { msg: "true", app: newDocument };
@@ -57,4 +57,4 @@ class AppService {
     }
 }
 
-module.exports = DBController;
+module.exports = AppService;
