@@ -22,6 +22,9 @@ COPY --from=build-fe /app/frontend/build /app/frontend/build
 
 WORKDIR /app/backend
 
+ENV NODE_ENV=production
+ENV MONGODB_URL=mongodb://mongodb:27017/TEST_DB
+
 EXPOSE 3069
 
 CMD ["npm", "start"]
