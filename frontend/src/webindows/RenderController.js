@@ -280,6 +280,8 @@ export default class RenderController {
         const computedLeftValue = window.getComputedStyle(windowElem).getPropertyValue("left");
         const computedTopValue = window.getComputedStyle(windowElem).getPropertyValue("top");
         this.appsController.moved(app.name, parseInt(computedLeftValue), parseInt(computedTopValue));
+
+        this.adjustZIndex(windowElem);
     }
 
     createWindowHeader(app) {
@@ -379,14 +381,15 @@ export default class RenderController {
     showWindow(name) {
         const window = document.getElementById(name);
         window.style.display = "block";
+        this.adjustZIndex(window);
     }
 
-    adjustZIndex(window) {
+    adjustZIndex(windowElem) {
         const arr = document.getElementsByClassName("winCl-BasicWindow");
         for (let i = 0; i < arr.length; i++) {
             arr[i].style["z-index"] = 1;
         }
-        if (!window.classList.contains("winCl-ShortcutBtn")) window.style["z-index"] = 2;
+        if (!windowElem.classList.contains("winCl-ShortcutBtn")) windowElem.style["z-index"] = 2;
     }
 
     moveElement(startDragX, startDragOffset, elem) {
