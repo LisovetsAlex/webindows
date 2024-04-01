@@ -39,6 +39,9 @@ export default class AppsController {
         obj = new App("Internet", `apps/Browser/ui.html`, "Img_Internet.PNG", { width: 1200, height: 700 });
         arrApps.push(obj);
 
+        obj = new App("Internet", `apps/Browser/ui.html`, "Img_Webindows.PNG", { width: 1200, height: 700 });
+        arrApps.push(obj);
+
         this.allApps = arrApps;
     }
 
