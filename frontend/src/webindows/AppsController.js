@@ -1,4 +1,4 @@
-import httpRequest from "../../../backend/db-connection/httpRequester";
+import Requester from "./Requester";
 
 export class App {
     constructor(name, html, icon, defaultScale) {
@@ -14,26 +14,19 @@ export class App {
     }
 
     setApp(name, html, icon, defaultScale) {
-        httpRequest(
-            "POST",
-            "/apps/create",
-            {
-                name: name,
-                html: html,
-                img: icon,
-                settings: {
-                    position: {
-                        x: 0,
-                        y: 0,
-                    },
-                    scale: defaultScale,
-                    isFullScreen: false,
+        httpRequest("POST", "/apps/create", {
+            name: name,
+            html: html,
+            img: icon,
+            settings: {
+                position: {
+                    x: 0,
+                    y: 0,
                 },
+                scale: defaultScale,
+                isFullScreen: false,
             },
-            (data) => {
-                this.id = data;
-            }
-        );
+        });
     }
 }
 
@@ -43,25 +36,33 @@ export default class AppsController {
         this.openedApps = new Array();
     }
 
-    initAllApps() {
+    async initAllApps() {
         let arrApps = new Array(0);
         let obj = {};
 
         obj = new App("Order Manager", `apps/OrderManager/ui.html`, "ImgTrans_OrderManager.png", { width: 350, height: 200 });
-        obj.setApp("Order Manager", `apps/OrderManager/ui.html`, "ImgTrans_OrderManager.png", { width: 350, height: 200 });
         arrApps.push(obj);
 
         obj = new App("Callback Sorter", `apps/CallbackSorter/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
-        obj.setApp("Callback Sorter", `apps/CallbackSorter/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
         obj = new App("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
-        obj.setApp("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
         obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
-        obj.setApp("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
+
+        const res = await new Requester().httpRequest("POST", "/apps/create", {
+            name: "app",
+            start_url: "apps/Browser/ui.html",
+            settings: {
+                description: "Web App",
+                icon: "Img_Program.PNG",
+                defaultScale: { width: 350, height: 200 },
+            },
+        });
+
+        console.log(res);
 
         this.allApps = arrApps;
     }

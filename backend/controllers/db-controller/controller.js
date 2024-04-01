@@ -1,65 +1,24 @@
-const express = require("express");
-const DBService = require("./service");
+const UserService = require("./service");
 const Controller = require("../../decorators/Controller");
 const Route = require("../../decorators/Route");
-const { AppModel } = require("../../Models/app.model");
-const { convertToPartialApp } = require("../../Utils/PartialAppConverter");
 
-@Controller("/db/apps")
-class DBController {
-    constructor(db) {
-        this.service = new DBService(db);
+@Controller("/db")
+class UserController {
+    constructor() {
+        this.service = new UserService();
     }
 
-    @Route("GET", "/all")
-    async getAll(req, res) {
-        await AppModel.find({}).then((data) => {
-            console.log("Successfully got all apps");
+    @Route("POST", "/login")
+    login(req, res) {
+        this.service.loginUser(req.body.username, req.body.password).then((data) => {
             res.send(data);
         });
     }
 
-    @Route("GET", "/one")
-    async getOne(req, res) {
-        await AppModel.findById(req.body.id).then((data) => {
-            console.log("Successfully got one app");
+    @Route("POST", "/register")
+    register(req, res) {
+        this.service.registerUser(req.body.username, req.body.password).then((data) => {
             res.send(data);
-        });
-    }
-
-    @Route("POST", "/create")
-    async create(req, res) {
-        const data = req.body;
-
-        const newDocument = await AppModel.create(data).catch((err) => {
-            console.log(err);
-            res.send(false);
-        });
-
-        if (newDocument) {
-            console.log("Successfully created app: " + newDocument._id);
-            res.send(newDocument._id);
-        }
-    }
-
-    @Route("PUT", "/update")
-    async update(req, res) {
-        const oldData = await AppModel.findById(req.body.id);
-        const newData = req.body.newData;
-        const obj = convertToPartialApp(newData, oldData);
-
-        await AppModel.updateOne({ _id: req.body.id }, { $set: obj }).then((data) => {
-            console.log("Successfully updated app");
-            console.log(data);
-            res.send(data);
-        });
-    }
-
-    @Route("DELETE", "/delete")
-    async delete(req, res) {
-        await AppModel.deleteOne({ _id: req.body.id }).then(() => {
-            console.log("Successfully deleted app");
-            res.send(true);
         });
     }
 }

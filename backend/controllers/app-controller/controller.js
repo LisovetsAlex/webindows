@@ -1,8 +1,8 @@
 const Controller = require("../../decorators/Controller");
 const Route = require("../../decorators/Route");
-const AppService = require("./app.service");
+const AppService = require("./service");
 
-@Controller("/db/apps")
+@Controller("/apps")
 class AppController {
     constructor() {
         this.service = new AppService();

@@ -1,5 +1,5 @@
 const { convertToPartialApp } = require("../../Utils/PartialAppConverter");
-const AppsModel = require("../../Models/Apps");
+const AppsModel = require("../../models/Apps");
 
 class AppService {
     async getAllApps() {

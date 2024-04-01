@@ -8,13 +8,20 @@ services:
         volumes:
             - "./:/home/coder/project"
             - "./config.yaml:/home/coder/.config/code-server/config.yaml"
+
     mongodb:
         image: mongo
+        container_name: mongodb
+        command: ["mongod", "--auth", "--config", "/etc/mongo.conf"]
         ports:
             - "27017:27017"
-        command: mongod
+        environment:
+            - MONGODB_INITDB_ROOT_USERNAME=root
+            - MONGODB_INITDB_ROOT_PASSWORD=12345678
         volumes:
             - "./mongo-data:/data/db"
+            - "./mongo.conf:/etc/mongo.conf"
+
     backend:
         build:
             context: .
