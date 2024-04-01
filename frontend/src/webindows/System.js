@@ -3,6 +3,9 @@ import AppsController from "./AppsController";
 import MouseController from "./MouseController";
 import { StartHandler as StartController } from "./StartController";
 import EventController from "./EventController";
+import UserController from "./UserController";
+import Requester from "./Requester";
+import LocalStorageController from "./LocalStorageController";
 
 export class System {
     constructor() {
@@ -11,11 +14,13 @@ export class System {
         this.mouse = new MouseController(this.eventController);
         this.renderController = new RenderController(this.eventController, this.mouse, this.appsController);
         this.starterController = new StartController();
+        this.requester = new Requester();
+        this.localStorageController = new LocalStorageController();
+        this.userController = new UserController(this.requester);
     }
 
     init() {
         this.starterController.initStartButtons();
-        this.renderController.webindowsLoadingScreen(2000);
         this.renderController.createLoginScreen();
         this.appsController.initAllApps();
 
@@ -24,6 +29,8 @@ export class System {
         for (let i = 0; i < this.appsController.allApps.length; i++) {
             this.renderController.createShortcut(this.appsController.allApps[i]);
         }
+
+        this.loginUser();
 
         this.tick();
     }
@@ -75,6 +82,16 @@ export class System {
         setTimeout(() => {
             this.renderController.black();
         }, 6000);
+    }
+
+    async loginUser(username, password) {
+        let loggedInUser = this.localStorageController.getUserData() ?? null;
+
+        if (loggedInUser) return this.renderController.removeLoginScreen();
+        if (!loggedInUser) {
+            loggedInUser = await this.userController.loginUser(username, password);
+            this.localStorageController.saveUserData(loggedInUser);
+        }
     }
 }
 

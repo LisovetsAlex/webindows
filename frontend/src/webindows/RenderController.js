@@ -506,16 +506,16 @@ export default class RenderController {
                         <label class="winCl-LoggingLabel" for="username">
                             Username: 
                         </label>
-                        <input name="username" type="text" placeholder="Your very cool name..." class="winCl-LoggingInput">
+                        <input id="id_username" name="username" type="text" placeholder="Your very cool name..." class="winCl-LoggingInput">
                     </div>
                     <div class="winCl-LoggingForm">
                         <label class="winCl-LoggingLabel" for="password">
                             Password: 
                         </label>
-                        <input name="password" type="password" placeholder="Your very secure password..." class="winCl-LoggingInput">
+                        <input id="id_password" name="password" type="password" placeholder="Your very secure password..." class="winCl-LoggingInput">
                     </div>
                     <div class="winCl-LoggingBtns">
-                        <button class="winCl-Btn winCl-LoggingBtn">Enter Webindows</button>
+                        <button id="id_login" class="winCl-Btn winCl-LoggingBtn">Enter Webindows</button>
                         <button class="winCl-Btn winCl-LoggingBtn" disabled>Cancel</button>
                         <button id="id_shutdown" class="winCl-Btn winCl-LoggingBtn">Shutdown</button>
                     </div>
@@ -529,6 +529,17 @@ export default class RenderController {
         document.getElementById("id_shutdown").addEventListener("click", () => {
             ueh.turnOff();
         });
+
+        document.getElementById("id_login").addEventListener("click", () => {
+            const name = document.getElementById("id_username").value;
+            const pass = document.getElementById("id_password").value;
+            ueh.loginUser(name, pass);
+        });
+    }
+
+    removeLoginScreen() {
+        const loginScreen = document.getElementById("id_loginScreen");
+        loginScreen.remove();
     }
 }
 

@@ -20,6 +20,10 @@ class UEH {
     turnOff() {
         sys.turnOff();
     }
+
+    loginUser(username, password) {
+        sys.loginUser(username, password);
+    }
 }
 
 const ueh = new UEH();

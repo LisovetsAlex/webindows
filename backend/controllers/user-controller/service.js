@@ -16,7 +16,6 @@ class UserService {
     async registerUser(username, password) {
         try {
             if (await UsersModel.findOne({ name: username })) return { msg: "false", user: null };
-
             const newUser = await UsersModel.create({ name: username, password });
             return { msg: "true", user: newUser };
         } catch (error) {
