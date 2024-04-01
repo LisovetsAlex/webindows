@@ -33,3 +33,8 @@ async function request(method, url, formData) {
         console.error("Error:", error);
     }
 }
+
+function showFileName(input) {
+    const fileName = input.files[0].name;
+    document.getElementById("id_fileName").textContent = fileName;
+}

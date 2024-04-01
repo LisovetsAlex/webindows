@@ -19,18 +19,22 @@ class UserController {
 
     @Route("POST", "/bg")
     async changeBG(req, res) {
-        const { user, file } = req.body;
-        console.log(req.body);
-        if (!user || !file) {
-            return res.status(400).json({ error: "User and file information are required." });
+        const { user } = req.body;
+        const files = req.files;
+
+        if (!files || !files["file"]) {
+            return res.status(400).json({ error: "No file uploaded" });
         }
 
+        await this.service.changeBackground(user, files);
+
         try {
-            const result = await this.service.changeBackground(JSON.parse(user), file);
-            res.json({ message: "Background changed successfully." });
+            const user = req.body.user;
+            const file = req.files["file"][0];
+            res.status(200).json({ message: "File uploaded successfully", filePath: file.path, user });
         } catch (error) {
-            console.error("Error changing background:", error);
-            res.status(500).json({ error: "Internal server error." });
+            console.error("Error saving file:", error);
+            res.status(500).json({ error: "Failed to save file" });
         }
     }
 }

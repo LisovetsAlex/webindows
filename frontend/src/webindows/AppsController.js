@@ -55,7 +55,7 @@ export default class AppsController {
         obj = new App("Internet", `apps/Browser/ui.html`, "Img_Internet.PNG", { width: 1200, height: 700 });
         arrApps.push(obj);
 
-        obj = new App("Background Changer", `apps/BackgroundChanger/ui.html`, "Img_Computer.PNG", { width: 1200, height: 700 });
+        obj = new App("Background Changer", `apps/BackgroundChanger/ui.html`, "Img_Computer.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
         this.allApps = arrApps;

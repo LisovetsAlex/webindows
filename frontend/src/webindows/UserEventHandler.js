@@ -24,6 +24,10 @@ class UEH {
     loginUser(username, password) {
         sys.loginUser(username, password);
     }
+
+    logoutUser() {
+        sys.logoutUser();
+    }
 }
 
 const ueh = new UEH();
