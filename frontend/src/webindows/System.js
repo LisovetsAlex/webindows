@@ -15,7 +15,8 @@ export class System {
 
     init() {
         this.starterController.initStartButtons();
-        this.renderController.webindowsLoadingScreen(100);
+        this.renderController.webindowsLoadingScreen(2000);
+        this.renderController.createLoginScreen();
         this.appsController.initAllApps();
 
         this.initClock();
