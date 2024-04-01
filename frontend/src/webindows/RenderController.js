@@ -422,8 +422,6 @@ export default class RenderController {
         elem.style.left = x + "px";
         elem.style.top = y + "px";
 
-        console.log(x, y);
-
         this.desktopGrid[shortCutIndx].x = x;
         this.desktopGrid[shortCutIndx].y = y;
     }
