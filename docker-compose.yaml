@@ -15,9 +15,6 @@ services:
         command: ["mongod", "--auth", "--config", "/etc/mongo.conf"]
         ports:
             - "27017:27017"
-        environment:
-            - MONGODB_INITDB_ROOT_USERNAME=root
-            - MONGODB_INITDB_ROOT_PASSWORD=12345678
         volumes:
             - "./mongo-data:/data/db"
             - "./mongo.conf:/etc/mongo.conf"
