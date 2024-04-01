@@ -24,7 +24,7 @@ class AppController {
 
     @Route("PUT", "/update")
     async update(req, res) {
-        this.service.updateSettings(req.body.id, req.body.data).then((data) => {
+        this.service.updateApp(req.body.id, req.body.data).then((data) => {
             res.send(data);
         });
     }
@@ -32,6 +32,13 @@ class AppController {
     @Route("DELETE", "/delete")
     async delete(req, res) {
         this.service.deleteApp(req.body.id).then((data) => {
+            res.send(data);
+        });
+    }
+
+    @Route("POST", "/allOwners")
+    async getAllWithOwners(req, res) {
+        this.service.getAllWithOwners().then((data) => {
             res.send(data);
         });
     }

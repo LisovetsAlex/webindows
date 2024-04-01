@@ -19,7 +19,7 @@ export class System {
         this.userController = new UserController(this.requester);
     }
 
-    init() {
+    async init() {
         this.starterController.initStartButtons();
         this.appsController.initAllApps();
 
@@ -29,7 +29,7 @@ export class System {
             this.renderController.createShortcut(this.appsController.allApps[i]);
         }
 
-        this.tryLoggingIn();
+        await this.tryLoggingIn();
 
         this.tick();
     }

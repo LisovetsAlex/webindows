@@ -1,5 +1,3 @@
-import Requester from "./Requester";
-
 export class App {
     constructor(name, html, icon, defaultScale) {
         this.name = name;
@@ -46,7 +44,7 @@ export default class AppsController {
         obj = new App("Apploader", `apps/AppUploader/ui.html`, "Img_Computer.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("Order Manager", `apps/OrderManager/ui.html`, "ImgTrans_OrderManager.PNG", { width: 350, height: 200 });
+        obj = new App("Order Manager", `apps/OrderManager/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
         obj = new App("Callback Sorter", `apps/CallbackSorter/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });

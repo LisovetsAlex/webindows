@@ -1,5 +1,6 @@
-const { convertToPartialApp } = require("../../Utils/PartialAppConverter");
+const { convertToPartialAppSettings } = require("../../Utils/PartialAppConverter");
 const AppsModel = require("../../models/Apps");
+const UsersModel = require("../../models/Users");
 
 class AppService {
     async getAllApps() {
@@ -24,10 +25,10 @@ class AppService {
         }
     }
 
-    async updateSettings(id, newData) {
+    async updateApp(id, newData) {
         try {
             const oldData = await AppsModel.findById(id);
-            const obj = convertToPartialApp(newData, oldData);
+            const obj = convertToPartialAppSettings(newData, oldData);
             const updatedApp = await AppsModel.updateOne({ _id: id }, { $set: obj });
 
             if (updatedApp) return { msg: "true", app: updatedApp };
@@ -48,6 +49,16 @@ class AppService {
         } catch (err) {
             console.log(err);
             return { msg: "error", app: null };
+        }
+    }
+
+    async getAllWithOwners() {
+        try {
+            const appsWithOwners = await AppsModel.find().populate("owner_id");
+            return appsWithOwners;
+        } catch (error) {
+            console.error("Error fetching users with apps:", error);
+            throw error;
         }
     }
 }

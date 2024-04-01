@@ -28,14 +28,24 @@ class UserController {
 
         await this.service.changeBackground(user, files);
 
-        try {
-            const user = req.body.user;
-            const file = req.files["file"][0];
-            res.status(200).json({ message: "File uploaded successfully", filePath: file.path, user });
-        } catch (error) {
-            console.error("Error saving file:", error);
-            res.status(500).json({ error: "Failed to save file" });
-        }
+        res.status(200).json({ msg: "true" });
+    }
+
+    @Route("POST", "/apps")
+    async getApps(req, res) {
+        const user = req.body.user;
+        if (!user) return res.status(400).json({ error: "User object not provided in request body" });
+        const apps = await this.service.getApps(user);
+        res.status(200).json({ msg: "true", apps });
+    }
+
+    @Route("POST", "/upload")
+    async uploadApp(req, res) {
+        const user = req.body.user;
+        const app = req.body.app;
+
+        const result = await this.service.uploadApp(user, app);
+        if (result) return res.status(200).json({ msg: "true" });
     }
 }
 

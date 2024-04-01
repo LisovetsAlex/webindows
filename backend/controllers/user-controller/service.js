@@ -1,4 +1,5 @@
 const UsersModel = require("../../models/Users");
+const AppsModel = require("../../models/Apps");
 const { ObjectId } = require("mongodb");
 
 class UserService {
@@ -42,6 +43,45 @@ class UserService {
         } catch (error) {
             console.error("Error updating background:", error);
             return { msg: "error", user: null };
+        }
+    }
+
+    async getApps(user) {
+        try {
+            if (!user) return res.status(400).json({ error: "User object not provided in request body" });
+
+            const apps = await AppsModel.find({ owner_id: user._id });
+
+            return apps;
+        } catch (error) {
+            console.error("Error fetching user's apps:", error);
+            return null;
+        }
+    }
+
+    async uploadApp(user, app) {
+        try {
+            const newApp = {
+                name: app.name,
+                owner_id: user._id,
+                start_url: app.html,
+                settings: {
+                    description: app.settings?.description ?? "Some App",
+                    icon: app.settings?.icon ?? "Assets/Img_Program.PNG",
+                    defaultScale: {
+                        width: app.settings?.defaultScale.width ?? 350,
+                        height: app.settings?.defaultScale.height ?? 200,
+                    },
+                },
+            };
+
+            const savedApp = await AppsModel.create(newApp);
+            await UsersModel.findByIdAndUpdate(user._id, { $push: { owned_apps: savedApp._id } });
+
+            return savedApp;
+        } catch (error) {
+            console.error("Error creating new app:", error);
+            return null;
         }
     }
 }

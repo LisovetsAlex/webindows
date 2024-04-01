@@ -4,6 +4,12 @@ const { Schema, model } = mongoose;
 const UsersSchema = new Schema({
     name: String,
     password: String,
+    owned_apps: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Apps",
+        },
+    ],
     uploaded_files: [String],
     public_settings: {
         icon: { type: String, default: "Assets/Img_Sound.PNG" },
