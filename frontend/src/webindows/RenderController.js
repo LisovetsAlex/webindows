@@ -70,7 +70,7 @@ export default class RenderController {
 
     webindowsLoadingScreen(duration) {
         let screen = document.getElementById("turnOff");
-        screen.style.backgroundImage = "url('Assets/Img_LoadingWindows.PNG')";
+        screen.style.backgroundImage = "url('Assets/Img_LoadingScreen.PNG')";
         screen.style.display = "block";
         setTimeout(function () {
             screen.style.display = "none";
@@ -429,10 +429,10 @@ export default class RenderController {
     }
 
     showTurnOffScreen() {
-        let screen = document.getElementById("turnOff");
+        let screen = document.getElementById("id_windows");
 
-        screen.style.backgroundImage = "url('Assets/Img_ShutDown.PNG')";
-        screen.style.display = "block";
+        screen.innerHTML = "";
+        screen.style.backgroundColor = "#000000";
     }
 
     black() {
@@ -495,6 +495,40 @@ export default class RenderController {
         for (let i = 0; i < iframes.length; i++) {
             iframes[i].style.pointerEvents = "auto";
         }
+    }
+
+    createLoginScreen() {
+        const loggingScreen = `
+            <div id="id_loginScreen" class="winCl-LoggingScreen">
+                <div class="winCl-LoggingContent">
+                    <img src="Assets/Img_Webindows_Start.gif" class="winCl-LoggingImg">
+                    <div class="winCl-LoggingForm">
+                        <label class="winCl-LoggingLabel" for="username">
+                            Username: 
+                        </label>
+                        <input name="username" type="text" placeholder="Your very cool name..." class="winCl-LoggingInput">
+                    </div>
+                    <div class="winCl-LoggingForm">
+                        <label class="winCl-LoggingLabel" for="password">
+                            Password: 
+                        </label>
+                        <input name="password" type="password" placeholder="Your very secure password..." class="winCl-LoggingInput">
+                    </div>
+                    <div class="winCl-LoggingBtns">
+                        <button class="winCl-Btn winCl-LoggingBtn">Enter Webindows</button>
+                        <button class="winCl-Btn winCl-LoggingBtn" disabled>Cancel</button>
+                        <button id="id_shutdown" class="winCl-Btn winCl-LoggingBtn">Shutdown</button>
+                    </div>
+                </div>
+            </div>`;
+
+        const tempContainer = document.createElement("div");
+        tempContainer.innerHTML = loggingScreen;
+        this.desktop.append(tempContainer);
+
+        document.getElementById("id_shutdown").addEventListener("click", () => {
+            ueh.turnOff();
+        });
     }
 }
 
