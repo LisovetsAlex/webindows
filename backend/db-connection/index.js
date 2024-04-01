@@ -15,7 +15,8 @@ function connectToDB() {
             reject(err);
         });
         db.once("open", () => {
-            console.log("Database connection successful");
+            db.useDb(dbName);
+            console.log("Using database: " + dbName);
             resolve(db);
         });
     });
