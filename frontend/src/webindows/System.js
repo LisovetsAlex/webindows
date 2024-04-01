@@ -10,12 +10,12 @@ import LocalStorageController from "./LocalStorageController";
 export class System {
     constructor() {
         this.eventController = new EventController();
-        this.appsController = new AppsController();
+        this.requester = new Requester();
+        this.appsController = new AppsController(this.requester);
         this.mouse = new MouseController(this.eventController);
+        this.localStorageController = new LocalStorageController();
         this.renderController = new RenderController(this.eventController, this.mouse, this.appsController);
         this.starterController = new StartController();
-        this.requester = new Requester();
-        this.localStorageController = new LocalStorageController();
         this.userController = new UserController(this.requester);
     }
 

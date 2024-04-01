@@ -13,19 +13,14 @@ class AppService {
         }
     }
 
-    async createApp(name, data) {
+    async createApp(data) {
         try {
-            if (await AppsModel.findOne({ name: name })) return { msg: "false", app: null };
+            if (await AppsModel.findOne({ name: data.name })) return { msg: "false", app: null };
 
             const newDocument = await AppsModel.create(data);
             return { msg: "true", app: newDocument };
         } catch (error) {
             console.error(error);
-        }
-
-        if (newDocument) {
-            console.log("Successfully created app: " + newDocument._id);
-            res.send(newDocument._id);
         }
     }
 
