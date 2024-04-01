@@ -9,4 +9,8 @@ export default class LocalStorageController {
         if (!localStorage["loggedInUser"]) return null;
         return JSON.parse(localStorage["loggedInUser"]);
     }
+
+    clearUserData() {
+        localStorage.removeItem("loggedInUser");
+    }
 }

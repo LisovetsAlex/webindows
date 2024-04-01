@@ -436,10 +436,8 @@ export default class RenderController {
     }
 
     black() {
-        let screen = document.getElementById("turnOff");
-
-        screen.style.backgroundImage = "";
-        screen.style.backgroundColor = "black";
+        if (!this.desktop) return;
+        this.desktop.innerHTML = "";
     }
 
     expandWindow(window) {
@@ -498,6 +496,7 @@ export default class RenderController {
     }
 
     createLoginScreen() {
+        if (document.getElementById("id_loginScreen")) return;
         const loggingScreen = `
             <div id="id_loginScreen" class="winCl-LoggingScreen">
                 <div class="winCl-LoggingContent">
@@ -554,7 +553,13 @@ export default class RenderController {
 
     removeLoginScreen() {
         const loginScreen = document.getElementById("id_loginScreen");
-        loginScreen.remove();
+        if (!loginScreen) return;
+        const loadingScreen = document.getElementById("id_loadingScreen");
+        loadingScreen.style.display = "block";
+        setTimeout(() => {
+            loginScreen.remove();
+            loadingScreen.style.display = "none";
+        }, 1000);
     }
 
     changeBackground(imgUrl) {

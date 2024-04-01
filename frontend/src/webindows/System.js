@@ -21,7 +21,6 @@ export class System {
 
     init() {
         this.starterController.initStartButtons();
-        this.renderController.createLoginScreen();
         this.appsController.initAllApps();
 
         this.initClock();
@@ -36,7 +35,9 @@ export class System {
     }
 
     tick() {
-        //setInterval(() => {}, 60 / 1000);
+        setInterval(() => {
+            this.tryLoggingIn();
+        }, 500);
     }
 
     initClock() {
@@ -47,6 +48,7 @@ export class System {
 
     tickTime() {
         const clock = document.getElementById("id_clockTaskBar");
+        if (!clock) return;
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, "0");
         const minutes = String(now.getMinutes()).padStart(2, "0");
@@ -94,8 +96,13 @@ export class System {
 
     async tryLoggingIn() {
         const userData = this.localStorageController.getUserData();
-        if (!userData) return;
+        if (!userData) return this.renderController.createLoginScreen();
         this.loginUser(userData.name, userData.password);
+        this.renderController.changeBackground(userData.personal_settings.bg_img_url);
+    }
+
+    logoutUser() {
+        this.localStorageController.clearUserData();
     }
 }
 

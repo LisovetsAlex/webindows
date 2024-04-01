@@ -1,8 +1,40 @@
 const express = require("express");
 const controllers = require("../controllers/controllers");
 const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
-const upload = multer();
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "../frontend/public/Assets");
+    },
+    filename: function (req, file, cb) {
+        const user = JSON.parse(req.body.user);
+        const originalFilename = file.originalname;
+        const sanitizedFilename = originalFilename.replace(/\s+/g, "_");
+
+        const directory = "../frontend/public/Assets";
+        const userId = user._id;
+
+        fs.readdir(directory, (err, files) => {
+            if (err) {
+                console.error("Error reading directory:", err);
+                return;
+            }
+
+            files.forEach((fileName) => {
+                if (!fileName.includes(userId) && !fileName.includes("_bg_")) return;
+                fs.unlink(path.join(directory, fileName), (err) => {
+                    if (err) console.error("Error deleting file:", err);
+                });
+            });
+        });
+
+        cb(null, user._id + "_" + "_bg_" + sanitizedFilename);
+    },
+});
+
+const upload = multer({ storage: storage });
 
 function registerRoutes(app) {
     controllers.forEach((Controller) => {

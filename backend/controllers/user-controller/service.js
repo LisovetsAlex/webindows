@@ -1,5 +1,5 @@
 const UsersModel = require("../../models/Users");
-const fs = require("fs");
+const { ObjectId } = require("mongodb");
 
 class UserService {
     async loginUser(username, password) {
@@ -24,7 +24,26 @@ class UserService {
         }
     }
 
-    async changeBackground(user, file) {}
+    async changeBackground(user, files) {
+        try {
+            const filePath = "Assets/" + files["file"][0].filename;
+            const userJson = JSON.parse(user);
+
+            const updatedUser = await UsersModel.findOne({ _id: userJson._id });
+
+            if (!updatedUser) {
+                return { msg: "false", user: null };
+            }
+
+            updatedUser.personal_settings.bg_img_url = filePath;
+            await updatedUser.save();
+
+            return { msg: "true", user: updatedUser };
+        } catch (error) {
+            console.error("Error updating background:", error);
+            return { msg: "error", user: null };
+        }
+    }
 }
 
 module.exports = UserService;
