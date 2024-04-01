@@ -30,7 +30,7 @@ export class System {
             this.renderController.createShortcut(this.appsController.allApps[i]);
         }
 
-        this.loginUser();
+        this.tryLoggingIn();
 
         this.tick();
     }
@@ -85,13 +85,16 @@ export class System {
     }
 
     async loginUser(username, password) {
-        let loggedInUser = this.localStorageController.getUserData() ?? null;
-
-        if (loggedInUser) return this.renderController.removeLoginScreen();
-        if (!loggedInUser) {
-            loggedInUser = await this.userController.loginUser(username, password);
+        const loggedInUser = await this.userController.loginUser(username, password);
+        if (loggedInUser) {
             this.localStorageController.saveUserData(loggedInUser);
+            this.renderController.removeLoginScreen();
         }
+    }
+
+    async tryLoggingIn() {
+        const userData = this.localStorageController.getUserData();
+        if (userData) return this.renderController.removeLoginScreen();
     }
 }
 

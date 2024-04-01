@@ -515,7 +515,7 @@ export default class RenderController {
                         <input id="id_password" name="password" type="password" placeholder="Your very secure password..." class="winCl-LoggingInput">
                     </div>
                     <div class="winCl-LoggingBtns">
-                        <button id="id_login" class="winCl-Btn winCl-LoggingBtn">Enter Webindows</button>
+                        <button id="id_login" class="winCl-Btn winCl-LoggingBtn" disabled>Enter Webindows</button>
                         <button class="winCl-Btn winCl-LoggingBtn" disabled>Cancel</button>
                         <button id="id_shutdown" class="winCl-Btn winCl-LoggingBtn">Shutdown</button>
                     </div>
@@ -526,13 +526,28 @@ export default class RenderController {
         tempContainer.innerHTML = loggingScreen;
         this.desktop.append(tempContainer);
 
+        const loginBtn = document.getElementById("id_login");
+        const usernameInput = document.getElementById("id_username");
+        const passwordInput = document.getElementById("id_password");
+        let username = "";
+        let password = "";
+
+        usernameInput.addEventListener("input", (event) => {
+            username = event.target.value;
+            loginBtn.disabled = username.length < 4 || password.length < 4;
+        });
+        passwordInput.addEventListener("input", (event) => {
+            password = event.target.value;
+            loginBtn.disabled = username.length < 4 || password.length < 4;
+        });
+
         document.getElementById("id_shutdown").addEventListener("click", () => {
             ueh.turnOff();
         });
 
         document.getElementById("id_login").addEventListener("click", () => {
-            const name = document.getElementById("id_username").value;
-            const pass = document.getElementById("id_password").value;
+            const name = usernameInput.value;
+            const pass = passwordInput.value;
             ueh.loginUser(name, pass);
         });
     }

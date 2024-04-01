@@ -14,7 +14,7 @@ class UserController {
         if (result.msg === "true") return res.send(result.user);
 
         const newUser = await this.service.registerUser(req.body.username, req.body.password);
-        res.send(newUser);
+        res.send(newUser.user);
     }
 }
 
