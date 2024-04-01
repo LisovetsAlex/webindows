@@ -49,22 +49,13 @@ export default class AppsController {
         obj = new App("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
+        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_VSC.PNG", { width: 1200, height: 700 });
         arrApps.push(obj);
 
-        const res = await new Requester().httpRequest("POST", "/apps/create", {
-            name: "app",
-            start_url: "apps/Browser/ui.html",
-            settings: {
-                description: "Web App",
-                icon: "Img_Program.PNG",
-                defaultScale: { width: 350, height: 200 },
-            },
-        });
+        obj = new App("Internet", `apps/Browser/ui.html`, "Img_Internet.PNG", { width: 1200, height: 700 });
+        arrApps.push(obj);
 
-        console.log(res);
-
-        obj = new App("Internet", `apps/Browser/ui.html`, "Img_Webindows.PNG", { width: 1200, height: 700 });
+        obj = new App("App Configurator", `apps/AppsConfigurator/ui.html`, "Img_Computer.PNG", { width: 1200, height: 700 });
         arrApps.push(obj);
 
         this.allApps = arrApps;

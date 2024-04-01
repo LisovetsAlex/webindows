@@ -1,4 +1,4 @@
-const UserController = require("./db-controller/controller");
+const UserController = require("./user-controller/controller");
 const FEController = require("./fe-controller/controller");
 const AppController = require("./app-controller/controller");
 
