@@ -94,7 +94,8 @@ export class System {
 
     async tryLoggingIn() {
         const userData = this.localStorageController.getUserData();
-        if (userData) return this.renderController.removeLoginScreen();
+        if (!userData) return;
+        this.loginUser(userData.name, userData.password);
     }
 }
 

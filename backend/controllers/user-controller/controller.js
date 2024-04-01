@@ -16,6 +16,23 @@ class UserController {
         const newUser = await this.service.registerUser(req.body.username, req.body.password);
         res.send(newUser.user);
     }
+
+    @Route("POST", "/bg")
+    async changeBG(req, res) {
+        const { user, file } = req.body;
+        console.log(req.body);
+        if (!user || !file) {
+            return res.status(400).json({ error: "User and file information are required." });
+        }
+
+        try {
+            const result = await this.service.changeBackground(JSON.parse(user), file);
+            res.json({ message: "Background changed successfully." });
+        } catch (error) {
+            console.error("Error changing background:", error);
+            res.status(500).json({ error: "Internal server error." });
+        }
+    }
 }
 
 module.exports = UserController;

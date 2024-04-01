@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
 const UsersModel = require("../../models/Users");
+const fs = require("fs");
 
 class UserService {
     async loginUser(username, password) {
@@ -23,6 +23,8 @@ class UserService {
             return { msg: "error", user: null };
         }
     }
+
+    async changeBackground(user, file) {}
 }
 
 module.exports = UserService;

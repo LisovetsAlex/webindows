@@ -556,6 +556,10 @@ export default class RenderController {
         const loginScreen = document.getElementById("id_loginScreen");
         loginScreen.remove();
     }
+
+    changeBackground(imgUrl) {
+        this.desktop.style.backgroundImage = `url(${imgUrl})`;
+    }
 }
 
 function sendMousemoveToParent(event, iframe) {
