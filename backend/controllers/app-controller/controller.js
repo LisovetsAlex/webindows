@@ -17,7 +17,7 @@ class AppController {
 
     @Route("POST", "/create")
     async create(req, res) {
-        this.service.createApp(req.body.name, req.body.data).then((data) => {
+        this.service.createApp(req.body.data).then((data) => {
             res.send(data);
         });
     }

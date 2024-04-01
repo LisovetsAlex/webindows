@@ -10,37 +10,43 @@ export class App {
         this.position = { x: 0, y: 0 };
         this.html = html;
         this.img = icon;
-        this.id = "";
-    }
-
-    setApp(name, html, icon, defaultScale) {
-        httpRequest("POST", "/apps/create", {
-            name: name,
-            html: html,
-            img: icon,
-            settings: {
-                position: {
-                    x: 0,
-                    y: 0,
-                },
-                scale: defaultScale,
-                isFullScreen: false,
-            },
-        });
     }
 }
 
 export default class AppsController {
-    constructor() {
+    constructor(requester) {
         this.allApps = new Array();
         this.openedApps = new Array();
+        this.requester = requester;
+    }
+
+    initDefaultApps(apps) {
+        for (let app of apps) {
+            this.requester.httpRequest("POST", "http://localhost:3000/apps/create", {
+                data: {
+                    name: app.name,
+                    start_url: app.html,
+                    settings: {
+                        description: app.name,
+                        icon: app.img,
+                        defaultScale: {
+                            width: app.width,
+                            height: app.height,
+                        },
+                    },
+                },
+            });
+        }
     }
 
     async initAllApps() {
         let arrApps = new Array(0);
         let obj = {};
 
-        obj = new App("Order Manager", `apps/OrderManager/ui.html`, "ImgTrans_OrderManager.png", { width: 350, height: 200 });
+        obj = new App("Apploader", `apps/AppUploader/ui.html`, "Img_Computer.PNG", { width: 350, height: 200 });
+        arrApps.push(obj);
+
+        obj = new App("Order Manager", `apps/OrderManager/ui.html`, "ImgTrans_OrderManager.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
         obj = new App("Callback Sorter", `apps/CallbackSorter/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
@@ -57,6 +63,8 @@ export default class AppsController {
 
         obj = new App("Background Changer", `apps/BackgroundChanger/ui.html`, "Img_Computer.PNG", { width: 1200, height: 700 });
         arrApps.push(obj);
+
+        this.initDefaultApps(arrApps);
 
         this.allApps = arrApps;
     }
