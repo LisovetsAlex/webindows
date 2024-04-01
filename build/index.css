@@ -1,0 +1,498 @@
+:root {
+    --dark-blue0: rgb(2, 0, 36);
+    --dark-blue5: rgb(8, 8, 111);
+    --dark-blue23: rgb(9, 9, 121);
+    --light-blue: rgb(0, 106, 255);
+
+    --grey: #b0b0b0;
+
+    --white: #fff;
+
+    --font: "Monaco";
+}
+
+img {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+}
+body {
+    font-family: var(--font);
+    background-color: #0d8cbe;
+    padding: 10px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    width: max-content;
+    height: max-content;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+p,
+text,
+button,
+input,
+option {
+    font-family: var(--font);
+    outline: none;
+}
+
+.winCl-Field {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.winCl-WindowHeader {
+    padding-top: 3px;
+    margin-bottom: 3px;
+    padding-right: 5px;
+    height: 20px;
+    color: var(--white);
+    padding-left: 5px;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, var(--dark-blue0) 0%, var(--dark-blue5) 5%, var(--dark-blue23) 23%, var(--light-blue) 100%);
+}
+
+.winCl-Text {
+    font-family: var(--font);
+    font-size: small;
+}
+
+.winCl-Grabber {
+    cursor: grab;
+}
+
+.winCl-Grabber:active {
+    cursor: grabbing;
+}
+
+.winCl-BasicWindow {
+    z-index: 1;
+    border-left: 2px solid var(--white);
+    border-top: 2px solid var(--white);
+    border-right: 2px solid #848484;
+    border-bottom: 2px solid #848484;
+    padding: 2px;
+    background-color: rgb(201, 201, 201);
+    height: 100vh;
+    width: 100vw;
+    box-shadow: rgba(0, 0, 0, 0.253) 0px 2px 16px 4px;
+}
+
+.winCl-Window {
+    z-index: 1;
+    background-color: rgb(201, 201, 201);
+    height: calc(100vh - 16px);
+    width: calc(100vw - 16px);
+    padding: 8px;
+}
+
+.winCl-Frame {
+}
+
+.winCl-Taskbar {
+    z-index: 3;
+    display: flex;
+    flex-direction: row;
+    border-top: 3px solid rgb(225, 225, 225);
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    background-color: rgb(214, 211, 206);
+    align-items: center;
+}
+
+.winCl-Selector {
+    cursor: url(Assets/Windows95_Cursor.cur), auto;
+    border-left: 2px solid #3d3d3d;
+    border-top: 2px solid #3d3d3d;
+    border-right: 2px solid #b0b0b0;
+    border-bottom: 2px solid #b0b0b0;
+    width: 30%;
+    height: 50%;
+    margin: 3px;
+    margin-top: 0;
+}
+
+.winCl-Selector:hover,
+.winCl-Selector:focus,
+.winCl-Selector:active {
+    outline: 0;
+}
+
+.winCl-Option {
+    height: 15px;
+    padding: 2px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    user-select: all;
+}
+
+.winCl-BtnGroup {
+    display: flex;
+    margin-top: auto;
+    flex-direction: column;
+    align-items: center;
+    height: 190px;
+}
+
+.winCl-Input {
+    cursor: text;
+    color: black;
+    border-left: 2px solid #3d3d3d;
+    border-top: 2px solid #3d3d3d;
+    border-right: 2px solid #b0b0b0;
+    border-bottom: 2px solid #b0b0b0;
+    background-color: var(--white);
+    width: 75px;
+    user-select: all;
+    margin-left: auto;
+    margin-block: 3px;
+}
+
+.winCl-Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.winCl-Btn {
+    cursor: pointer;
+    border-left: 2px solid var(--white);
+    border-top: 2px solid var(--white);
+    border-right: 2px solid #848484;
+    border-bottom: 2px solid #848484;
+    background-color: rgb(201, 201, 201);
+    padding: 3px 1px 3px 1px;
+    width: 100px;
+    margin: 3px;
+}
+.winCl-Btn:disabled {
+    cursor: default;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #848484;
+    border-top: 2px solid #848484;
+    background-color: rgb(204, 204, 204);
+    padding: 3px 1px 3px 1px;
+    width: 100px;
+    margin: 3px;
+}
+
+.winCl-Label {
+    padding-right: 8px;
+}
+
+.winCl-PinnedApps {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    max-width: 20%;
+}
+
+.winCl-MinnedApps {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.winCl-Disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #848484;
+    border-left: 2px solid #9b9b9b;
+    border-top: 2px solid #9b9b9b;
+    border-right: 2px solid var(--white);
+    border-bottom: 2px solid var(--white);
+}
+
+.winCl-ShortcutBtn {
+    cursor: pointer;
+    z-index: -1;
+    width: 75px;
+    height: 75px;
+    color: white;
+    margin: 5px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.winCl-List {
+}
+
+.winCl-ShortcutImg {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+}
+
+.winCl-ShortcutBtn:hover {
+    border: 1px dotted #303030;
+}
+.winCl-ShortcutBtn:focus {
+    border: 1px dotted #303030;
+}
+
+.winCl-ShortcutBtn:active {
+    border: 1px dotted #303030;
+}
+
+.winCl-ClockTaskBar {
+    height: 32px;
+    background-color: rgb(214, 211, 206);
+    width: 150px;
+    margin-left: auto;
+    margin-right: 1%;
+}
+
+.winCl-CloseIcon {
+    background-image: url("Assets/Img_Button_Close.PNG");
+    height: 18px;
+    width: 20px;
+}
+.winCl-ExpandIcon {
+    background-image: url("Assets/Img_Button_Expand.PNG");
+}
+.winCl-MinimizeIcon {
+    background-image: url("Assets/Img_Button_Minimize.PNG");
+}
+
+.winCl-PinnedBtn {
+    cursor: pointer;
+    border-left: 2px solid rgb(214, 211, 206);
+    border-top: 2px solid rgb(214, 211, 206);
+    border-right: 2px solid rgb(214, 211, 206);
+    border-bottom: 2px solid rgb(214, 211, 206);
+    background-color: rgb(214, 211, 206);
+    border-color: rgb(214, 211, 206);
+    border-radius: 0px;
+    width: 40px;
+}
+
+.winCl-MinimizedBtn {
+    cursor: pointer;
+    display: flex;
+    border-left: 2px solid rgb(255, 255, 255);
+    border-top: 2px solid rgb(255, 255, 255);
+    border-right: 2px solid rgb(137, 137, 137);
+    border-bottom: 2px solid rgb(137, 137, 137);
+    background-color: rgb(214, 211, 206);
+    padding: 0px;
+    width: 175px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 7px;
+    height: 35px;
+}
+
+.winCl-BtnHeader {
+    cursor: pointer;
+    float: right;
+    padding: 0px;
+    width: 20px;
+    height: 18px;
+    margin: 0px;
+    margin-right: 2px;
+    align-items: center;
+    border-left: 2px solid rgb(255, 255, 255);
+    border-top: 2px solid rgb(255, 255, 255);
+    border-right: 2px solid rgb(64, 64, 64);
+    border-bottom: 2px solid rgb(64, 64, 64);
+}
+
+.winCl-PinnedBtn:hover,
+.winCl-PinnedBtn:focus,
+.winCl-PinnedBtn:active {
+    outline: 0;
+}
+
+.winCl-Btn:hover,
+.winCl-Btn:focus {
+    outline: 0;
+}
+
+.winCl-Btn:active {
+    border-right: 2px solid var(--white);
+    border-bottom: 2px solid var(--white);
+    border-left: 2px solid #848484;
+    border-top: 2px solid #848484;
+}
+
+.winCl-MinimizedBtn:hover,
+.winCl-MinimizedBtn:focus {
+    outline: 0;
+}
+
+.winCl-MinimizedBtn:active {
+    border-right: 2px solid var(--white);
+    border-bottom: 2px solid var(--white);
+    border-left: 2px solid #848484;
+    border-top: 2px solid #848484;
+}
+
+.windowStart {
+    z-index: 2;
+    background-color: rgb(214, 211, 206);
+    width: 240px;
+    height: 409px;
+    position: fixed;
+    left: 5px;
+    bottom: 49px;
+    border-right: 2px solid var(--white);
+    border-bottom: 2px solid var(--white);
+    border-left: 2px solid #848484;
+    border-top: 2px solid #848484;
+    overflow: hidden;
+    display: none;
+}
+
+.imageStart {
+    background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, rgba(6, 5, 80, 1) 0%, rgba(8, 8, 111, 1) 5%, rgba(9, 9, 121, 1) 23%, rgba(0, 106, 255, 1) 100%);
+    width: 40px;
+    position: absolute;
+    bottom: 1px;
+    top: 1px;
+    left: 1px;
+    color: white;
+    font-weight: bold;
+}
+
+.textStart {
+    transform: rotate(-90deg);
+    z-index: 2;
+    position: absolute;
+    width: max-content;
+    left: -134;
+    bottom: 144;
+    margin-left: -15px;
+}
+
+.winStartBtn {
+    height: 50px;
+    width: 199px;
+    text-align: left;
+    border: none;
+    margin-top: 1px;
+    background-color: rgb(214, 211, 206);
+    z-index: 2;
+}
+
+/* .winStartBtn:first-child {
+    box-shadow: inset 0px 6px 0px -3px #848484;
+  }
+  
+  .winStartBtn:nth-child(2) {
+    box-shadow: ;
+    border-top: 2px solid var(--white);
+  }
+  
+  .winStartBtn:nth-last-child(2) {
+    box-shadow: 0px 5px 0px -3px #848484;
+  }
+  
+  .winStartBtn:last-child {
+    border-top: 2px solid #848484; 
+    box-shadow: ; 
+  } */
+
+.winStartBtn:hover {
+    background-color: #08246b;
+    color: white;
+}
+
+.startBtnGroup {
+    position: absolute;
+    margin-left: 41px;
+    display: inline-grid;
+    grid-template-columns: 100%;
+}
+
+.winStartBtn :active :hover {
+    background-color: #08246b;
+}
+
+.turnOff {
+    z-index: 999;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: fixed;
+    padding: 0;
+    margin: 0;
+
+    top: 0;
+    left: 0;
+}
+
+.resize-handle-hori {
+    position: absolute;
+    width: 8px;
+    height: 100%;
+    top: 0;
+    cursor: ew-resize;
+}
+
+.resize-handle-vert {
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    cursor: ns-resize;
+}
+
+.resize-handle-diag {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+}
+
+.resize-handle-diag.right-bottom {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.resize-handle-diag.left-bottom {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+}
+
+.resize-handle-vert.top {
+    top: -5px;
+    left: -1%;
+}
+
+.resize-handle-vert.bottom {
+    bottom: -5px;
+    left: -1%;
+}
+
+.resize-handle-hori.left {
+    left: -5px;
+}
+
+.resize-handle-hori.right {
+    right: -5px;
+}

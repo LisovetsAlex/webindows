@@ -9,7 +9,7 @@ function startProdServer() {
     app.use(express.urlencoded({ extended: true }));
 
     app.listen(PORT, () => {
-        console.log(`Production server started at: http://localhost:${PORT}`);
+        console.log(`Server started at: http://localhost:${PORT}`);
     });
 
     return app;

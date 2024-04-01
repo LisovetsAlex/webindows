@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<div>
+    <script src="../Utility/Util_Storage.js" defer></script>
+    <script src="order_manager.js" defer></script>
+
+    <link rel="stylesheet" type="text/css" href="../../index.css" />
+</div>
+
+<body onload="loadSaved()">
+    <div class="winCl-Window">
+        <select id="list1" size="5" class="winCl-Selector">
+            <option data-price="100" class="winCl-Option" value="1">
+                Coffee
+            </option>
+            <option data-price="200" class="winCl-Option" value="2">Tea</option>
+            <option data-price="300" class="winCl-Option" value="3">
+                Milk
+            </option>
+        </select>
+        <select id="list2" size="5" class="winCl-Selector"></select>
+        <div style="float: right; width: 35%">
+            <button
+                id="right"
+                class="winCl-Btn"
+                onclick="toRight(list1.selectedIndex)"
+                style="width: 95%"
+            >
+                To Right
+            </button>
+            <br />
+            <button
+                id="left"
+                class="winCl-Btn"
+                onclick="toLeft(list2.selectedIndex)"
+                style="width: 95%"
+            >
+                To Left
+            </button>
+            <br />
+            <button
+                id="sortBtn"
+                class="winCl-Btn"
+                onclick="sortList()"
+                style="width: 95%"
+            >
+                Sort
+            </button>
+            <br />
+            <button
+                id="calc"
+                class="winCl-Btn"
+                onclick="calculate()"
+                style="width: 95%"
+            >
+                Price
+            </button>
+            <button
+                id="save"
+                class="winCl-Btn"
+                onclick="saveSelection()"
+                style="width: 95%"
+            >
+                Save
+            </button>
+        </div>
+
+        <div style="display: flex; height: 38px">
+            <p style="margin-left: 3px">Price:</p>
+            <input
+                disabled
+                id="price"
+                data-summe="0"
+                class="winCl-Input"
+                style="margin-top: 18px; margin-left: 15px"
+            />
+        </div>
+    </div>
+</body>

@@ -1,4 +1,4 @@
-const UserService = require("./service.js");
+const UserService = require("./service");
 const Controller = require("../../decorators/Controller");
 const Route = require("../../decorators/Route");
 
