@@ -1,5 +1,8 @@
 const express = require("express");
 const controllers = require("../controllers/controllers");
+const multer = require("multer");
+
+const upload = multer();
 
 function registerRoutes(app) {
     controllers.forEach((Controller) => {
@@ -17,7 +20,7 @@ function registerRoutes(app) {
 
             instance.routes.forEach((route) => {
                 const { path, handler, method } = route;
-                router[method](path, (req, res) => handler(instance, req, res));
+                router[method](path, upload.fields([{ name: "user" }, { name: "file" }]), (req, res) => handler(instance, req, res));
                 console.log(`   - Route (${method}): ${basePath + path}`);
             });
 

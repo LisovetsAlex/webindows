@@ -1,27 +1,32 @@
 /**
- * Sends a request to the specified URL and invokes the provided callback function with the response data.
- *
- * @param {string} url - The URL to send the request to.
- * @param {function} callback - The callback function to invoke with the response data.
- * @param {RequestInit} fetchOptions - The options to pass to the fetch function.
- * @return {void} This function does not return a value.
+ * Method to make an http request to the specified url
+ * @param {String} method the method to use (POST, GET, PUT, DELETE)
+ * @param {String} url the url to send the request to (eg. /users)
+ * @param {String} body the body of the request
+ * @param {String} enctype the enctype of the request (eg. application/json, multipart/form-data)
+ * @param {Function} onSuccess the function to call when the request is successful
  */
-const sendRequest = function (url, callback, fetchOptions) {
-    fetch(url, {
-        method: fetchOptions.method,
-        body: fetchOptions.body,
-        ...fetchOptions,
-    })
-        .then(function (response) {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.text();
-        })
-        .then(function (data) {
-            callback(data);
-        })
-        .catch(function (error) {
-            console.error("Fetch error: " + error);
-        });
-};
+async function httpRequest(method, url, body, enctype) {
+    try {
+        const headers = {
+            "Content-Type": enctype || "application/json", // Default to application/json if enctype is not provided
+        };
+
+        const options = {
+            method: method,
+            headers: headers,
+            body: enctype === "multipart/form-data" ? body : JSON.stringify(body),
+        };
+
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
