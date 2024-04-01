@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 function connectToDB() {
     return new Promise((resolve, reject) => {
         const dbUrl = process.env.MONGODB_URL;
-        mongoose.connect(dbUrl);
+        const dbUser = process.env.MONGODB_USER;
+        const dbPass = process.env.MONGODB_PASS;
+        const dbName = process.env.MONGODB_DB;
+
+        mongoose.connect(`mongodb://${dbUser}:${dbPass}@${dbUrl}/${dbName}?authSource=admin`);
         const db = mongoose.connection;
 
         db.on("error", (err) => {
@@ -11,7 +15,8 @@ function connectToDB() {
             reject(err);
         });
         db.once("open", () => {
-            console.log("Database connection successful");
+            db.useDb(dbName);
+            console.log("Using database: " + dbName);
             resolve(db);
         });
     });

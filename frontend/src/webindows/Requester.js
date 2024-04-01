@@ -1,27 +1,29 @@
-function Requester() {
+export default class Requester {
     /**
-     * Sends a request to the specified URL using the specified method.
-     *
-     * @param {string} url - The URL to send the request to.
-     * @param {string} [method="GET"] - The HTTP method to use for the request. Default is "GET".
-     * @param {function} callback - The callback function to be executed when the request is complete.
-     * @return {void}
+     * Method to make an http request to the specified url
+     * @param {String} method the method to use (POST, GET, PUT, DELETE)
+     * @param {String} url the url to send the request to (eg. /users)
+     * @param {String} body the body of the request
+     * @param {Function} onSuccess the function to call when the request is successful
      */
-    this.sendRequest = function (url, callback) {
-        fetch(url)
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.text();
-            })
-            .then(function (data) {
-                callback(data);
-            })
-            .catch(function (error) {
-                console.error("Fetch error: " + error);
+    async httpRequest(method, url, body) {
+        try {
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
             });
-    };
-}
 
-export { Requester };
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            const responseData = await response.json();
+            return responseData;
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+}

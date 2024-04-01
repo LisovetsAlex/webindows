@@ -1,3 +1,5 @@
+import Requester from "./Requester";
+
 export class App {
     constructor(name, html, icon, defaultScale) {
         this.name = name;
@@ -8,6 +10,23 @@ export class App {
         this.position = { x: 0, y: 0 };
         this.html = html;
         this.img = icon;
+        this.id = "";
+    }
+
+    setApp(name, html, icon, defaultScale) {
+        httpRequest("POST", "/apps/create", {
+            name: name,
+            html: html,
+            img: icon,
+            settings: {
+                position: {
+                    x: 0,
+                    y: 0,
+                },
+                scale: defaultScale,
+                isFullScreen: false,
+            },
+        });
     }
 }
 
@@ -17,27 +36,33 @@ export default class AppsController {
         this.openedApps = new Array();
     }
 
-    initAllApps() {
+    async initAllApps() {
         let arrApps = new Array(0);
         let obj = {};
 
         obj = new App("Order Manager", `apps/OrderManager/ui.html`, "ImgTrans_OrderManager.png", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("Callback Sorter", `apps/CallbackSorter/ui.html`, "Img_Computer.PNG", { width: 350, height: 200 });
+        obj = new App("Callback Sorter", `apps/CallbackSorter/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Img_Internet.PNG", { width: 350, height: 200 });
+        obj = new App("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("WWW?", `apps/CustomerProductTester/ui.html`, "Img_HowBook.PNG", { width: 350, height: 200 });
+        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
         arrApps.push(obj);
 
-        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_VSC.PNG", { width: 1200, height: 700 });
-        arrApps.push(obj);
+        const res = await new Requester().httpRequest("POST", "/apps/create", {
+            name: "app",
+            start_url: "apps/Browser/ui.html",
+            settings: {
+                description: "Web App",
+                icon: "Img_Program.PNG",
+                defaultScale: { width: 350, height: 200 },
+            },
+        });
 
-        obj = new App("Internet", `apps/Browser/ui.html`, "Img_Internet.PNG", { width: 1200, height: 700 });
-        arrApps.push(obj);
+        console.log(res);
 
         obj = new App("Internet", `apps/Browser/ui.html`, "Img_Webindows.PNG", { width: 1200, height: 700 });
         arrApps.push(obj);

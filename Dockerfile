@@ -23,7 +23,7 @@ COPY --from=build-fe /app/frontend/build /app/frontend/build
 WORKDIR /app/backend
 
 ENV NODE_ENV=production
-ENV MONGODB_URL=mongodb://mongodb:27017/TEST_DB
+ENV MONGODB_URL=mongodb://root:12345678@mongodb:27017/
 
 EXPOSE 3069
 

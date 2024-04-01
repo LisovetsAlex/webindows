@@ -31,3 +31,14 @@ npm run start:dev
 ```
 
 5. Production is localhost:3069 after running Docker
+
+## Create Default User in DB
+
+Open mongosh, connect to DB after running docker:
+
+```
+use admin
+db.createUser({user:"admin",pwd:"12345678",roles:[{role:"readWrite",db:"WEBINDOWS_DB"}, {role: "dbAdmin", db: "WEBINDOWS_DB"}]})
+```
+
+Then restart mongodb container
