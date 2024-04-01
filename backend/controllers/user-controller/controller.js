@@ -16,13 +16,6 @@ class UserController {
         const newUser = await this.service.registerUser(req.body.username, req.body.password);
         res.send(newUser);
     }
-
-    @Route("POST", "/register")
-    registerUser(req, res) {
-        this.service.registerUser(req.body.username, req.body.password).then((result) => {
-            res.send(result);
-        });
-    }
 }
 
 module.exports = UserController;
