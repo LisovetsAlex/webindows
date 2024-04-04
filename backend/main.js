@@ -4,9 +4,9 @@ const registerRoutes = require("./decorators/registerRoutes");
 require("dotenv").config({ path: "../.dev.env" });
 
 async function createApp() {
-    const db = await connectToDB();
+    //const db = await connectToDB();
 
-    registerRoutes(app, db);
+    registerRoutes(app);
 
     return app;
 }
