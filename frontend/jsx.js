@@ -1,5 +1,4 @@
 /** @jsx createElement */
-/*** @jsxFrag createFragment */
 
 const createElement = (tag, props, ...children) => {
     if (typeof tag === "function") return tag(props, ...children);
@@ -22,8 +21,4 @@ const appendChild = (parent, child) => {
     else parent.appendChild(child.nodeType ? child : document.createTextNode(child));
 };
 
-const createFragment = (props, ...children) => {
-    return children;
-};
-
-export { createElement, createFragment, appendChild };
+export { createElement, appendChild };

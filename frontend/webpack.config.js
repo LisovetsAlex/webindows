@@ -1,5 +1,6 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
     entry: "./index.js",
@@ -27,6 +28,9 @@ module.exports = {
                 { from: "public", to: "." },
                 { from: "src/apps", to: "./apps" },
             ],
+        }),
+        new webpack.ProvidePlugin({
+            createElement: [path.resolve(__dirname, "jsx.js"), "createElement"],
         }),
     ],
 };
