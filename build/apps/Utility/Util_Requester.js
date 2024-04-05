@@ -1,1 +1,0 @@
-const sendRequest=function(o,t,e){fetch(o,{method:e.method,body:e.body,...e}).then((function(o){if(!o.ok)throw new Error("Network response was not ok");return o.text()})).then((function(o){t(o)})).catch((function(o){console.error("Fetch error: "+o)}))};

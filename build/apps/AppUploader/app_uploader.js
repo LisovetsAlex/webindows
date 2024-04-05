@@ -1,1 +1,0 @@
-function upload(){const e=new FormData,t=document.getElementById("html").files[0],n=document.getElementById("js").files[0],o=document.getElementById("css").files[0];e.append("html",t),e.append("js",n),e.append("css",o),sendRequest("http://localhost:3000/upload/app/",(e=>{console.log(e)}),{body:e,method:"POST"})}
