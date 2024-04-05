@@ -10,37 +10,9 @@ export default class RenderController {
     }
 
     createShortcut(app) {
-        const shortCut = document.createElement("div");
-        const btn = document.createElement("button");
-        const img = document.createElement("img");
-
-        shortCut.setAttribute("id", "id_shortcuts");
-        shortCut.style.position = "absolute";
         const position = this.getNextOnGrid();
         const shortCutIndx = position.indx;
-        shortCut.style.top = `${position.y}px`;
-        shortCut.style.left = `${position.x}px`;
 
-        btn.setAttribute("id", `${app.name}sc`);
-        btn.classList.add("winCl-ShortcutBtn");
-        btn.classList.add("winCl-Grabber");
-        btn.dataset.width = "75";
-
-        btn.addEventListener("dblclick", () => {
-            ueh.openApp(app.name);
-        });
-
-        btn.addEventListener("mousedown", () => {
-            const savedX = this.mouse.x;
-            const savedOffset = shortCut.offsetLeft;
-            this.eventController.addEvent({
-                name: `${app.name}sc_drag`,
-                event: "mousemove",
-                callback: () => {
-                    this.moveShortcut(savedX, savedOffset, shortCut, shortCutIndx);
-                },
-            });
-        });
         this.eventController.addEvent({
             name: `${app.name}sc_drag_up`,
             event: "mouseup",
@@ -49,15 +21,31 @@ export default class RenderController {
             },
         });
 
-        img.setAttribute("src", `Assets/${app.img}`);
-        img.setAttribute("loading", "lazy");
-        img.classList.add("winCl-ShortcutImg");
+        const elem = (
+            <div id="id_shortcuts" style={{ position: "absolute", top: `${position.y}px`, left: `${position.x}px` }}>
+                <img src={`Assets/${app.img}`} className="winCl-ShortcutImg" />
+                <button
+                    id={`${app.name}sc`}
+                    className="winCl-ShortcutBtn winCl-Grabber"
+                    onDblclick={() => ueh.openApp(app.name)}
+                    onMousedown={() => {
+                        const savedX = this.mouse.x;
+                        const savedOffset = shortCut.offsetLeft;
+                        this.eventController.addEvent({
+                            name: `${app.name}sc_drag`,
+                            event: "mousemove",
+                            callback: () => {
+                                this.moveShortcut(savedX, savedOffset, shortCut, shortCutIndx);
+                            },
+                        });
+                    }}
+                >
+                    {app.name}
+                </button>
+            </div>
+        );
 
-        btn.append(img);
-        btn.innerHTML += app.name;
-        shortCut.append(btn);
-
-        this.desktop.append(shortCut);
+        this.desktop.append(elem);
     }
 
     removeWindow(name) {

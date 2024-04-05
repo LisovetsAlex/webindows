@@ -5,7 +5,8 @@ const createElement = (tag, props, ...children) => {
     const element = document.createElement(tag);
 
     Object.entries(props || {}).forEach(([name, value]) => {
-        if (name.startsWith("on") && name.toLowerCase() in window) element.addEventListener(name.toLowerCase().substr(2), value);
+        if (name.startsWith("on") && name.toLowerCase() in window) element.addEventListener(name.toLowerCase().substring(2), value);
+        else if (name === "className") element.setAttribute("class", value);
         else element.setAttribute(name, value.toString());
     });
 
