@@ -74,6 +74,7 @@
 }
 
 .winCl-Input {
+    height: 22px;
     color: var(--black);
     font-family: var(--font-fat);
     border: 0;

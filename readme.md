@@ -42,3 +42,13 @@ db.createUser({user:"admin",pwd:"12345678",roles:[{role:"readWrite",db:"WEBINDOW
 ```
 
 Then restart mongodb container
+
+## Making own apps
+
+```
+cd frontend/src/apps
+```
+
+```
+npx create-webindows-app-template
+```
