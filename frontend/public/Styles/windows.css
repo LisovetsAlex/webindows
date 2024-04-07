@@ -1,0 +1,81 @@
+.winCl-Header {
+    cursor: grab;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3px;
+    padding-inline: 5px;
+    padding-block: 1px;
+    height: 20px;
+    color: var(--white);
+    font-family: var(--font-reg);
+    font-size: small;
+    background: linear-gradient(90deg, var(--blue-200) 0%, var(--blue-100) 100%);
+}
+.winCl-Header:active {
+    cursor: grabbing;
+}
+
+.winCl-Window {
+    border: 0;
+    background-color: var(--grey-200);
+    padding: 4px;
+}
+
+.winCl-Frame {
+    border: 0;
+    padding: 4px;
+    margin: 0;
+    background-color: var(--grey-200);
+}
+
+.resize-handle-hori {
+    position: absolute;
+    width: 8px;
+    height: 100%;
+    top: 0;
+    cursor: ew-resize;
+}
+
+.resize-handle-vert {
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    left: 0;
+    cursor: ns-resize;
+}
+
+.resize-handle-diag {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+}
+
+.resize-handle-diag.right-bottom {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.resize-handle-diag.left-bottom {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+}
+
+.resize-handle-vert.top {
+    top: -5px;
+}
+
+.resize-handle-vert.bottom {
+    bottom: -5px;
+}
+
+.resize-handle-hori.left {
+    left: -5px;
+}
+
+.resize-handle-hori.right {
+    right: -5px;
+}

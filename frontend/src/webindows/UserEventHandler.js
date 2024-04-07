@@ -1,10 +1,6 @@
 import { sys } from "./System";
 
 class UEH {
-    mouseMove(event) {
-        sys.moveWindow(event);
-    }
-
     openApp(name) {
         sys.openApp(name);
     }

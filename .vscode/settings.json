@@ -1,7 +1,7 @@
 {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "prettier.printWidth": 160,
+    "prettier.printWidth": 110,
     "prettier.tabWidth": 4,
     "cSpell.words": ["webindows"]
 }

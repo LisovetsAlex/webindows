@@ -5,9 +5,22 @@ const createElement = (tag, props, ...children) => {
     const element = document.createElement(tag);
 
     Object.entries(props || {}).forEach(([name, value]) => {
-        if (name.startsWith("on") && name.toLowerCase() in window) element.addEventListener(name.toLowerCase().substring(2), value);
-        else if (name === "className") element.setAttribute("class", value);
-        else element.setAttribute(name, value.toString());
+        if (name.startsWith("on") && name.toLowerCase() in window) {
+            element.addEventListener(name.toLowerCase().substring(2), value);
+            return;
+        }
+        if (name === "className") {
+            element.setAttribute("class", value);
+            return;
+        }
+        if (name === "style" && typeof value === "object") {
+            Object.keys(value).forEach((propName) => {
+                const propValue = value[propName];
+                element.style[propName] = propValue;
+            });
+            return;
+        }
+        element.setAttribute(name, value.toString());
     });
 
     children.forEach((child) => {

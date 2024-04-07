@@ -1,0 +1,140 @@
+.winCl-Taskbar {
+    z-index: 3;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    align-items: center;
+    padding-block: 2px;
+    border: 0;
+    background-color: var(--grey-200);
+    height: 34px;
+}
+
+.winCl-MinnedApps {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+}
+
+.winCl-PinnedBtn {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 0px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.winCl-TaskbarPinnedApps {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-inline: 8px;
+}
+
+.winCl-PinnedApps {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-inline: 8px;
+}
+
+.winCl-StartBtn {
+    cursor: pointer;
+    margin-left: 4px;
+    padding: 4px;
+    padding-inline: 8px;
+}
+
+.winCl-MinnedApp {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    padding: 0px;
+    padding-inline: 4px;
+    width: 175px;
+    height: 28px;
+    font-size: small;
+}
+
+.winCl-ClockTaskBar {
+    height: 22px;
+    width: 75px;
+    margin-left: auto;
+    margin-right: 1%;
+}
+
+.winCl-StartBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: "MS Sans Serif", sans-serif;
+    font-size: small;
+    font-weight: bold;
+}
+
+.winCl-Start {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2px;
+    left: 4px;
+    bottom: 38px;
+    position: absolute;
+    width: 250px;
+    z-index: 3;
+    background-color: var(--grey-200);
+    border-left: 36px solid rgba(8, 37, 96, 1);
+}
+
+.winCl-StartText {
+    font-size: x-large;
+    font-family: "font-fat";
+    color: var(--white);
+    text-wrap: nowrap;
+    position: absolute;
+    bottom: 0;
+    left: -8px;
+
+    background: none;
+
+    transform-origin: 0 0;
+    transform: rotate(-45deg);
+}
+
+.winCl-StartButtons {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: auto;
+}
+
+.winCl-StartLink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 46px;
+    gap: 16px;
+}
+.winCl-StartLink img {
+    height: 28px;
+    width: 28px;
+}

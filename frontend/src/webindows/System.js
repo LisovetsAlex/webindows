@@ -1,7 +1,7 @@
-import RenderController from "./RenderController";
+import RenderController from "./Rendering/RenderController";
 import AppsController from "./AppsController";
 import MouseController from "./MouseController";
-import { StartHandler as StartController } from "./StartController";
+import { StartHandler as StartController } from "./Rendering/StartController";
 import EventController from "./EventController";
 import UserController from "./UserController";
 import Requester from "./Requester";
@@ -9,6 +9,7 @@ import LocalStorageController from "./LocalStorageController";
 
 export class System {
     constructor() {
+        this.isOff = false;
         this.eventController = new EventController();
         this.requester = new Requester();
         this.appsController = new AppsController(this.requester);
@@ -20,14 +21,9 @@ export class System {
     }
 
     async init() {
-        this.starterController.initStartButtons();
         this.appsController.initAllApps();
 
         this.initClock();
-
-        for (let i = 0; i < this.appsController.allApps.length; i++) {
-            this.renderController.createShortcut(this.appsController.allApps[i]);
-        }
 
         await this.tryLoggingIn();
 
@@ -36,6 +32,7 @@ export class System {
 
     tick() {
         setInterval(() => {
+            if (this.isOff) return;
             this.tryLoggingIn();
         }, 500);
     }
@@ -79,11 +76,9 @@ export class System {
     }
 
     turnOff() {
-        this.renderController.showTurnOffScreen();
-
-        setTimeout(() => {
-            this.renderController.black();
-        }, 6000);
+        this.isOff = true;
+        this.renderController.removeAll();
+        this.logoutUser();
     }
 
     async loginUser(username, password) {
@@ -91,6 +86,7 @@ export class System {
         if (loggedInUser) {
             this.localStorageController.saveUserData(loggedInUser);
             this.renderController.removeLoginScreen();
+            this.renderController.createDesktop();
         }
     }
 

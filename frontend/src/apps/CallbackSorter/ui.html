@@ -2,10 +2,10 @@
 <head>
     <script src="callback_sorter.js" defer></script>
 
-    <link rel="stylesheet" type="text/css" href="../../index.css" />
+    <link rel="stylesheet" type="text/css" href="../../public.css" />
 </head>
 <body>
-    <div class="winCl-Window">
+    <div class="winCl-AppWindow">
         <ul
             id="id_list"
             class="winCl-Selector"
@@ -19,21 +19,11 @@
         </ul>
 
         <div style="margin-left: 33%; width: 35%">
-            <button
-                id="sortText"
-                class="winCl-Btn"
-                onclick="sortBy(false)"
-                style="width: 95%"
-            >
+            <button id="sortText" class="winCl-Btn" onclick="sortBy(false)" style="width: 95%">
                 Sort By Text
             </button>
             <br />
-            <button
-                id="sortValue"
-                class="winCl-Btn"
-                onclick="sortBy(true)"
-                style="width: 95%"
-            >
+            <button id="sortValue" class="winCl-Btn" onclick="sortBy(true)" style="width: 95%">
                 Sort By Value
             </button>
             <br />

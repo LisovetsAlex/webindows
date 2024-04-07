@@ -41,25 +41,51 @@ export default class AppsController {
         let arrApps = new Array(0);
         let obj = {};
 
-        obj = new App("Apploader", `apps/AppUploader/ui.html`, "Img_Computer.PNG", { width: 350, height: 200 });
+        obj = new App("Apploader", `apps/AppUploader/ui.html`, "Icons/mmsys.cpl_14_4366.ico", {
+            width: 350,
+            height: 200,
+        });
         arrApps.push(obj);
 
-        obj = new App("Order Manager", `apps/OrderManager/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
+        obj = new App("Order Manager", `apps/OrderManager/ui.html`, "Icons/mmsys.cpl_14_4366.ico", {
+            width: 350,
+            height: 200,
+        });
         arrApps.push(obj);
 
-        obj = new App("Callback Sorter", `apps/CallbackSorter/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
+        obj = new App("Callback Sorter", `apps/CallbackSorter/ui.html`, "Icons/mmsys.cpl_14_4366.ico", {
+            width: 350,
+            height: 200,
+        });
         arrApps.push(obj);
 
-        obj = new App("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Img_Program.PNG", { width: 350, height: 200 });
+        obj = new App("POS Aufgabe", `apps/CustomerProductTester/ui.html`, "Icons/mmsys.cpl_14_4366.ico", {
+            width: 350,
+            height: 200,
+        });
         arrApps.push(obj);
 
-        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Img_VSC.PNG", { width: 1200, height: 700 });
+        obj = new App("Visual Studio Code", `apps/VisualStudioCode/ui.html`, "Icons/pifmgr.dll_14_3.ico", {
+            width: 1200,
+            height: 700,
+        });
         arrApps.push(obj);
 
-        obj = new App("Internet", `apps/Browser/ui.html`, "Img_Internet.PNG", { width: 1200, height: 700 });
+        obj = new App("Internet", `apps/Browser/ui.html`, "Icons/mshtml.dll_14_2660.ico", {
+            width: 1200,
+            height: 700,
+        });
         arrApps.push(obj);
 
-        obj = new App("Background Changer", `apps/BackgroundChanger/ui.html`, "Img_Computer.PNG", { width: 350, height: 200 });
+        obj = new App(
+            "Background Changer",
+            `apps/BackgroundChanger/ui.html`,
+            "Icons/progman.exe_14_123.ico",
+            {
+                width: 350,
+                height: 200,
+            }
+        );
         arrApps.push(obj);
 
         this.initDefaultApps(arrApps);

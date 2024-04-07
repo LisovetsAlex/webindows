@@ -1,0 +1,85 @@
+.winCl-Button3d {
+    color: var(--black);
+    font-family: var(--font-fat);
+    cursor: pointer;
+    border: 0;
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100) inset,
+        var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset,
+        var(--border-radius) var(--border-radius) 0px var(--shadow-300),
+        var(--border-radius) 0px 0px var(--shadow-300), 0px var(--border-radius) 0px var(--shadow-300);
+    background-color: var(--grey-200);
+    padding: 2px 4px 2px 4px;
+    margin-right: var(--border-radius);
+    margin-bottom: var(--border-radius);
+}
+.winCl-Button3d:active {
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100),
+        var(--border-radius) var(--border-radius) 0px var(--shadow-300) inset,
+        var(--border-radius) var(--border-radius) 0px var(--shadow-200) inset;
+}
+.winCl-Button3d:disabled {
+    cursor: default;
+    color: var(--grey-300);
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100),
+        var(--border-radius) var(--border-radius) 0px var(--shadow-300) inset,
+        var(--border-radius) var(--border-radius) 0px var(--shadow-200) inset;
+}
+
+.winCl-Button {
+    color: var(--black);
+    font-family: var(--font-fat);
+    cursor: pointer;
+    border: 0;
+    box-shadow: 0;
+    padding: 4px 8px 4px 8px;
+    background-color: var(--grey-200);
+}
+.winCl-Button:active,
+.winCl-Button:hover {
+    color: var(--white);
+    background-color: var(--blue-200);
+    box-shadow: 0;
+}
+.winCl-Button:disabled {
+    color: var(--grey-300);
+    pointer-events: none;
+}
+
+.winCl-Shortcut {
+    cursor: pointer;
+    z-index: -1;
+    width: 75px;
+    height: 75px;
+    color: var(--white);
+    text-shadow: -1px -1px 0 var(--black), 1px -1px 0 var(--black), -1px 1px 0 var(--black),
+        1px 1px 0 var(--black);
+    margin: 5px;
+    background-color: transparent;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: small;
+}
+.winCl-Shortcut:hover {
+    border: 2px dotted var(--shadow-300);
+}
+.winCl-Shortcut:focus {
+    border: 2px dotted var(--shadow-300);
+}
+.winCl-Shortcut:active {
+    border: 2px dotted var(--shadow-300);
+}
+
+.winCl-Input {
+    color: var(--black);
+    font-family: var(--font-fat);
+    border: 0;
+    background-color: var(--white);
+    box-shadow: var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-100) inset,
+        var(--border-radius) var(--border-radius) 0px var(--shadow-200) inset,
+        calc(var(--border-radiusn) * 2) calc(var(--border-radiusn) * 2) 0px var(--grey-200) inset,
+        calc(var(--border-radius) * 2) calc(var(--border-radius) * 2) 0px var(--shadow-300) inset;
+}

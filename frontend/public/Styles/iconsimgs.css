@@ -1,0 +1,26 @@
+.winCl-CloseIcon {
+    background-image: url("../Assets/Img_Button_Close.PNG");
+    height: 16px;
+    width: 16px;
+    margin-left: 2px;
+}
+.winCl-ExpandIcon {
+    background-image: url("../Assets/Img_Button_Expand.PNG");
+    height: 16px;
+    width: 16px;
+}
+.winCl-MinimizeIcon {
+    background-image: url("../Assets/Img_Button_Minimize.PNG");
+    height: 16px;
+    width: 16px;
+}
+
+.winCl-ShortcutImg {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    width: 32px;
+    height: 32px;
+}
