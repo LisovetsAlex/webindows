@@ -19,7 +19,10 @@ async function startDevServer() {
     app.use((req, res, next) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+        );
         next();
     });
     app.use(
@@ -29,9 +32,18 @@ async function startDevServer() {
     );
     app.use(webpackHotMiddleware(compiler));
     app.use(express.static("app/public"));
+    app.get("/Icons/:filepath(*)", (req, res) => {
+        const filepath = req.params.filepath;
+        const filePathInAppsDir = path.join(__dirname, "./public/Assets/Icons", filepath);
+        console.log(filePathInAppsDir);
+        fs.access(filePathInAppsDir, fs.constants.F_OK, (err) => {
+            if (err) return res.status(404).send("File not found");
+            res.sendFile(filePathInAppsDir);
+        });
+    });
     app.get("/Apps/:filepath(*)", (req, res) => {
         const filepath = req.params.filepath;
-        const filePathInAppsDir = path.join(__dirname, "../src/apps", filepath);
+        const filePathInAppsDir = path.join(__dirname, "../apps", filepath);
         fs.access(filePathInAppsDir, fs.constants.F_OK, (err) => {
             if (err) return res.status(404).send("File not found");
             res.sendFile(filePathInAppsDir);

@@ -1,3 +1,3 @@
-import { sys } from "./src/webindows/System";
+import { sys } from "./src/System";
 
 sys.init();
