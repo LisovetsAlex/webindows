@@ -11,10 +11,10 @@ class FEController {
         res.sendFile(path.join(__dirname, "../../../frontend/build/index.html"));
     }
 
-    @Route("GET", "/:filepath(*)")
+    /* @Route("GET", "/:filepath(*)")
     getFiles(req, res) {
         res.sendFile(path.join(__dirname, "../../../frontend/build", req.params.filepath));
-    }
+    } */
 }
 
 module.exports = FEController;

@@ -45,6 +45,14 @@ class FileController {
         if (!result) return res.send({ msg: "false", data: null });
         res.send({ msg: "true", data: result });
     }
+
+    @Route("GET", "/get/public/:filepath(*)")
+    getPublicFile(req, res) {
+        const filepath = req.params.filepath;
+        const result = this.service.getPublicFile(filepath);
+        if (!result) return res.send({ msg: "false", data: null });
+        res.sendFile(result);
+    }
 }
 
 module.exports = FileController;

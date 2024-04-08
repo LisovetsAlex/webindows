@@ -117,9 +117,22 @@ class FileService {
             const metadata = this.getMetadataOfFolder(folderPath);
             metadata.size = totalSize;
             metadata.contains = `files: ${numFiles}, folders: ${numFolders}`;
+            if (numFiles > 0 || numFolders > 0) {
+                metadata.other.icon = "dmdskres.dll_14_372.ico";
+            }
             fs.writeFile(metadataFilePath, JSON.stringify(metadata), "utf8", (err) => {});
             return true;
         } catch (error) {
+            return null;
+        }
+    }
+
+    getPublicFile(filePath) {
+        try {
+            const joinedPath = path.join(__dirname, "../../system", filePath);
+            fs.access(joinedPath, fs.constants.F_OK, (err) => {});
+            return joinedPath;
+        } catch (err) {
             return null;
         }
     }
