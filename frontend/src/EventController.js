@@ -28,6 +28,42 @@ export default class EventHandler {
         const events = ["abort", "animationcancel", "animationend", "animationiteration", "animationstart", "auxclick", "beforeinput", "blur", "cancel", "canplay", "canplaythrough", "change", "click", "close", "contextmenu", "cuechange", "dblclick", "drag", "dragend", "dragenter", "dragexit", "dragleave", "dragover", "dragstart", "drop", "durationchange", "emptied", "ended", "error", "focus", "focusin", "focusout", "formdata", "gotpointercapture", "input", "invalid", "keydown", "keypress", "keyup", "load", "loadeddata", "loadedmetadata", "loadstart", "lostpointercapture", "mousedown", "mouseenter", "mouseleave", "mousemove", "mouseout", "mouseover", "mouseup","pause", "play", "playing", "pointercancel", "pointerdown", "pointerenter", "pointerleave", "pointermove", "pointerout", "pointerover", "pointerup", "progress", "ratechange", "reset", "resize", "scroll", "securitypolicyviolation", "seeked", "seeking", "select", "selectionchange", "selectstart", "stalled", "submit", "suspend", "textInput", "timeupdate", "toggle", "touchcancel", "touchend", "touchmove", "touchstart", "transitioncancel", "transitionend", "transitionrun", "transitionstart", "volumechange", "waiting", "wheel"];
 
         window.addEventListener("message", (e) => {
+            if (e.data.request === "AddEvent") {
+                this.addEvent({
+                    name: e.data.event.name,
+                    event: e.data.event.event,
+                    callback: this.stringToFunction(
+                        e.data.event.callback,
+                        e.data.event.dependencies,
+                        e.source
+                    ),
+                });
+                return;
+            }
+            if (e.data.request === "AddFrameEvent") {
+                this.addFrameEvent({
+                    name: e.data.event.name,
+                    event: e.data.event.event,
+                    callback: this.stringToFunction(
+                        e.data.event.callback,
+                        e.data.event.dependencies,
+                        e.source
+                    ),
+                });
+                return;
+            }
+            if (e.data.request === "RemoveEvent") {
+                this.removeEvent({
+                    name: e.data.name,
+                });
+                return;
+            }
+            if (e.data.request === "RemoveFrameEvent") {
+                this.removeFrameEvent({
+                    name: e.data.name,
+                });
+                return;
+            }
             this.callEvents(e, "message");
         });
 
@@ -115,5 +151,55 @@ export default class EventHandler {
                 this.frameEvents[i].callback(e);
             }
         }
+    }
+
+    stringToFunction(funcString, deps, frame) {
+        const dependencies = deps;
+        let dependencyVariables = "";
+        dependencyVariables += `const frame = document.querySelector('iframe[id="${frame.frameElement.id}"]')?.contentWindow.document;\n`;
+        dependencyVariables += `if(!frame) return;\n`;
+
+        Object.keys(dependencies).forEach((key) => {
+            if (dependencies[key] instanceof Array) {
+                if (dependencies[key].length <= 0) {
+                    dependencyVariables += `const ${key} = []; \n`;
+                    return;
+                }
+                if (dependencies[key][0]._isHTML) {
+                    dependencyVariables += `const ${key} = [];\n`;
+                    dependencies[key].forEach((item, index) => {
+                        dependencyVariables += `const ${key}_${index} = frame.getElementById("${item.id}");\n`;
+                        dependencyVariables += `if (${key}_${index}) ${key}.push(${key}_${index});\n`;
+                    });
+                    return;
+                }
+                dependencyVariables += `const ${key} = ${dependencies[key]};\n`;
+                return;
+            }
+            if (typeof dependencies[key] === "number") {
+                dependencyVariables += `const ${key} = ${dependencies[key]};\n`;
+                return;
+            }
+            if (dependencies[key] instanceof Object) {
+                dependencyVariables += `const ${key} = ${dependencies[key]};\n`;
+                return;
+            }
+            if (dependencies[key]._isHTML) {
+                dependencyVariables += `const ${key} = frame.getElementById("${dependencies[key].id}");\n`;
+                return;
+            }
+            return (dependencyVariables += `const ${key} = "${dependencies[key]}";\n`);
+        });
+
+        const reconstructedCallback = new Function(
+            "event",
+            `
+            ${dependencyVariables}
+            ${funcString.replace(/\bdocument\b/g, "frame")}
+            callback(event);
+            `
+        );
+
+        return reconstructedCallback;
     }
 }

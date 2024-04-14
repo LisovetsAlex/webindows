@@ -1,4 +1,5 @@
 import { ueh } from "../UserEventHandler";
+import { ICONS_PATH } from "../constants";
 
 export default class WindowsController {
     constructor(eventController, mouse, appsController) {
@@ -30,7 +31,7 @@ export default class WindowsController {
         frame.setAttribute("loading", `lazy`);
         frame.style.width = parseInt(windowElem.style.width) - 8;
         frame.style.height = parseInt(windowElem.style.height) - 34;
-        frame.classList = "winCl-Frame winCl-HardInsetShadow";
+        frame.classList = "winCl-Frame";
         frame.onload = () => {
             const iframe = frame.contentDocument || frame.contentWindow.document;
 
@@ -309,7 +310,7 @@ export default class WindowsController {
                     if (window.style.zIndex == 1) return this.adjustZIndex(window);
                 }}
             >
-                <img src={`Assets/${app.img}`} style="width: 26px" />
+                <img src={`${ICONS_PATH}/${app.img}`} style="width: 26px" />
                 <p>{app.name}</p>
             </button>
         );

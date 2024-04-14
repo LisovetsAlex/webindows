@@ -1,10 +1,10 @@
 @font-face {
     font-family: font-reg;
-    src: url(Assets/w2000_font.ttf);
+    src: url(http://localhost:3000/files/get/public/webindows/public/Assets/w2000_font.ttf);
 }
 @font-face {
     font-family: font-fat;
-    src: url(Assets/w2000_font_fat.ttf);
+    src: url(http://localhost:3000/files/get/public/webindows/public/Assets/w2000_font_fat.ttf);
 }
 
 :root {

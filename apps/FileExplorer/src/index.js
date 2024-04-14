@@ -1,26 +1,23 @@
-import Button from "../components/Button";
-import ButtonIcon from "../components/ButtonIcon";
-import ButtonBar from "../components/ButtonBar";
-import DividerVertical from "../components/DividerVertical";
-import Icon from "../components/Icon";
-import Input from "../components/Input";
-import Text from "../components/Text";
-import ButtonBase from "../components/ButtonBase";
-import FoldersMenu from "../components/FoldersMenu";
-import SubWindow from "../components/SubWindow";
-import { ICONS_PATH, requestFolder } from "../components/constants";
-import FolderItem from "../components/FolderItem";
-
-const history = ["/"];
-let currentIndex = 0;
-let location = history[history.length - 1];
+import { ICONS_PATH } from "@webindows/connect/constants";
+import WindowContent from "@webindows/components/WindowContent";
+import { goTo, goBack, goForward } from "./history";
+import { ViewContainer, addView } from "@webindows/Views";
+import { ButtonBarContainer, ButtonBar } from "@webindows/ButtonBars";
+import Button from "@webindows/components/common/Button";
+import ButtonIcon from "@webindows/components/common/ButtonIcon";
+import Icon from "@webindows/components/common/Icon";
+import Text from "@webindows/components/common/Text";
+import DividerVertical from "@webindows/components/common/DividerVertical";
+import Input from "@webindows/components/common/Input";
+import { FoldersView } from "./AppViews/FoldersView";
+import FileExplorerOverview from "./AppViews/FileExplorerOverview";
 
 function init() {
     const root = document.getElementsByTagName("body")[0];
     let address = "/";
     root.append(
-        <div>
-            <ButtonBase>
+        <WindowContent>
+            <ButtonBarContainer>
                 <ButtonBar>
                     <Button text="File" disabled={false} />
                     <Button text="Edit" disabled={false} />
@@ -33,31 +30,61 @@ function init() {
                         src={`${ICONS_PATH}/progman.exe_14_143.ico`}
                         text="Back"
                         disabled={false}
+                        isGrey={true}
                         onClick={() => goBack()}
                     />
                     <ButtonIcon
                         src={`${ICONS_PATH}/progman.exe_14_144.ico`}
                         text="Forward"
                         disabled={false}
+                        isGrey={true}
                         onClick={() => goForward()}
                     />
-                    <Icon src={`${ICONS_PATH}/webcheck.dll_14_114.ico`} height="16px" width="16px" />
+                    <Icon
+                        src={`${ICONS_PATH}/webcheck.dll_14_114.ico`}
+                        isGrey={true}
+                        height="16px"
+                        width="16px"
+                    />
                     <DividerVertical height="20px" />
+                    <ButtonIcon src={`${ICONS_PATH}/home.png`} text="Home" isGrey={true} disabled={false} />
                     <ButtonIcon
                         src={`${ICONS_PATH}/explorer.exe_14_101.ico`}
                         text="Search"
+                        isGrey={true}
                         disabled={false}
                     />
-                    <ButtonIcon src={`${ICONS_PATH}/fde.dll_14_400.ico`} text="Folders" disabled={false} />
+                    <ButtonIcon
+                        src={`${ICONS_PATH}/shell32.dll_14_4.ico`}
+                        text="Folders"
+                        isGrey={true}
+                        disabled={false}
+                    />
                     <ButtonIcon
                         src={`${ICONS_PATH}/snmpsnap.dll_14_6504.ico`}
                         text="History"
+                        isGrey={true}
                         disabled={false}
                     />
                     <DividerVertical height="20px" />
-                    <Icon src={`${ICONS_PATH}/syncui.dll_14_126.ico`} height="16px" width="16px" />
-                    <Icon src={`${ICONS_PATH}/syncui.dll_14_127.ico`} height="16px" width="16px" />
-                    <Icon src={`${ICONS_PATH}/compstui.dll_14_64003.ico`} height="16px" width="16px" />
+                    <Icon
+                        src={`${ICONS_PATH}/syncui.dll_14_126.ico`}
+                        isGrey={true}
+                        height="16px"
+                        width="16px"
+                    />
+                    <Icon
+                        src={`${ICONS_PATH}/syncui.dll_14_127.ico`}
+                        isGrey={true}
+                        height="16px"
+                        width="16px"
+                    />
+                    <Icon
+                        src={`${ICONS_PATH}/compstui.dll_14_64003.ico`}
+                        isGrey={true}
+                        height="16px"
+                        width="16px"
+                    />
                 </ButtonBar>
                 <ButtonBar gap="4px">
                     <Text text="Address" />
@@ -74,73 +101,24 @@ function init() {
                         src={`${ICONS_PATH}/progman.exe_14_144.ico`}
                         text="Go"
                         disabled={false}
+                        isGrey={true}
                         onClick={() => goTo(address)}
                     />
                 </ButtonBar>
-            </ButtonBase>
-            <SubWindow>
-                <FoldersMenu id="id_FileExplorer_FoldersMenu"></FoldersMenu>
-            </SubWindow>
-        </div>
+            </ButtonBarContainer>
+            <ViewContainer />
+        </WindowContent>
     );
+
+    addView("25%", <FileExplorerOverview />, false);
+    addView("75%", <FoldersView />, false);
 
     goTo(address);
 }
 
-async function goTo(address) {
-    const input = document.getElementById("id_FileExplorer_Address");
-    const menu = document.getElementById("id_FileExplorer_FoldersMenu");
-    const newFolders = await requestFolder(address);
-
-    input.value = address;
-    history.push(address);
-    location = address;
-    currentIndex = history.length - 1;
-
-    while (menu.firstChild) {
-        menu.removeChild(menu.firstChild);
-    }
-
-    menu.append(
-        <div>
-            {newFolders.data.map((child) => (
-                <FolderItem metadata={child} onClick={() => goTo(address + "/" + child.name)} />
-            ))}
-        </div>
-    );
-}
-
-async function goToHistory(index) {
-    const input = document.getElementById("id_FileExplorer_Address");
-    const menu = document.getElementById("id_FileExplorer_FoldersMenu");
-    const newFolders = await requestFolder(history[index]);
-
-    input.value = history[index];
-    location = history[index];
-
-    while (menu.firstChild) {
-        menu.removeChild(menu.firstChild);
-    }
-
-    menu.append(
-        <div>
-            {newFolders.data.map((child) => (
-                <FolderItem metadata={child} onClick={() => goTo(history[index] + "/" + child.name)} />
-            ))}
-        </div>
-    );
-}
-
-function goBack() {
-    if (currentIndex <= 0) currentIndex = 1;
-    currentIndex--;
-    goToHistory(currentIndex);
-}
-
-function goForward() {
-    if (currentIndex >= history.length - 1) currentIndex = history.length - 2;
-    currentIndex++;
-    goToHistory(currentIndex);
-}
+document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    addView("25%", <FileExplorerOverview />);
+});
 
 init();

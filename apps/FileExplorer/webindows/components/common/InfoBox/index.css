@@ -1,0 +1,6 @@
+.InfoBox {
+    margin: 8px;
+    padding: 4px;
+    background-color: var(--yellow-100);
+    border: var(--yellow-200) 1px solid;
+}

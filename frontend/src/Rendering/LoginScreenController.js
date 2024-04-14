@@ -1,4 +1,5 @@
 import { ueh } from "../UserEventHandler";
+import { ASSETS_PATH, PUBLIC_PATH } from "../constants";
 
 export default class WindowsController {
     constructor() {
@@ -16,7 +17,7 @@ export default class WindowsController {
         const loggingScreen = (
             <div id="id_loginScreen" class="winCl-LoggingScreen">
                 <div class="winCl-LoggingContent winCl-HardOutsetShadow">
-                    <img src="Assets/Img_Webindows_Start.gif" class="winCl-LoggingImg" />
+                    <img src={`${ASSETS_PATH}/Img_Webindows_Start.gif`} class="winCl-LoggingImg" />
                     <div class="winCl-LoggingForm">
                         <label class="winCl-LoggingLabel" for="username">
                             Username:

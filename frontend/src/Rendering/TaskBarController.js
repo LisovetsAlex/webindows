@@ -1,4 +1,5 @@
 import { ueh } from "../UserEventHandler";
+import { ICONS_PATH } from "../constants";
 
 export default class TaskBarController {
     constructor(eventController) {
@@ -19,7 +20,7 @@ export default class TaskBarController {
                         onClick={() => this.toggleStartMenu()}
                     >
                         <img
-                            src="Assets/Icons/user32.dll_14_105.ico"
+                            src={`${ICONS_PATH}/user32.dll_14_105.ico`}
                             style="height: 26px; pointer-events: none"
                         />
                         Start
@@ -34,7 +35,7 @@ export default class TaskBarController {
                                     ueh.openApp("Internet");
                                 }}
                             >
-                                <img src="Assets/Icons/mshtml.dll_14_2660.ico" style="width: 26px" />
+                                <img src={`${ICONS_PATH}/mshtml.dll_14_2660.ico`} style="width: 26px" />
                             </button>
                             <button
                                 class="winCl-PinnedBtn"
@@ -42,7 +43,7 @@ export default class TaskBarController {
                                     ueh.openApp("Visual Studio Code");
                                 }}
                             >
-                                <img src="Assets/Icons/pifmgr.dll_14_3.ico" style="width: 26px" />
+                                <img src={`${ICONS_PATH}/pifmgr.dll_14_3.ico`} style="width: 26px" />
                             </button>
                         </div>
                         <div className="winCl-DividerVertical" style="height: 32px"></div>
@@ -101,7 +102,7 @@ export default class TaskBarController {
                         class="winCl-StartLink winCl-Button"
                         onClick={() => ueh.turnOff()}
                     >
-                        <img src="Assets/Icons/msgina.dll_14_22.ico" />
+                        <img src={`${ICONS_PATH}/msgina.dll_14_22.ico`} />
                         Shutdown
                     </button>
                     <div className="winCl-DividerHorizontal" style="width: 100%"></div>
@@ -110,27 +111,27 @@ export default class TaskBarController {
                         class="winCl-StartLink winCl-Button"
                         onClick={() => ueh.logoutUser()}
                     >
-                        <img src="Assets/Icons/shdocvw.dll_14_12768.ico" />
+                        <img src={`${ICONS_PATH}/shdocvw.dll_14_12768.ico`} />
                         Logout
                     </button>
                     <button id="id_shutdownBtn" class="winCl-StartLink winCl-Button">
-                        <img src="Assets/Icons/winhlp32.exe_14_4001.ico" />
+                        <img src={`${ICONS_PATH}/winhlp32.exe_14_4001.ico`} />
                         Help!
                     </button>
                     <button id="id_shutdownBtn" class="winCl-StartLink winCl-Button">
-                        <img src="Assets/Icons/winsrv.dll_14_1.ico" />
+                        <img src={`${ICONS_PATH}/winsrv.dll_14_1.ico`} />
                         Programs
                     </button>
                     <button id="id_shutdownBtn" class="winCl-StartLink winCl-Button">
-                        <img src="Assets/Icons/explorer.exe_14_100.ico" />
+                        <img src={`${ICONS_PATH}/explorer.exe_14_100.ico`} />
                         File Explorer
                     </button>
                     <button id="id_shutdownBtn" class="winCl-StartLink winCl-Button">
-                        <img src="Assets/Icons/mydocs.dll_14_101.ico" />
+                        <img src={`${ICONS_PATH}/mydocs.dll_14_101.ico`} />
                         51GB Folder
                     </button>
                     <button id="id_shutdownBtn" class="winCl-StartLink winCl-Button">
-                        <img src="Assets/Icons/syssetup.dll_14_89.ico" />
+                        <img src={`${ICONS_PATH}/syssetup.dll_14_89.ico`} />
                         BitCoin.txt
                     </button>
                 </div>

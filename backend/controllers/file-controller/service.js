@@ -118,12 +118,107 @@ class FileService {
             metadata.size = totalSize;
             metadata.contains = `files: ${numFiles}, folders: ${numFolders}`;
             if (numFiles > 0 || numFolders > 0) {
-                metadata.other.icon = "dmdskres.dll_14_372.ico";
+                metadata.other.icon = "shell32.dll_14_4.ico";
+            }
+            if (numFiles === 0 && numFolders === 0) {
+                metadata.other.icon = "shell32.dll_14_5.ico";
             }
             fs.writeFile(metadataFilePath, JSON.stringify(metadata), "utf8", (err) => {});
             return true;
         } catch (error) {
             return null;
+        }
+    }
+
+    getFilesAt(filePath) {
+        try {
+            const joinedPath = path.join(__dirname, "../../system", filePath);
+            const files = fs.readdirSync(joinedPath);
+            const fileDetails = files
+                .map((file) => {
+                    const fullPath = path.join(joinedPath, file);
+                    const fileStats = fs.statSync(fullPath);
+                    const fileExtension = path.extname(file).toLowerCase();
+                    const fileName = path.basename(file, fileExtension);
+                    let icon = this.getFileIcon(fileExtension);
+                    const metadata = this.getMetadataOfFolder(filePath);
+                    if (fileName.startsWith("m_")) return null;
+                    if (fileStats.isDirectory()) return null;
+                    if (icon === "compstui.dll_14_64043.ico") {
+                        icon = "/" + filePath + "/" + file;
+                        return {
+                            name: fileName,
+                            extension: fileExtension,
+                            icon,
+                            withPreview: true,
+                            size: fileStats.size,
+                            owner: metadata.owner,
+                        };
+                    }
+                    return {
+                        name: fileName,
+                        extension: fileExtension,
+                        icon,
+                        withPreview: false,
+                        size: fileStats.size,
+                        owner: metadata.owner,
+                    };
+                })
+                .filter(Boolean);
+            return fileDetails;
+        } catch (err) {
+            return null;
+        }
+    }
+
+    getFile(filePath) {
+        try {
+            const joinedPath = path.join(__dirname, "../../system", filePath);
+            fs.access(joinedPath, fs.constants.F_OK, (err) => {});
+            return joinedPath;
+        } catch (err) {
+            return null;
+        }
+    }
+
+    getFileIcon(extension) {
+        const ext = extension.substring(1);
+
+        // prettier-ignore
+        const imageExtensions = ["ico", 'ai', 'bmp', 'dds', 'eps', 'gif', 'ico', 'jpeg', 'jpg', 'png', 'ps', 'psd', 'svg', 'tif', 'tiff', 'webp', 'xbm'];
+        // prettier-ignore
+        const textExtensions = ['asc', 'csv', 'doc', 'docx', 'log', 'msg', 'odt', 'org', 'pages', 'pdf', 'ppt', 'pptx', 'rtf', 'tex', 'txt', 'wpd', 'wps', 'xls', 'xlsx', 'xml'];
+        // prettier-ignore
+        const soundExtensions = ['aif', 'cda', 'flac', 'm3u', 'm4a', 'mid', 'mp3', 'mpa', 'ogg', 'opus', 'wav', 'wma'];
+        // prettier-ignore
+        const videoExtensions = ['3g2', '3gp', 'asf', 'avi', 'flv', 'm4v', 'mkv', 'mov', 'mp4', 'mpg', 'rm', 'srt', 'swf', 'vob', 'wmv'];
+        // prettier-ignore
+        const htmlExtensions = ['asp', 'aspx', 'cer', 'cfm', 'cgi', 'pl', 'css', 'htm', 'html', 'jsp', 'part', 'php', 'phtml', 'rss', 'shtml', 'xhtml'];
+        // prettier-ignore
+        const configExtensions = ["json", "conf", "cfg", "ini", "json", "plist", "xml", "yaml", "yml"];
+        // prettier-ignore
+        const executableExtensions = ['apk', 'app', 'bat', 'cmd', 'com', 'exe', 'gadget', 'jar', 'msi', 'py', 'wsf'];
+        // prettier-ignore
+        const codeExtensions = ["css", 'c', 'cc', 'clj', 'coffee', 'cpp', 'cs', 'css', 'cxx', 'dart', 'ejs', 'go', 'groovy', 'h', 'hpp', 'hs', 'java', 'js', 'json', 'jsx', 'kt', 'less', 'lua', 'm', 'm4', 'pl', 'php', 'py', 'rb', 'rs', 'sass', 'scala', 'scss', 'sh', 'sql', 'swift', 'ts', 'tsx', 'vb', 'xml', 'yaml'];
+
+        if (imageExtensions.includes(ext)) {
+            return "compstui.dll_14_64043.ico";
+        } else if (textExtensions.includes(ext)) {
+            return "fontext.dll_14_2.ico";
+        } else if (soundExtensions.includes(ext)) {
+            return "mplay32.exe_14_12.ico";
+        } else if (videoExtensions.includes(ext)) {
+            return "mplay32.exe_14_11.ico";
+        } else if (htmlExtensions.includes(ext)) {
+            return "mshtml.dll_14_2661.ico";
+        } else if (configExtensions.includes(ext)) {
+            return "shell32.dll_14_154.ico";
+        } else if (executableExtensions.includes(ext)) {
+            return "access.cpl_14_219.ico";
+        } else if (codeExtensions.includes(ext)) {
+            return "mshtml.dll_14_2681.ico";
+        } else {
+            return "mapistub.dll_14_451.ico";
         }
     }
 

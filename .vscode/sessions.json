@@ -7,28 +7,71 @@
     "sessions": {
         "default": [
             {
+                "name": "docker",
+                "autoExecuteCommands": false,
+                "icon": "symbol-method",
+                "color": "terminal.ansiBlue",
+                "commands": [
+                    "npm run docker"
+                ]
+            },
+            {
                 "name": "root",
                 "autoExecuteCommands": true,
-                "icon": "tag",
+                "icon": "terminal",
                 "color": "terminal.ansiGreen",
                 "commands": []
             },
             {
+                "name": "frontend",
+                "autoExecuteCommands": true,
+                "icon": "terminal",
+                "color": "terminal.ansiGreen",
+                "commands": [
+                    "cd frontend"
+                ]
+            },
+            {
                 "name": "backend",
                 "autoExecuteCommands": true,
-                "icon": "tag",
+                "icon": "terminal",
                 "color": "terminal.ansiGreen",
                 "commands": [
                     "cd backend"
                 ]
             },
             {
-                "name": "frontend",
+                "name": "apps",
                 "autoExecuteCommands": true,
-                "icon": "tag",
-                "color": "terminal.ansiGreen",
+                "icon": "terminal",
+                "color": "terminal.ansiWhite",
                 "commands": [
-                    "cd frontend"
+                    "cd apps"
+                ]
+            },
+            {
+                "name": "other",
+                "autoExecuteCommands": true,
+                "icon": "terminal",
+                "color": "terminal.ansiWhite",
+                "commands": []
+            },
+            {
+                "name": "fe server",
+                "autoExecuteCommands": false,
+                "icon": "layers",
+                "color": "terminal.ansiBlue",
+                "commands": [
+                    "npm run dev:fe"
+                ]
+            },
+            {
+                "name": "be server",
+                "autoExecuteCommands": false,
+                "icon": "layers",
+                "color": "terminal.ansiBlue",
+                "commands": [
+                    "npm run dev:be"
                 ]
             }
         ],

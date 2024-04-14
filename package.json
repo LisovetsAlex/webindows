@@ -4,7 +4,9 @@
     "description": "",
     "main": "main.js",
     "scripts": {
-        "docker": "docker-compose up -d"
+        "docker": "docker-compose up -d",
+        "dev:fe": "npm run --prefix ./frontend dev",
+        "dev:be": "npm run --prefix ./backend dev"
     },
     "keywords": [],
     "author": "",

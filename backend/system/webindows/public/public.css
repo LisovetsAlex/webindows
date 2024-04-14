@@ -148,6 +148,12 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: var(--font-reg);
+}
 
 @font-face {
     font-family: font-fat;
@@ -170,6 +176,9 @@ body {
     --blue-200: #08256a;
     --blue-100: #396da5;
 
+    --yellow-200: #e8e9ca;
+    --yellow-100: #feffe3;
+
     --border-radius: 1px;
     --border-radiusn: -1px;
 
@@ -181,6 +190,7 @@ body {
     --font-reg: font-reg;
     --font-fat: font-fat;
 
+    font-family: var(--font-reg);
     font-size: small;
 }
 
@@ -190,13 +200,6 @@ body {
 
 .winCl-BGColor {
     background-color: var(--grey-200);
-}
-
-.winCl-DividerVertical {
-    width: calc(var(--border-radius) * 2);
-    background-color: var(--shadow-200);
-    box-shadow: var(--border-radius) 0px 0px var(--shadow-200) inset,
-        var(--border-radiusn) 0px 0px var(--shadow-100) inset;
 }
 
 .winCl-DividerBigVertical {
@@ -219,6 +222,7 @@ body {
         var(--border-radius) var(--border-radius) 0px var(--shadow-200) inset,
         calc(var(--border-radiusn) * 2) calc(var(--border-radiusn) * 2) 0px var(--grey-200) inset,
         calc(var(--border-radius) * 2) calc(var(--border-radius) * 2) 0px var(--shadow-300) inset;
+    padding: calc(var(--border-radius) * 2);
 }
 
 .winCl-LightInsetShadow {
@@ -240,116 +244,97 @@ body {
         var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset;
 }
 
-.winCl-ButtonBar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100vw;
+::-webkit-scrollbar {
+    width: 18px;
 }
 
-.winCl-ButtonIcon {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    color: var(--black);
-    font-family: var(--font-reg);
-    font-size: small;
-    background-color: transparent;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    padding-inline: 4px;
-}
-.winCl-ButtonIcon:disabled {
-    cursor: default;
-    color: var(--grey-300);
-}
-.winCl-ButtonIcon__icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 4px;
-    pointer-events: none;
+::-webkit-scrollbar-track {
+    background: var(--grey-100);
 }
 
-.winCl-Button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    color: var(--black);
-    font-family: var(--font-reg);
-    font-size: small;
-    background-color: transparent;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    padding-inline: 4px;
-}
-.winCl-Button:disabled {
-    cursor: default;
-    color: var(--grey-300);
+::-webkit-scrollbar-thumb {
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100) inset,
+        var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset;
+    border-right: var(--shadow-300) 1px solid;
+    border-bottom: var(--shadow-300) 1px solid;
+    border-left: var(--grey-200) 1px solid;
+    border-top: var(--grey-200) 1px solid;
+    background-color: var(--grey-200);
 }
 
-.winCl-Icon {
-    width: 16px;
-    height: 16px;
+::-webkit-scrollbar-button {
+    display: block;
+    background-color: var(--grey-200);
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
 }
 
-.winCl-Text {
-    font-family: var(--font-reg);
-    font-size: small;
-    color: var(--black);
+::-webkit-scrollbar-button:vertical:start:decrement {
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100) inset,
+        var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset;
+    border-right: var(--shadow-300) 1px solid;
+    border-bottom: var(--shadow-300) 1px solid;
+    border-left: var(--grey-200) 1px solid;
+    border-top: var(--grey-200) 1px solid;
+    background-color: var(--grey-200);
+    background-image: url("http://localhost:3000/files/get/public/webindows/public/Assets/Icons/pyramid_up.png");
 }
 
-.winCl-Input {
-    color: var(--black);
-    font-family: var(--font-fat);
-    border: 0;
-    padding-inline: 4px;
-    padding-block: 2px;
-    background-color: var(--white);
-    box-shadow: var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-100) inset,
-        var(--border-radius) var(--border-radius) 0px var(--shadow-200) inset,
-        calc(var(--border-radiusn) * 2) calc(var(--border-radiusn) * 2) 0px var(--grey-200) inset,
-        calc(var(--border-radius) * 2) calc(var(--border-radius) * 2) 0px var(--shadow-300) inset;
+::-webkit-scrollbar-button:vertical:end:increment {
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100) inset,
+        var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset;
+    border-right: var(--shadow-300) 1px solid;
+    border-bottom: var(--shadow-300) 1px solid;
+    border-left: var(--grey-200) 1px solid;
+    border-top: var(--grey-200) 1px solid;
+    background-color: var(--grey-200);
+    background-image: url("http://localhost:3000/files/get/public/webindows/public/Assets/Icons/pyramid_down.png");
 }
 
-.winCl-SubWindow {
-    margin-top: 2px;
-    background-color: var(--white);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+}
+::-webkit-scrollbar-button:vertical:end:decrement {
+    display: none;
 }
 
-.winCl-FoldersMenu {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    flex-grow: 1;
+::-webkit-scrollbar-button:horizontal:start:decrement {
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100) inset,
+        var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset;
+    border-right: var(--shadow-300) 1px solid;
+    border-bottom: var(--shadow-300) 1px solid;
+    border-left: var(--grey-200) 1px solid;
+    border-top: var(--grey-200) 1px solid;
+    background-color: var(--grey-200);
+    background-image: url("http://localhost:3000/files/get/public/webindows/public/Assets/Icons/pyramid_left.png");
 }
 
-.winCl-FolderItem {
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    margin-block: 4px;
-    margin-inline: 8px;
-    gap: 4px;
-    font-family: var(--font-reg);
-    border: 2px dotted transparent;
+::-webkit-scrollbar-button:horizontal:end:increment {
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100) inset,
+        var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset;
+    border-right: var(--shadow-300) 1px solid;
+    border-bottom: var(--shadow-300) 1px solid;
+    border-left: var(--grey-200) 1px solid;
+    border-top: var(--grey-200) 1px solid;
+    background-color: var(--grey-200);
+    background-image: url("http://localhost:3000/files/get/public/webindows/public/Assets/Icons/pyramid_right.png");
 }
 
-.winCl-FolderItem:active {
-    border: 2px dotted var(--shadow-300);
+::-webkit-scrollbar-button:horizontal:start:increment {
+    display: none;
+}
+
+::-webkit-scrollbar-button:horizontal:end:decrement {
+    display: none;
+}
+
+::-webkit-scrollbar-corner {
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100) inset,
+        var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset;
+    border-right: var(--shadow-300) 1px solid;
+    border-bottom: var(--shadow-300) 1px solid;
+    border-left: var(--grey-200) 1px solid;
+    border-top: var(--grey-200) 1px solid;
+    background-color: var(--grey-200);
 }

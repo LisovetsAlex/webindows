@@ -1,4 +1,5 @@
 import { ueh } from "../UserEventHandler";
+import { ICONS_PATH } from "../constants";
 
 export default class ShortcutController {
     constructor(eventController, mouse) {
@@ -45,7 +46,7 @@ export default class ShortcutController {
                         });
                     }}
                 >
-                    <img src={`Assets/${app.img}`} className="winCl-ShortcutImg" />
+                    <img src={`${ICONS_PATH}/${app.img}`} className="winCl-ShortcutImg" />
                     {app.name}
                 </div>
             </div>

@@ -53,6 +53,22 @@ class FileController {
         if (!result) return res.send({ msg: "false", data: null });
         res.sendFile(result);
     }
+
+    @Route("GET", "/get/files/:filepath(*)")
+    getFilesAt(req, res) {
+        const filepath = req.params.filepath;
+        const result = this.service.getFilesAt(filepath);
+        if (!result) return res.send({ msg: "false", data: null });
+        res.send(result);
+    }
+
+    @Route("GET", "/get/file/:filepath(*)")
+    getFile(req, res) {
+        const filepath = req.params.filepath;
+        const result = this.service.getFile(filepath);
+        if (!result) return res.send({ msg: "false", data: null });
+        res.sendFile(result);
+    }
 }
 
 module.exports = FileController;

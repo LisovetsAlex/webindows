@@ -1,16 +1,16 @@
 .winCl-CloseIcon {
-    background-image: url("../Assets/Img_Button_Close.PNG");
+    background-image: url("http://localhost:3000/files/get/public/webindows/public/Assets/Img_Button_Close.PNG");
     height: 16px;
     width: 16px;
     margin-left: 2px;
 }
 .winCl-ExpandIcon {
-    background-image: url("../Assets/Img_Button_Expand.PNG");
+    background-image: url("http://localhost:3000/files/get/public/webindows/public/Assets/Img_Button_Expand.PNG");
     height: 16px;
     width: 16px;
 }
 .winCl-MinimizeIcon {
-    background-image: url("../Assets/Img_Button_Minimize.PNG");
+    background-image: url("http://localhost:3000/files/get/public/webindows/public/Assets/Img_Button_Minimize.PNG");
     height: 16px;
     width: 16px;
 }

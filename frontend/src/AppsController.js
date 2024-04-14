@@ -1,3 +1,5 @@
+import { ICONS_PATH } from "./constants";
+
 export class App {
     constructor(name, html, icon, defaultScale) {
         this.name = name;
@@ -41,57 +43,57 @@ export default class AppsController {
         let arrApps = new Array(0);
         let obj = {};
 
-        obj = new App("Apploader", `Apps/AppUploader/ui.html`, "Icons/mmsys.cpl_14_4366.ico", {
+        obj = new App("Apploader", `Apps/AppUploader/ui.html`, `mmsys.cpl_14_4366.ico`, {
             width: 350,
             height: 200,
         });
         arrApps.push(obj);
 
-        obj = new App("Order Manager", `Apps/OrderManager/ui.html`, "Icons/mmsys.cpl_14_4366.ico", {
+        obj = new App("Order Manager", `Apps/OrderManager/ui.html`, `mmsys.cpl_14_4366.ico`, {
             width: 350,
             height: 200,
         });
         arrApps.push(obj);
 
-        obj = new App("Callback Sorter", `Apps/CallbackSorter/ui.html`, "Icons/mmsys.cpl_14_4366.ico", {
+        obj = new App("Callback Sorter", `Apps/CallbackSorter/ui.html`, `mmsys.cpl_14_4366.ico`, {
             width: 350,
             height: 200,
         });
         arrApps.push(obj);
 
-        obj = new App("POS Aufgabe", `Apps/CustomerProductTester/ui.html`, "Icons/mmsys.cpl_14_4366.ico", {
+        obj = new App("POS Aufgabe", `Apps/CustomerProductTester/ui.html`, `mmsys.cpl_14_4366.ico`, {
             width: 350,
             height: 200,
         });
         arrApps.push(obj);
 
-        obj = new App("Visual Studio Code", `Apps/VisualStudioCode/ui.html`, "Icons/pifmgr.dll_14_3.ico", {
-            width: 1200,
-            height: 700,
-        });
-        arrApps.push(obj);
-
-        obj = new App("Internet", `Apps/Browser/ui.html`, "Icons/mshtml.dll_14_2660.ico", {
-            width: 1200,
-            height: 700,
-        });
-        arrApps.push(obj);
-
-        obj = new App("File Explorer", `Apps/FileExplorer/build/index.html`, "Icons/cmprops.dll_14_2.ico", {
+        obj = new App("Visual Studio Code", `Apps/InternetExplorer/ui.html`, `pifmgr.dll_14_3.ico`, {
             width: 1200,
             height: 700,
         });
         arrApps.push(obj);
 
         obj = new App(
-            "Background Changer",
-            `apps/BackgroundChanger/ui.html`,
-            "Icons/progman.exe_14_123.ico",
+            "Internet Explorer",
+            `Apps/InternetExplorer/compiled/index.html`,
+            `mshtml.dll_14_2660.ico`,
             {
-                width: 350,
-                height: 200,
+                width: 1200,
+                height: 700,
             }
         );
+        arrApps.push(obj);
+
+        obj = new App("File Explorer", `Apps/FileExplorer/compiled/index.html`, `cmprops.dll_14_2.ico`, {
+            width: 1200,
+            height: 700,
+        });
+        arrApps.push(obj);
+
+        obj = new App("Background Changer", `apps/BackgroundChanger/ui.html`, `progman.exe_14_123.ico`, {
+            width: 350,
+            height: 200,
+        });
         arrApps.push(obj);
 
         this.initDefaultApps(arrApps);
