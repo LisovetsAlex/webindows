@@ -20,13 +20,14 @@ export default class WindowsController {
         const resizeHandleBottom = document.createElement("div");
         const resizeHandleDRB = document.createElement("div");
         const resizeHandleDLB = document.createElement("div");
+        let isResizing = false;
 
         windowElem.setAttribute("id", `${app.name}`);
         windowElem.classList = "winCl-Window winCl-HardOutsetShadow";
         windowElem.style.width = app.width;
         windowElem.style.height = app.height;
 
-        frame.setAttribute("id", `${app.name}`);
+        frame.setAttribute("id", `${app.name}_frame`);
         frame.setAttribute("src", `${app.html}`);
         frame.setAttribute("loading", `lazy`);
         frame.style.width = parseInt(windowElem.style.width) - 8;
@@ -72,13 +73,17 @@ export default class WindowsController {
         resizeHandleDLB.classList.add("left-bottom");
 
         resizeHandleBottom.addEventListener("mousedown", () => {
+            isResizing = true;
+            this.eventController.sendMessage("window_resize_start", `${app.name}_frame`);
             const savedY = this.mouse.y;
             const savedHeightWindow = this.mouse.y - windowElem.offsetTop;
             this.eventController.addFrameEvent({
-                name: `${app.name}_resize`,
+                name: `window_resize`,
                 event: "mousemove",
+                shareEvent: true,
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.eventController.sendMessage("window_resize", `${app.name}_frame`);
                     this.disableIframes();
                     windowElem.style.height =
                         Math.max(this.mouse.y - savedY + parseInt(savedHeightWindow), 50) + "px";
@@ -91,14 +96,17 @@ export default class WindowsController {
         });
 
         resizeHandleTop.addEventListener("mousedown", () => {
+            isResizing = true;
+            this.eventController.sendMessage("window_resize_start", `${app.name}_frame`);
             const savedY = this.mouse.y;
             const savedHeightWindow = windowElem.style.height;
             const savedHeightFrame = frame.style.height;
             this.eventController.addFrameEvent({
-                name: `${app.name}_resize`,
+                name: `window_resize`,
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.eventController.sendMessage("window_resize", `${app.name}_frame`);
                     if (savedY - this.mouse.y + parseInt(savedHeightWindow) < 50) return;
                     this.disableIframes();
                     windowElem.style.top = this.mouse.y + "px";
@@ -114,14 +122,17 @@ export default class WindowsController {
         });
 
         resizeHandleRight.addEventListener("mousedown", () => {
+            isResizing = true;
+            this.eventController.sendMessage("window_resize_start", `${app.name}_frame`);
             const savedX = this.mouse.x;
             const savedWidthWindow = windowElem.style.width;
             const savedWidthFrame = frame.style.width;
             this.eventController.addFrameEvent({
-                name: `${app.name}_resize`,
+                name: `window_resize`,
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.eventController.sendMessage("window_resize", `${app.name}_frame`);
                     this.disableIframes();
                     windowElem.style.width =
                         Math.max(this.mouse.x - savedX + parseInt(savedWidthWindow), 200) + "px";
@@ -134,14 +145,17 @@ export default class WindowsController {
         });
 
         resizeHandleLeft.addEventListener("mousedown", () => {
+            isResizing = true;
+            this.eventController.sendMessage("window_resize_start", `${app.name}_frame`);
             const savedX = this.mouse.x;
             const savedWidthWindow = windowElem.style.width;
             const savedWidthFrame = frame.style.width;
             this.eventController.addFrameEvent({
-                name: `${app.name}_resize`,
+                name: `window_resize`,
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.eventController.sendMessage("window_resize", `${app.name}_frame`);
                     if (savedX - this.mouse.x + parseInt(savedWidthWindow) < 200) return;
                     this.disableIframes();
                     windowElem.style.left = this.mouse.x + "px";
@@ -157,11 +171,14 @@ export default class WindowsController {
         });
 
         resizeHandleDRB.addEventListener("mousedown", () => {
+            isResizing = true;
+            this.eventController.sendMessage("window_resize_start", `${app.name}_frame`);
             this.eventController.addFrameEvent({
-                name: `${app.name}_resize`,
+                name: `window_resize`,
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.eventController.sendMessage("window_resize", `${app.name}_frame`);
                     this.disableIframes();
                     const ySide = this.mouse.y - windowElem.offsetTop;
                     const hypo = this.calculateDistance(
@@ -180,13 +197,16 @@ export default class WindowsController {
         });
 
         resizeHandleDLB.addEventListener("mousedown", () => {
+            isResizing = true;
             const savedWidth = parseInt(windowElem.style.width);
             const savedLeft = windowElem.offsetLeft;
+            this.eventController.sendMessage("window_resize_start", `${app.name}_frame`);
             this.eventController.addFrameEvent({
-                name: `${app.name}_resize`,
+                name: `window_resize`,
                 event: "mousemove",
                 callback: () => {
                     if (app.isFullScreen) return;
+                    this.eventController.sendMessage("window_resize", `${app.name}_frame`);
                     this.disableIframes();
                     const ySide = this.mouse.y - windowElem.offsetTop;
                     const hypo = this.calculateDistance(
@@ -211,10 +231,13 @@ export default class WindowsController {
         });
 
         this.eventController.addEvent({
-            name: `${app.name}_resize_up`,
+            name: `window_resize_end`,
             event: "mouseup",
+            callCondition: () => isResizing,
             callback: () => {
-                this.eventController.removeFrameEvent(`${app.name}_resize`);
+                isResizing = false;
+                this.eventController.removeFrameEvent(`window_resize`);
+                this.eventController.sendMessage("window_resize_end", `${app.name}_frame`);
                 this.enableIframes();
             },
         });
@@ -225,6 +248,7 @@ export default class WindowsController {
 
         this.desktop.prepend(windowElem);
 
+        this.eventController.sendMessage("window_open", `${app.name}_frame`);
         const computedLeftValue = window.getComputedStyle(windowElem).getPropertyValue("left");
         const computedTopValue = window.getComputedStyle(windowElem).getPropertyValue("top");
         this.appsController.moved(app.name, parseInt(computedLeftValue), parseInt(computedTopValue));
@@ -281,7 +305,7 @@ export default class WindowsController {
                                 return;
                             }
                             if (!app.isFullScreen) {
-                                this.expandWindow(window);
+                                this.expandWindow(app, window);
                                 this.appsController.toggleExpand(app.name);
                                 return;
                             }
@@ -319,8 +343,10 @@ export default class WindowsController {
         miniApps.prepend(elem);
     }
 
-    expandWindow(window) {
+    expandWindow(app, window) {
         if (!window) return;
+        this.eventController.sendMessage("window_before_expand", `${app.name}_frame`);
+
         const frame = window.querySelector("iframe");
         frame.style.width = "calc(100% - 8px)";
         frame.style.height = "calc(100% - 34px)";
@@ -328,14 +354,20 @@ export default class WindowsController {
         window.style.height = "calc(100% - 44px)";
         window.style.top = "0px";
         window.style.left = "0px";
+
+        this.eventController.sendMessage("window_expand", `${app.name}_frame`);
     }
 
     unexpandWindow(app, window) {
         if (!window) return;
+        this.eventController.sendMessage("window_before_unexpand", `${app.name}_frame`);
+
         window.style.width = `${app.width}px`;
         window.style.height = `${app.height}px`;
         window.style.top = `${app.position.y}px`;
         window.style.left = `${app.position.x}px`;
+
+        this.eventController.sendMessage("window_unexpand", `${app.name}_frame`);
     }
 
     disableIframes() {

@@ -56,7 +56,7 @@ class FileService {
                 result.push(content);
             }
 
-            this.updateMetadata(folderPath);
+            //this.updateMetadata(folderPath);
             return result;
         } catch (error) {
             return null;

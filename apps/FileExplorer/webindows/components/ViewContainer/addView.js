@@ -1,5 +1,5 @@
 import View from "./View";
-import { subtractFrom, clamp } from "../../utils/math";
+import { subtractFrom, clamp } from "@webindows/utils/math";
 
 /**
  * Add a new view to the view container.

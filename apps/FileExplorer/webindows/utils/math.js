@@ -62,4 +62,19 @@ function nearlyEqual(num1, num2, epsilon = 1) {
     return Math.abs(num1 - num2) < epsilon;
 }
 
-export { subtractFrom, clamp, subtractEqualShare, nearlyEqual };
+/**
+ * Adds an equal share to each element in the array based on the value.
+ *
+ * @param {number} value - The total value to split among the elements.
+ * @param {Array} array - The array of values to add to.
+ * @return {Array} The modified array.
+ */
+function spreadValueAcrossArray(value, arr) {
+    const length = arr.length;
+    if (length === 0) return arr;
+    const equalValue = value / length;
+    const spreadArray = arr.map((num) => num + equalValue);
+    return spreadArray;
+}
+
+export { subtractFrom, clamp, subtractEqualShare, nearlyEqual, spreadValueAcrossArray };

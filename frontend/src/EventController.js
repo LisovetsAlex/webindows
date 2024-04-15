@@ -140,6 +140,8 @@ export default class EventHandler {
     callEvents(e, name) {
         for (let i = 0; i < this.events.length; i++) {
             if (this.events[i].event === name) {
+                if (this.events[i].callCondition != undefined && this.events[i].callCondition() == false)
+                    continue;
                 this.events[i].callback(e);
             }
         }
@@ -148,9 +150,25 @@ export default class EventHandler {
     callFrameEvents(e, name) {
         for (let i = 0; i < this.frameEvents.length; i++) {
             if (this.frameEvents[i].event === name) {
+                if (this.events[i].callCondition != undefined && this.events[i].callCondition() == false)
+                    continue;
                 this.frameEvents[i].callback(e);
             }
         }
+    }
+
+    sendMessage(eventName, frameId) {
+        const frame = document.getElementById(frameId);
+        frame.contentWindow.postMessage(
+            {
+                event: eventName,
+                windowSize: {
+                    width: parseInt(window.getComputedStyle(frame).getPropertyValue("width")),
+                    height: parseInt(window.getComputedStyle(frame).getPropertyValue("height")),
+                },
+            },
+            "*"
+        );
     }
 
     stringToFunction(funcString, deps, frame) {
