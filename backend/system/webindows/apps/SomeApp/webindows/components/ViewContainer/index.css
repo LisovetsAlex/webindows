@@ -1,0 +1,28 @@
+.ViewContainer {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 85px);
+    padding-top: 4px;
+}
+
+.View {
+    background-color: var(--white);
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.ViewResizeHandleLeft {
+    cursor: ew-resize;
+    padding-inline: 4px;
+    height: 100%;
+    z-index: 2;
+}
+
+.CloseBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1px;
+}

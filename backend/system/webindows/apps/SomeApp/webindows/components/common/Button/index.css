@@ -1,0 +1,23 @@
+.Button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    font-family: var(--font-reg);
+    font-size: small;
+    background-color: transparent;
+    border: 0;
+    padding-block: 2px;
+    margin: 0;
+    cursor: pointer;
+    padding-inline: 8px;
+}
+.Button:active {
+    box-shadow: var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-100) inset,
+        var(--border-radius) var(--border-radius) 0px var(--shadow-200) inset;
+}
+.Button:disabled {
+    cursor: default;
+    color: var(--grey-300);
+}

@@ -96,6 +96,12 @@ export default class AppsController {
         });
         arrApps.push(obj);
 
+        obj = new App("Some App", `apps/SomeApp/compiled/index.html`, `progman.exe_14_123.ico`, {
+            width: 1200,
+            height: 700,
+        });
+        arrApps.push(obj);
+
         this.initDefaultApps(arrApps);
 
         this.allApps = arrApps;

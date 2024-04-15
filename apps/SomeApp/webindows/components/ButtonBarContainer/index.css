@@ -1,0 +1,12 @@
+.ButtonBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: calc(100vw - 4px);
+    border: 0;
+    box-shadow: var(--border-radius) var(--border-radius) 0px var(--shadow-100) inset,
+        var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset,
+        var(--border-radius) var(--border-radius) 0px var(--shadow-300),
+        var(--border-radius) 0px 0px var(--shadow-300), 0px var(--border-radius) 0px var(--shadow-300);
+}
