@@ -15,7 +15,7 @@ module.exports = {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
+                exclude: /(node_modules|apps|public)/,
                 use: {
                     loader: "babel-loader",
                 },
@@ -24,10 +24,7 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin({
-            patterns: [
-                { from: "public", to: "." },
-                { from: "src/apps", to: "./apps" },
-            ],
+            patterns: [{ from: "public", to: "." }],
         }),
         new webpack.ProvidePlugin({
             createElement: [path.resolve(__dirname, "jsx.js"), "createElement"],

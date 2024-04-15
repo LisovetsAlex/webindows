@@ -4,7 +4,7 @@
     "description": "",
     "main": "main.js",
     "scripts": {
-        "start:dev": "babel-node -r dotenv/config main.js",
+        "dev": "babel-node -r dotenv/config main.js",
         "start": "babel-node main.js"
     },
     "author": "",

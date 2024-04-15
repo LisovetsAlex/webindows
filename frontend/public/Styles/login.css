@@ -1,0 +1,66 @@
+.winCl-LoggingScreen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--blue-100);
+    z-index: 9999;
+}
+
+.winCl-LoggingForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    margin-top: 8px;
+}
+
+.winCl-LoggingContent {
+    position: absolute;
+    width: 658px;
+    height: 350px;
+    left: calc(50vw - 329px);
+    top: 25vh;
+    padding: 1px;
+    border: 0;
+    background-color: var(--grey-200);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.winCl-LoggingImg {
+    background: url(Assets/Img_Webindows_Start.gif) top center repeat-y;
+    background-size: 100%;
+    width: 100%;
+    height: 194px;
+    margin-bottom: 16px;
+}
+
+.winCl-LoggingLabel {
+    width: 75px;
+    font-size: small;
+    margin-left: 18px;
+}
+
+.winCl-LoggingInput {
+    height: 22px;
+    padding: 4px;
+    width: 250px;
+}
+
+.winCl-LoggingBtn {
+    width: 100px;
+    height: 30px;
+    margin: 0;
+}
+
+.winCl-LoggingBtns {
+    display: flex;
+    justify-content: row;
+    gap: 8px;
+    margin-top: 16px;
+    margin-left: calc(75px + 32px + 16px);
+}

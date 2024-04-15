@@ -1,0 +1,8 @@
+.Link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.Link:active {
+    color: purple;
+}

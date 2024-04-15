@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<div>
+    <script src="../Utility/Util_Requester.js" defer></script>
+    <script src="code.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="../../public.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</div>
+
+<body>
+    <div class="winCl-AppWindow">
+        <p style="display: flex; justify-content: center; margin-top: 0">
+            Change the background of webindows.
+        </p>
+        <div class="list">
+            <label for="file-upload" class="file-input-wrapper">
+                Browse for Image...
+                <input type="file" id="id_img" class="file-input" onchange="showFileName(this)" />
+            </label>
+            <span class="file-name" id="id_fileName">No file chosen</span>
+            <div class="right">
+                <button class="winCl-Btn uploadBtn" onclick="upload()">Change</button>
+            </div>
+        </div>
+    </div>
+</body>

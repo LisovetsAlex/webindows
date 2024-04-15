@@ -1,0 +1,12 @@
+.Input {
+    color: var(--black);
+    font-family: var(--font-fat);
+    border: 0;
+    padding-inline: 4px;
+    padding-block: 2px;
+    background-color: var(--white);
+    box-shadow: var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-100) inset,
+        var(--border-radius) var(--border-radius) 0px var(--shadow-200) inset,
+        calc(var(--border-radiusn) * 2) calc(var(--border-radiusn) * 2) 0px var(--grey-200) inset,
+        calc(var(--border-radius) * 2) calc(var(--border-radius) * 2) 0px var(--shadow-300) inset;
+}

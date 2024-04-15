@@ -1,0 +1,6 @@
+.DividerVertical {
+    width: calc(var(--border-radius) * 2);
+    background-color: var(--shadow-200);
+    box-shadow: var(--border-radius) 0px 0px var(--shadow-200) inset,
+        var(--border-radiusn) 0px 0px var(--shadow-100) inset;
+}

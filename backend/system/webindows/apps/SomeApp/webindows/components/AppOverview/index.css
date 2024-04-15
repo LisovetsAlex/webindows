@@ -1,0 +1,12 @@
+.AppOverview__SeeAlso {
+    margin: 14px;
+    gap: 8px;
+}
+
+.AppOverview__SeeAlsoList {
+    list-style-type: none;
+}
+
+.AppOverview__SeeAlsoListItem {
+    margin-top: 4px;
+}
