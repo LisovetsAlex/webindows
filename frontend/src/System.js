@@ -25,15 +25,16 @@ export class System {
 
         this.initClock();
 
-        await this.tryLoggingIn();
-
+        //await this.tryLoggingIn();
+        this.renderController.removeLoginScreen();
+        this.renderController.createDesktop();
         this.tick();
     }
 
     tick() {
         setInterval(() => {
             if (this.isOff) return;
-            this.tryLoggingIn();
+            //this.tryLoggingIn();
         }, 500);
     }
 
@@ -78,7 +79,7 @@ export class System {
     turnOff() {
         this.isOff = true;
         this.renderController.removeAll();
-        this.logoutUser();
+        //this.logoutUser();
     }
 
     async loginUser(username, password) {

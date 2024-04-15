@@ -102,7 +102,7 @@ export default class AppsController {
         });
         arrApps.push(obj);
 
-        this.initDefaultApps(arrApps);
+        //this.initDefaultApps(arrApps);
 
         this.allApps = arrApps;
     }
