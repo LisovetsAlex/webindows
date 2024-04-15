@@ -102,6 +102,12 @@ export default class AppsController {
         });
         arrApps.push(obj);
 
+        obj = new App("MS Paint", `apps/MSPaint/compiled/index.html`, `progman.exe_14_110.ico`, {
+            width: 1200,
+            height: 700,
+        });
+        arrApps.push(obj);
+
         //this.initDefaultApps(arrApps);
 
         this.allApps = arrApps;

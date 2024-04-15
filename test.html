@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <canvas id="myCanvas" width="1200" height="700" style="border: 1px solid #d3d3d3"> </canvas>
+
+        <button onclick="download()">Download as .png</button>
+
+        <script>
+            let prevMouse = { x: 0, y: 0 };
+            var c = document.getElementById("myCanvas");
+            let isMouseDown = false;
+
+            const drawPixel = (e) => {
+                const offset = 8;
+                const kursiv = 0;
+                const x = e.clientX - offset;
+                const y = e.clientY - offset;
+                const prevX = prevMouse.x - offset - kursiv;
+                const prevY = prevMouse.y - offset + kursiv;
+                const fattness = 8;
+                var ctx = c.getContext("2d");
+                ctx.lineWidth = 10;
+                ctx.strokeStyle = "red";
+                ctx.moveTo(x, y);
+                ctx.lineTo(prevX, prevY);
+                ctx.stroke();
+            };
+
+            c.addEventListener("mousemove", (e) => {
+                if (isMouseDown) drawPixel(e);
+                prevMouse.x = e.clientX;
+                prevMouse.y = e.clientY;
+            });
+
+            c.addEventListener("mousedown", (e) => {
+                isMouseDown = true;
+            });
+            c.addEventListener("mouseup", (e) => {
+                isMouseDown = false;
+            });
+
+            function download() {
+                var image = c.toDataURL("image/jpg");
+
+                var link = document.createElement("a");
+                link.download = "canvas_image.jpg";
+                link.href = image;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        </script>
+    </body>
+</html>
