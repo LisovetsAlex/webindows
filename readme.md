@@ -50,5 +50,5 @@ cd frontend/src/apps
 ```
 
 ```
-npx create-webindows-app-template
+npx create-webindows-app
 ```
