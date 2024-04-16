@@ -8,7 +8,7 @@ export default function MainAppView() {
         <div>
             <h1>Main App View</h1>
             <p>This is the main app view!</p>
-            <InfoBox id="count" text={count} />
+            <InfoBox id="count" text={count} width="100px" />
             <Button
                 text="Count up!"
                 onClick={() => {

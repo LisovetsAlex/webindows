@@ -418,6 +418,8 @@ export default class WindowsController {
     }
 
     removeWindow(name) {
+        this.eventController.sendMessage("window_close", `${name}_frame`);
+
         const window = document.getElementById(name);
         window.remove();
 

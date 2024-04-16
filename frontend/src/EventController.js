@@ -1,3 +1,5 @@
+import { ueh } from "./UserEventHandler";
+
 /**
  * Event
  * @param {string} name - Unique name for the event
@@ -58,10 +60,8 @@ export default class EventHandler {
                 });
                 return;
             }
-            if (e.data.request === "RemoveFrameEvent") {
-                this.removeFrameEvent({
-                    name: e.data.name,
-                });
+            if (e.data.request === "ChangeBackground") {
+                ueh.changeBackground(e.data.background);
                 return;
             }
             this.callEvents(e, "message");

@@ -31,14 +31,11 @@ let isMouseDown = false;
 
 const drawPixel = (e) => {
     const c = document.getElementById("id_MSPAINT_Canvas");
-    const offset = 8;
     const kursiv = 0;
-    const x = mouse.x - offset;
-    const y = mouse.y - offset;
-    const prevX = prevMouse.x - offset - kursiv;
-    const prevY = prevMouse.y - offset + kursiv;
-    console.log("now: ", x, y);
-    console.log("prev: ", prevX, prevY);
+    const x = mouse.x;
+    const y = mouse.y;
+    const prevX = prevMouse.x - kursiv;
+    const prevY = prevMouse.y + kursiv;
     let ctx = c.getContext("2d");
     ctx.lineWidth = 1;
     ctx.strokeStyle = "black";
@@ -56,16 +53,22 @@ c.addEventListener("mousemove", (e) => {
     prevMouse.y = mousePos.y;
 });
 
-const getMousePos = (canvas, e) => {
-    return {
-        x: e.clientX - canvas.offsetLeft,
-        y: e.clientY - canvas.offsetTop,
-    };
-};
-
 c.addEventListener("mousedown", (e) => {
     isMouseDown = true;
 });
 c.addEventListener("mouseup", (e) => {
     isMouseDown = false;
 });
+
+c.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    console.log(123);
+    fill(mouse.x, mouse.y, "black");
+});
+
+const getMousePos = (canvas, e) => {
+    return {
+        x: e.clientX - canvas.offsetLeft,
+        y: e.clientY - canvas.offsetTop,
+    };
+};

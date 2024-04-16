@@ -244,6 +244,10 @@ body {
         var(--border-radiusn) var(--border-radiusn) 0px var(--shadow-200) inset;
 }
 
+.winCl-Selected {
+    border: 2px dotted var(--grey-300);
+}
+
 ::-webkit-scrollbar {
     width: 18px;
 }

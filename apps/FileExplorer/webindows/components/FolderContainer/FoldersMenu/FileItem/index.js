@@ -3,7 +3,7 @@ import { ICONS_PATH, FILE_PATH } from "@webindows/connect/constants";
 export default function FileItem(props) {
     if (!props.file) return <div></div>;
     return (
-        <div className="winCl-FolderItem" onDblClick={props.onDblClick}>
+        <div className="winCl-FolderItem" onDblClick={props.onDblClick} onClick={props.onClick}>
             <div
                 style={{ width: "60%", minWidth: "200px", display: "flex", alignItems: "center", gap: "4px" }}
             >

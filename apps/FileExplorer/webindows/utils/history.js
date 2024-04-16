@@ -12,7 +12,7 @@ class LinearHistory {
      */
     addNew(address) {
         this.history.push(address);
-        this.__cleanDuplicates();
+        this.removeAdjacentDuplicates();
         this.index = this.history.length - 1;
     }
 
@@ -96,8 +96,10 @@ class LinearHistory {
         this.index = 0;
     }
 
-    __cleanDuplicates() {
-        this.history = [...new Set(this.history)];
+    removeAdjacentDuplicates() {
+        this.history = this.history.filter((item, index) => {
+            return index === 0 || item !== this.history[index - 1];
+        });
     }
 }
 

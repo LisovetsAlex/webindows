@@ -11,6 +11,8 @@ import DividerVertical from "@webindows/components/common/DividerVertical";
 import Input from "@webindows/components/common/Input";
 import { FoldersView } from "./AppViews/FoldersView";
 import FileExplorerOverview from "./AppViews/FileExplorerOverview";
+import createDropdown from "@webindows/components/common/Dropdown";
+import DropdownItem from "@webindows/components/common/Dropdown/DropdownItem";
 
 function init() {
     const root = document.getElementsByTagName("body")[0];
@@ -19,8 +21,72 @@ function init() {
         <WindowContent>
             <ButtonBarContainer>
                 <ButtonBar>
-                    <Button text="File" disabled={false} />
-                    <Button text="Edit" disabled={false} />
+                    <Button
+                        id="FileExplorer_FileBtn"
+                        text="File"
+                        disabled={false}
+                        onClick={() => {
+                            createDropdown("FileExplorer_FileBtn", "FileExplorer_FileDD", [
+                                <DropdownItem
+                                    text="New File"
+                                    onClick={() => {
+                                        console.log("New File");
+                                    }}
+                                />,
+                                <DropdownItem
+                                    text="New File"
+                                    onClick={() => {
+                                        console.log("New File");
+                                    }}
+                                />,
+                                <DropdownItem
+                                    text="New File"
+                                    onClick={() => {
+                                        console.log("New File");
+                                    }}
+                                />,
+                                <DropdownItem
+                                    text="New File"
+                                    onClick={() => {
+                                        console.log("New File");
+                                    }}
+                                />,
+                            ]);
+                        }}
+                    />
+                    <Button
+                        id="FileExplorer_EditBtn"
+                        text="Edit"
+                        disabled={false}
+                        onClick={() => {
+                            createDropdown("FileExplorer_EditBtn", "FileExplorer_EditDD", [
+                                <DropdownItem
+                                    text="New File"
+                                    onClick={() => {
+                                        console.log("New File");
+                                    }}
+                                />,
+                                <DropdownItem
+                                    text="New File"
+                                    onClick={() => {
+                                        console.log("New File");
+                                    }}
+                                />,
+                                <DropdownItem
+                                    text="New File"
+                                    onClick={() => {
+                                        console.log("New File");
+                                    }}
+                                />,
+                                <DropdownItem
+                                    text="New File"
+                                    onClick={() => {
+                                        console.log("New File");
+                                    }}
+                                />,
+                            ]);
+                        }}
+                    />
                     <Button text="View" disabled={true} />
                     <Button text="Extra" disabled={true} />
                     <Button text="?" disabled={true} />

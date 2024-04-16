@@ -1,0 +1,24 @@
+.Dropdown {
+    position: absolute;
+    width: 150px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.DropdownItem {
+    pointer-events: all;
+    cursor: pointer;
+    color: var(--black);
+    padding-left: 4px;
+    width: calc(100% - 5.5px);
+    margin-block: 1px;
+    text-align: start;
+}
+
+.DropdownItem:hover {
+    background-color: var(--blue-200);
+    color: var(--white);
+}

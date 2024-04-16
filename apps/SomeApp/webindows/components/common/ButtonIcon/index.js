@@ -2,12 +2,7 @@ import "./index.css";
 
 export default function ButtonIcon(props) {
     return (
-        <button
-            id={props.id}
-            className="ButtonIcon"
-            disabled={props.disabled}
-            onClick={props.onClick}
-        >
+        <button className="ButtonIcon" disabled={props.disabled} onClick={props.onClick}>
             <img
                 src={props.src}
                 className="ButtonIcon__icon"

@@ -64,6 +64,6 @@ export default class RenderController {
     }
 
     changeBackground(imgUrl) {
-        this.desktop.style.backgroundImage = `url(${imgUrl})`;
+        this.desktop.style.backgroundImage = `url("http://localhost:3000/files/get/file/${imgUrl}")`;
     }
 }

@@ -3,6 +3,7 @@ import { ViewContainer, addView } from "@webindows/Views";
 import WebindowsAppOverview from "./AppViews/WebindowsAppOverview";
 import NavigationBar from "./AppViews/NavigationBar";
 import MainAppView from "./AppViews/MainAppView";
+import AnotherView from "./AppViews/AnotherView";
 
 function init() {
     const root = document.getElementsByTagName("body")[0];
@@ -20,7 +21,7 @@ function init() {
 
 document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
-    addView("25%", <MainAppView />);
+    addView("25%", <AnotherView />);
 });
 
 init();

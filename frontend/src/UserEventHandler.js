@@ -24,6 +24,10 @@ class UEH {
     logoutUser() {
         sys.logoutUser();
     }
+
+    changeBackground(path) {
+        sys.changeBackground(path);
+    }
 }
 
 const ueh = new UEH();

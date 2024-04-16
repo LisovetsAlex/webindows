@@ -101,6 +101,10 @@ export class System {
     logoutUser() {
         this.localStorageController.clearUserData();
     }
+
+    changeBackground(imgUrl) {
+        this.renderController.changeBackground(imgUrl);
+    }
 }
 
 const sys = new System();
