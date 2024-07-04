@@ -1,4 +1,14 @@
-# How to run
+# Webindows
+![Gif of webindows...](https://github.com/LisovetsAlex/webindows/assets/82639645/4b485a34-30d8-4b84-bed8-cea11d3fdd3b)
+
+This app is an abomination. It was created due to bordeom at programming classes at school.
+
+Webindows has no purpose, but had in school. Webindows was supposed to be able to open my JS 
+homework in draggable and resizable windows.
+
+Now its pupose is to dwell here forever.
+
+## How to run
 
 1. Install deps in /frontend and /backend:
 
@@ -32,7 +42,7 @@ npm run start:dev
 
 5. Production is localhost:3069 after running Docker
 
-## Create Default User in DB
+### Create Default User in DB
 
 Open mongosh, connect to DB after running docker:
 
@@ -43,7 +53,7 @@ db.createUser({user:"admin",pwd:"12345678",roles:[{role:"readWrite",db:"WEBINDOW
 
 Then restart mongodb container
 
-## Making own apps
+### Making own apps
 
 ```
 cd frontend/src/apps
